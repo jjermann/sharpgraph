@@ -5,13 +5,15 @@ using DotParser;
 
 namespace SharpGraph.DotParser {
     public static class DotParser {
-        public static IParseTree GetParseTree(StreamReader reader, IDotGrammarListener listener) {
+        public static IParseTree GetParseTree(StreamReader reader, IDotGrammarListener listener = null) {
             var input = new AntlrInputStream(reader);
             var lexer = new DotGrammarLexer(input);
             var tokens = new CommonTokenStream(lexer);
             var parser = new DotGrammarParser(tokens);
             var tree = parser.graph();
-            tree.EnterRule(listener);
+            if (listener != null) {
+                tree.EnterRule(listener);
+            }
             return tree;
         }
     }

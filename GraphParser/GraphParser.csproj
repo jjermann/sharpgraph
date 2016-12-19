@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GraphListener.cs" />
+    <Compile Include="GraphVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GraphParser.cs" />
   </ItemGroup>

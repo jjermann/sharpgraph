@@ -5,15 +5,12 @@ using DotParser;
 using SharpGraph.GraphModel;
 
 namespace SharpGraph.GraphParser {
-    public class GraphListener : DotGrammarBaseListener {
-        public IGraph ParsedGraph { get; private set; }
+    public class GraphVisitor : DotGrammarBaseVisitor<IGraph> {
+        private IGraph ParsedGraph { get; set; }
         private ISubGraph CurrentSubGraph { get; set; }
 
-        public override void EnterGraph(DotGrammarParser.GraphContext context) {
-            if (context == null) {
-                return;
-            }
-            if (ParsedGraph != null) {
+        public override IGraph VisitGraph(DotGrammarParser.GraphContext context) {
+            if ((context == null) || (ParsedGraph != null)) {
                 throw new NotImplementedException();
             }
             var id = context.id()?.GetText() ?? ModelHelper.DefaultGraphId;
@@ -26,8 +23,10 @@ namespace SharpGraph.GraphParser {
                 HandleNode(stmtContext.node_stmt());
                 HandleEdgeLine(stmtContext.edge_stmt());
                 HandleSubgraph(stmtContext.subgraph());
-                ExitSubgraph(stmtContext.subgraph());
+                HandleExitSubgraph(stmtContext.subgraph());
             }
+
+            return ParsedGraph;
         }
 
         private IList<INode> HandleNode(DotGrammarParser.Node_stmtContext context) {
@@ -67,14 +66,14 @@ namespace SharpGraph.GraphParser {
                 sourceNodes = new List<INode> {CurrentSubGraph.CreateNode(id, checkParent: false)};
             } else {
                 sourceNodes = HandleSubgraph(startContext.subgraph()).ToList();
-                ExitSubgraph(startContext.subgraph());
+                HandleExitSubgraph(startContext.subgraph());
             }
             if (endContext.node_id() != null) {
                 var id = endContext.node_id().id().GetText();
                 endNodes = new List<INode> {CurrentSubGraph.CreateNode(id, checkParent: false)};
             } else {
                 endNodes = HandleSubgraph(endContext.subgraph()).ToList();
-                ExitSubgraph(endContext.subgraph());
+                HandleExitSubgraph(endContext.subgraph());
             }
             foreach (var sourceNode in sourceNodes) {
                 foreach (var endNode in endNodes) {
@@ -100,12 +99,12 @@ namespace SharpGraph.GraphParser {
                 nodeList.AddRange(HandleNode(stmtContext.node_stmt()));
                 nodeList.AddRange(HandleEdgeLine(stmtContext.edge_stmt()));
                 nodeList.AddRange(HandleSubgraph(stmtContext.subgraph()));
-                ExitSubgraph(stmtContext.subgraph());
+                HandleExitSubgraph(stmtContext.subgraph());
             }
             return nodeList;
         }
 
-        public override void ExitSubgraph(DotGrammarParser.SubgraphContext context) {
+        private void HandleExitSubgraph(DotGrammarParser.SubgraphContext context) {
             if (context == null) {
                 return;
             }

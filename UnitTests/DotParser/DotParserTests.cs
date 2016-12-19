@@ -18,7 +18,7 @@ namespace SharpGraph.DotParser {
                 }
                 using (var reader = new StreamReader(stream)) {
                     try {
-                        DotParser.GetParseTree(reader, null);
+                        DotParser.GetParseTree(reader);
                     } catch (Exception e) {
                         Assert.Fail(e.Message);
                     }

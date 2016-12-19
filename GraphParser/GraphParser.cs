@@ -5,9 +5,8 @@ using SharpGraph.GraphModel;
 namespace SharpGraph.GraphParser {
     public static class GraphParser {
         public static IGraph GetGraph(StreamReader reader) {
-            var listener = new GraphListener();
-            DotParser.DotParser.GetParseTree(reader, listener);
-            return listener.ParsedGraph;
+            var tree = DotParser.DotParser.GetParseTree(reader);
+            return new GraphVisitor().Visit(tree);
         }
 
         public static IGraph GetGraph(string input) {
