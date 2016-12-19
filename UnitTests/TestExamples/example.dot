@@ -1,0 +1,16 @@
+digraph {
+  A
+  B->C->{
+    A; D; {
+	  A; B
+	}
+  }
+  C [label="MyEdges"]
+  D->B
+  D [label="MyNodeD", shape="circle"];
+  subgraph cluster0 {
+    E
+	F->A
+	D->B
+  }
+}
