@@ -1,27 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+﻿using System.Linq;
 using NUnit.Framework;
 using SharpGraph.GraphModel;
 
 namespace SharpGraph.GraphParser {
     [TestFixture]
     public class DotOutputTests {
-        private static readonly string ExampleDot;
-
-        static DotOutputTests() {
-            var executingAssembly = Assembly.GetExecutingAssembly();
-            using (var stream = executingAssembly.GetManifestResourceStream(@"SharpGraph.TestExamples.example.dot")) {
-                if (stream == null) {
-                    throw new Exception("example.dot not found!");
-                }
-                using (var reader = new StreamReader(stream)) {
-                    ExampleDot = reader.ReadToEnd();
-                }
-            }
-        }
-
         [SetUp]
         public void Init() {}
 
@@ -43,7 +26,7 @@ namespace SharpGraph.GraphParser {
 
         [Test]
         public void DigraphTypeTest() {
-            var input = ExampleDot.Replace("digraph {", "digraph {");
+            var input = TestHelper.ExampleDot.Replace("digraph {", "digraph {");
             var graph = GraphParser.GetGraph(input);
             Assert.IsTrue(graph.IsDirected);
             Assert.IsFalse(graph.IsStrict);
@@ -56,7 +39,7 @@ namespace SharpGraph.GraphParser {
 
         [Test]
         public void GraphTypeTest() {
-            var input = ExampleDot.Replace("digraph {", "graph MyId {");
+            var input = TestHelper.ExampleDot.Replace("digraph {", "graph MyId {");
             var graph = GraphParser.GetGraph(input);
             Assert.IsFalse(graph.IsDirected);
             Assert.IsFalse(graph.IsStrict);
@@ -69,7 +52,7 @@ namespace SharpGraph.GraphParser {
 
         [Test]
         public void StrictTypeTest() {
-            var input = ExampleDot.Replace("digraph {", "strict digraph MyId {");
+            var input = TestHelper.ExampleDot.Replace("digraph {", "strict digraph MyId {");
             var graph = GraphParser.GetGraph(input);
             Assert.IsTrue(graph.IsDirected);
             Assert.IsTrue(graph.IsStrict);
