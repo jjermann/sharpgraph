@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace SharpGraph.GraphModel {
     public class Graph : SubGraph, IGraph {
         public static IGraph CreateGraph(
-            string id,
+            string id = ModelHelper.DefaultGraphId,
             bool isDirected = true,
             bool isStrict = false,
             IAttributeDictionary graphAttrs = null,
