@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodel="clr-namespace:SharpGraph.GraphViewModel;assembly=GraphViewModel"
         mc:Ignorable="d"
-        Title="SharpGraph" Height="350" Width="525">
+        Title="SharpGraph" Width="800" Height="600">
     <Window.DataContext>
-        <viewmodel:GraphControler />
+        <viewmodel:GraphController />
     </Window.DataContext>
 
     <Window.Resources>
@@ -30,26 +30,14 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodel:WpfEdge}">
             <Canvas>
-                <Image>
-                    <Image.Source>
-                        <DrawingImage>
-                            <DrawingImage.Drawing>
-                                <GeometryDrawing Geometry="{Binding Path=Geometry}">
-                                    <GeometryDrawing.Pen>
-                                        <Pen Brush="Black" Thickness="1" />
-                                    </GeometryDrawing.Pen>
-                                </GeometryDrawing>
-                            </DrawingImage.Drawing>
-                        </DrawingImage>
-                    </Image.Source>
-                </Image>
+                <Path Data="{Binding Path=Geometry}" Stroke="Black" />
             </Canvas>
         </DataTemplate>
     </Window.Resources>
 
     <Grid>
-        <ListBox ItemsSource="{Binding WpfEdges}" />
-        <ListBox ItemsSource="{Binding WpfNodes}" />
+        <ItemsControl ItemsSource="{Binding WpfEdges}" />
+        <ItemsControl ItemsSource="{Binding WpfNodes}" />
     </Grid>
 </Window>
 

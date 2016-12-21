@@ -9,14 +9,14 @@ namespace SharpGraph.GraphViewModel {
         }
 
         public string Label => _nodeBehind.HasAttribute("label") ? _nodeBehind.GetAttribute("label") : _nodeBehind.Id;
-        public double Width => ConvertToDouble(_nodeBehind.GetAttribute("width").Trim('"'), 60);
-        public double Height => ConvertToDouble(_nodeBehind.GetAttribute("height").Trim('"'), 60);
-        public double X => ConvertToDouble(_nodeBehind.GetAttribute("pos").Trim('"').Split(',')[0]);
-        public double Y => ConvertToDouble(_nodeBehind.GetAttribute("pos").Trim('"').Split(',')[1]);
-
-        private double ConvertToDouble(string input, double factor = 1) {
-            var foo = double.Parse(input)*factor;
-            return foo;
-        }
+        public double Ppi => 96;
+        public double Width => GraphViewModelHelper.StringToPixel(_nodeBehind.GetAttribute("width").Trim('"') + "in");
+        public double Height => GraphViewModelHelper.StringToPixel(_nodeBehind.GetAttribute("height").Trim('"') + "in");
+        private double CenterX => GraphViewModelHelper.StringToPixel(
+            _nodeBehind.GetAttribute("pos").Trim('"').Split(',')[0] + "pt");
+        private double CenterY => GraphViewModelHelper.StringToPixel(
+            _nodeBehind.GetAttribute("pos").Trim('"').Split(',')[1] + "pt");
+        public double X => CenterX - Width/2;
+        public double Y => CenterY - Height/2;
     }
 }

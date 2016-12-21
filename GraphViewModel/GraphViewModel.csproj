@@ -30,10 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GraphViewModelHelper.cs" />
     <Compile Include="WpfSubGraph.cs" />
     <Compile Include="WpfEdge.cs" />
     <Compile Include="WpfNode.cs" />
-    <Compile Include="GraphControler.cs" />
+    <Compile Include="GraphController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,38 @@
+Bugs:
+- Handle the different coordinate systems (top to bottom vs. bottom to top)
+  o LayoutTransform?
+  o Individual changes for all involved properties?
+- Fix the different results from dot output (i.e. implement/imitate the sometimes strange dot behavior)
+
+Improvements:
+- Cleanup the initial WPF implementation
+- Arrow heads, maybe improve the paths
+- Support subgraphs and some more basic attributes
+
+Consistency/Stability/Refactorings:
+- Make sure the ToDot result is exactly the same as before
+- Make sure that the layout uses the same ids as the original dot
+  (currently not the case for non-strict edges for sure)
+
+Future:
+- Add possibilities to change underlying graph(s), in particular from the view/viewmodel, we have:
+  o OriginalGraph
+  o OriginalLayoutGraph (ExternalRunner -> parse again)
+    We could simply keep layout properties inside the original graph
+	or we can maintain a second layoutGraph copy around.
+	In any case the layout needs to be refreshed in case too much changes from the originalGraph,
+	e.g. removing/adding Nodes (maybe we never change the originalGraph)
+  o ReducedGraph
+    The idea is to have a much smaller graph based on <something to be determined, e.g. an attribute>.
+	In contrast to the original graph this graph will very likely change
+	(namely when the conditions for what part of the graph are "active" change, which happens interactively).
+	Possibilities for specifying what part is shown:
+	* (initially) in memory only (viewmodel induced by view)
+	* Separate file
+	* Some node attribute which we allow to change (in contrast to other attributes that we generally don't want to change)
+  o ReducedLayoutGraph
+    As above the reduced graph will need a corresponding layout that needs to be refreshed if needed.
+  Saving should always be done on the non-layout graph!  
+- A lot more layout to be close to dot output
+- Interactivity/Controls
+- Save/Load
