@@ -30,6 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="WpfSubGraph.cs" />
+    <Compile Include="WpfEdge.cs" />
     <Compile Include="WpfNode.cs" />
     <Compile Include="GraphControler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -47,6 +49,7 @@
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

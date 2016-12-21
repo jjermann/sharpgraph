@@ -28,10 +28,29 @@
                 </Grid>
             </Canvas>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodel:WpfEdge}">
+            <Canvas>
+                <Image>
+                    <Image.Source>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <GeometryDrawing Geometry="{Binding Path=Geometry}">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="Black" Thickness="1" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Image.Source>
+                </Image>
+            </Canvas>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>
+        <ListBox ItemsSource="{Binding WpfEdges}" />
         <ListBox ItemsSource="{Binding WpfNodes}" />
     </Grid>
 </Window>
+
 

@@ -10,6 +10,8 @@ namespace SharpGraph.GraphViewModel {
         private IGraph _originalGraphLayout;
 
         public IEnumerable<WpfNode> WpfNodes { get; private set; }
+        public IEnumerable<WpfEdge> WpfEdges { get; private set; }
+        public IEnumerable<WpfSubGraph> WpfSubGraphs { get; private set; }
         public string LowerLeftX => _originalGraphLayout.GetAttribute("bb").Split(',')[0];
         public string LowerLeftY => _originalGraphLayout.GetAttribute("bb").Split(',')[1];
         public string UpperRightX => _originalGraphLayout.GetAttribute("bb").Split(',')[2];
@@ -33,6 +35,8 @@ namespace SharpGraph.GraphViewModel {
         private void ReloadGraphLayout() {
             _originalGraphLayout = GraphParser.GraphParser.GetGraphLayout(_originalGraph.ToDot());
             WpfNodes = _originalGraphLayout.GetNodes().Select(n => new WpfNode(n));
+            WpfEdges = _originalGraphLayout.GetEdges().Select(e => new WpfEdge(e));
+            WpfSubGraphs = _originalGraphLayout.GetSubGraphs().Select(g => new WpfSubGraph(g));
         }
     }
 }
