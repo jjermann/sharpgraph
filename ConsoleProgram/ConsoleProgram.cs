@@ -3,7 +3,7 @@ using System.IO;
 
 namespace SharpGraph {
     public static class ConsoleProgram {
-        private const string DefaultInputFile = @"Examples\simple.dot";
+        private const string DefaultInputFile = @"Examples\example.dot";
 
         private static void Main(string[] args) {
             var file = args.Length > 0 ? new FileInfo(args[0]) : new FileInfo(DefaultInputFile);
@@ -18,7 +18,8 @@ namespace SharpGraph {
             Console.ReadKey();
 
             try {
-                var initialDot = GraphParser.GraphParser.GetGraphLayoutDot(file.OpenText().ReadToEnd());
+                var originalDot = file.OpenText().ReadToEnd();
+                var initialDot = GraphParser.GraphParser.GetGraphLayoutDot(originalDot);
                 var reparsedDot = GraphParser.GraphParser.GetGraphLayoutDot(graphDot);
                 var diff = DiffHelper.GetDiff(initialDot, reparsedDot);
                 //var initialReparsed = GraphParser.GraphParser.GetGraph(initialDot).ToDot();
@@ -26,6 +27,12 @@ namespace SharpGraph {
                 //var diff = DiffHelper.GetDiff(initialReparsed, reparsedReparsed);
                 Console.Clear();
                 Console.Write(diff);
+                Console.WriteLine("Press any key to generate outOriginal.png, out.png and layout.dot...");
+                Console.ReadKey();
+
+                GenerateOutput(originalDot, graphDot, reparsedDot);
+
+                Console.Clear();
                 Console.WriteLine("Press any key...");
                 Console.ReadKey();
             } catch (Exception e) {
@@ -34,6 +41,12 @@ namespace SharpGraph {
                 Console.WriteLine("Press any key...");
                 Console.ReadKey();
             }
+        }
+
+        private static void GenerateOutput(string originalDot, string graphDot, string reparsedDot) {
+            GraphParser.GraphParser.GetGraphImage(originalDot).Save("outOriginal.png");
+            GraphParser.GraphParser.GetGraphImage(graphDot).Save("out.png");
+            File.WriteAllText("layout.dot", reparsedDot);
         }
     }
 }

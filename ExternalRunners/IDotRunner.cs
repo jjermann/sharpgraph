@@ -1,5 +1,5 @@
 ﻿namespace SharpGraph.ExternalRunners {
-    public interface IDotRunner {
-        string GetGraphLayout(string input);
+    public interface IDotRunner<out T> {
+        T GetOutput(string input);
     }
 }

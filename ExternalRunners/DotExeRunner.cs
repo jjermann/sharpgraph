@@ -5,18 +5,20 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace SharpGraph.ExternalRunners {
-    public class DotExeRunner : IDotRunner {
-        public DotExeRunner() {
+    public class DotExeRunner<T> : IDotRunner<T> {
+        public DotExeRunner(string argument, Func<StreamReader, T> outputProcessor) {
             DotExecutablePath = @"C:\Program Files (x86)\Graphviz2.38\bin";
             DotExecutable = "dot.exe";
-            DotGraphLayoutArgument = "-Tdot";
+            DotGraphLayoutArgument = argument;
+            OutputProcessor = outputProcessor;
         }
 
         private string DotExecutablePath { get; }
         private string DotExecutable { get; }
         private string DotGraphLayoutArgument { get; }
+        private Func<StreamReader, T> OutputProcessor { get; }
 
-        public string GetGraphLayout(string input) {
+        public T GetOutput(string input) {
             var process = new Process {
                 StartInfo = new ProcessStartInfo {
                     CreateNoWindow = true,
@@ -32,7 +34,9 @@ namespace SharpGraph.ExternalRunners {
             process.StandardInput.AutoFlush = true;
             process.StandardInput.Write(input);
             process.StandardInput.Close();
-            var output = process.StandardOutput.ReadToEnd();
+
+            var output = OutputProcessor(process.StandardOutput);
+
             var errorOutput = process.StandardError.ReadToEnd();
             process.WaitForExit();
 
