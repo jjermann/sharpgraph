@@ -13,15 +13,6 @@ namespace SharpGraph.GraphViewModel {
         public IEnumerable<WpfEdge> WpfEdges { get; private set; }
         public IEnumerable<WpfSubGraph> WpfSubGraphs { get; private set; }
 
-        public string Foo => GraphViewModelHelper.PosToGeometry("e,99.992,50.161 79.71,90.149 84.609,79.337 90.046,68.253 95.1,58.884");
-        //TODO: Move to Subgraphs and check if the attribute exists...
-        //private double LowerLeftX => GraphViewModelHelper.StringToPixel(_originalGraphLayout.GetAttribute("bb").Split(',')[0] + "pt");
-        //private double LowerLeftY => GraphViewModelHelper.StringToPixel(_originalGraphLayout.GetAttribute("bb").Split(',')[1] + "pt");
-        //private double UpperRightX => GraphViewModelHelper.StringToPixel(_originalGraphLayout.GetAttribute("bb").Split(',')[2] + "pt");
-        //private double UpperRightY => GraphViewModelHelper.StringToPixel(_originalGraphLayout.GetAttribute("bb").Split(',')[3] + "pt");
-        //public double Width => UpperRightX - LowerLeftX;
-        //public double Height => UpperRightY - LowerLeftY;
-
         public string InputFile {
             get { return _inputFile; }
             set { InitializeGraph(value); }

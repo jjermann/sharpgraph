@@ -3,15 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewmodel="clr-namespace:SharpGraph.GraphViewModel;assembly=GraphViewModel"
+        xmlns:viewmodels="clr-namespace:SharpGraph.GraphViewModel;assembly=GraphViewModel"
         mc:Ignorable="d"
         Title="SharpGraph" Width="800" Height="600">
     <Window.DataContext>
-        <viewmodel:GraphController />
+        <viewmodels:GraphController />
     </Window.DataContext>
 
     <Window.Resources>
-        <DataTemplate DataType="{x:Type viewmodel:WpfNode}">
+        <DataTemplate x:Key="EmptyTemplate" />
+        <DataTemplate DataType="{x:Type viewmodels:WpfNode}">
             <Canvas>
                 <Grid
                     Canvas.Left="{Binding Path=X}"
@@ -28,17 +29,39 @@
                 </Grid>
             </Canvas>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodel:WpfEdge}">
+        <DataTemplate DataType="{x:Type viewmodels:WpfEdge}">
             <Canvas>
                 <Path Data="{Binding Path=Geometry}" Stroke="Black" />
             </Canvas>
         </DataTemplate>
+        <DataTemplate x:Key="SubGraphBoundingBox" DataType="viewmodels:WpfSubGraph">
+            <Canvas>
+                <Rectangle
+                    Canvas.Left="{Binding Path=X}"
+                    Canvas.Top="{Binding Path=Y}"
+                    Stroke="Black"
+                    Width="{Binding Path=Width}"
+                    Height="{Binding Path=Height}" />
+            </Canvas>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:WpfSubGraph}">
+            <ContentControl x:Name="cc" Content="{Binding}" ContentTemplate="{StaticResource EmptyTemplate}" />
+            <DataTemplate.Triggers>
+                <DataTrigger
+                    Binding="{Binding Path=HasBoundingBox}"
+                    Value="True">
+                    <Setter
+                        TargetName="cc"
+                        Property="ContentTemplate"
+                        Value="{StaticResource SubGraphBoundingBox}" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>
+        <ItemsControl ItemsSource="{Binding WpfSubGraphs}" />
         <ItemsControl ItemsSource="{Binding WpfEdges}" />
         <ItemsControl ItemsSource="{Binding WpfNodes}" />
     </Grid>
 </Window>
-
-

@@ -1,18 +1,36 @@
 Bugs:
-- Handle the different coordinate systems (top to bottom vs. bottom to top)
+- MAJOR ONE:
+  Handle the different coordinate systems (top to bottom vs. bottom to top)
   o LayoutTransform?
   o Individual changes for all involved properties?
+    In particular path geometries need to be handled
 - Fix the different results from dot output (i.e. implement/imitate the sometimes strange dot behavior)
+- Fix the content of various objects (ids):
+  o Fix Encodings
+  o Apply special characters like \n
+  o Trim surrounding parenthesis
 
-Improvements:
+Possible design Improvements / refactorings:
+- Find a nice design how to handle ids (See above)
 - Cleanup the initial WPF implementation
-- Arrow heads, maybe improve the paths
-- Support subgraphs and some more basic attributes
-
-Consistency/Stability/Refactorings:
+  o In particular use dependency properties
+  o For instance setting InputFile doesn't reload the graph
+    => Add interactive (re)loading possibilities
+  o Separate the ressources/datatemplates into a separate file?
+  o Make everything much more general/modular
+  o Define some region/control/whatever where graph output is shown (possibly multiple times)
+  o Make sure that nodes can be selected/etc, maybe also edges/paths(?)
+  o Allow zooming in/out, maybe scrolling (?)
 - Make sure the ToDot result is exactly the same as before
+  o Maybe we don't want this...
+  o This involves remembering the exact order and probably also subgraphs at ends of edges
 - Make sure that the layout uses the same ids as the original dot
   (currently not the case for non-strict edges for sure)
+- Ideally aim to get the equivalent layout output as from the original dot file
+
+Content improvements:
+- Arrow heads, maybe improve the paths
+- Support many more basic attributes
 
 Future:
 - Add possibilities to change underlying graph(s), in particular from the view/viewmodel, we have:
@@ -33,6 +51,6 @@ Future:
   o ReducedLayoutGraph
     As above the reduced graph will need a corresponding layout that needs to be refreshed if needed.
   Saving should always be done on the non-layout graph!  
-- A lot more layout to be close to dot output
+- Add a lot more layout to be close to dot output
 - Interactivity/Controls
 - Save/Load

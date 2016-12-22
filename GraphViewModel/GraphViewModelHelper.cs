@@ -54,20 +54,25 @@ namespace SharpGraph.GraphViewModel {
                 var cubicTriples = match.Groups["cubicTriple"].Captures
                     .OfType<Group>()
                     .Select(g => g.Value).ToList();
-                var endPoint = match.Groups["endPoint"].Value;
-                var allPoints = new List<string>();
 
-                if (!string.IsNullOrEmpty(startPoint)) {
-                    allPoints.Add(startPoint);
+                var endPoint = match.Groups["endPoint"].Value;
+
+                var pathFigureGeometry = new List<string>();
+                if (string.IsNullOrEmpty(startPoint)) {
+                    pathFigureGeometry.Add($"M {ConvertSegmentPointToPixel(mainPoint)}");
+                } else {
+                    pathFigureGeometry.Add($"M {ConvertSegmentPointToPixel(startPoint)}");
+                    pathFigureGeometry.Add($"L {ConvertSegmentPointToPixel(mainPoint)}");
                 }
-                allPoints.Add(mainPoint);
-                allPoints.AddRange(cubicTriples.SelectMany(v => v.Split(' ')));
-                //if (!string.IsNullOrEmpty(endPoint)) {
-                //    allPoints.Add(endPoint);
-                //}
-                var pathFigure = allPoints.Select(ConvertSegmentPointToPixel)
-                    .Select((v, i) => i > 0 ? ((i - 1)%3 == 0 ? " C " : " ") + v : "M " + v);
-                pathGeometry.Add(string.Concat(pathFigure));
+                foreach (var cubicTriple in cubicTriples) {
+                    var convertedPoints = cubicTriple.Split(' ').Select(ConvertSegmentPointToPixel);
+                    var bezierSegment = "C " + string.Join(" ", convertedPoints);
+                    pathFigureGeometry.Add(bezierSegment);
+                }
+                if (!string.IsNullOrEmpty(endPoint)) {
+                    pathFigureGeometry.Add($"L {ConvertSegmentPointToPixel(endPoint)}");
+                }
+                pathGeometry.Add(string.Join(" ", pathFigureGeometry));
             }
 
             return string.Join(" ", pathGeometry);
