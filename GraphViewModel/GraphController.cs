@@ -1,39 +1,42 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using SharpGraph.GraphModel;
 using SharpGraph.GraphViewModel.Properties;
 
 namespace SharpGraph.GraphViewModel {
     public class GraphController : INotifyPropertyChanged {
-        private string _inputFile;
+        private string _originalInputFile;
         private IGraph _originalGraph;
-        private IGraph _originalGraphLayout;
+        private IGraph _originalLayoutGraph;
+        private WpfGraph _originalWpfGraph;
 
-        public IEnumerable<WpfNode> WpfNodes { get; private set; }
-        public IEnumerable<WpfEdge> WpfEdges { get; private set; }
-        public IEnumerable<WpfSubGraph> WpfSubGraphs { get; private set; }
 
-        public string InputFile {
-            get { return _inputFile; }
-            set { InitializeGraph(value); }
+        public string OriginalInputFile {
+            get { return _originalInputFile; }
+            set {
+                _originalInputFile = value;
+                InitializeOriginalGraph(_originalInputFile);
+                OnPropertyChanged();
+            }
         }
 
-        private void InitializeGraph(string filename) {
-            _inputFile = filename;
-            _originalGraph = GraphParser.GraphParser.GetGraph(new FileInfo(_inputFile));
-            ReloadGraphLayout();
+        public WpfGraph OriginalWpfGraph {
+            get { return _originalWpfGraph; }
+            private set {
+                _originalWpfGraph = value;
+                OnPropertyChanged();
+            }
         }
 
-        private void ReloadGraphLayout() {
-            _originalGraphLayout = GraphParser.GraphParser.GetGraphLayout(_originalGraph.ToDot());
-            WpfNodes = _originalGraphLayout.GetNodes().Select(n => new WpfNode(n));
-            WpfEdges = _originalGraphLayout.GetEdges().Select(e => new WpfEdge(e));
-            WpfSubGraphs = _originalGraphLayout.GetSubGraphs().Select(g => new WpfSubGraph(g));
-            // ReSharper disable once ExplicitCallerInfoArgument
-            OnPropertyChanged("");
+        private void InitializeOriginalGraph(string filename) {
+            _originalGraph = GraphParser.GraphParser.GetGraph(new FileInfo(filename));
+            ReloadOriginalGraphLayout();
+        }
+
+        private void ReloadOriginalGraphLayout() {
+            _originalLayoutGraph = GraphParser.GraphParser.GetGraphLayout(_originalGraph.ToDot());
+            OriginalWpfGraph = new WpfGraph(_originalLayoutGraph);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

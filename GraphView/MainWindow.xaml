@@ -60,8 +60,8 @@
     </Window.Resources>
 
     <Grid>
-        <ItemsControl ItemsSource="{Binding WpfSubGraphs}" />
-        <ItemsControl ItemsSource="{Binding WpfEdges}" />
-        <ItemsControl ItemsSource="{Binding WpfNodes}" />
+        <ItemsControl ItemsSource="{Binding OriginalWpfGraph.WpfSubGraphs}" />
+        <ItemsControl ItemsSource="{Binding OriginalWpfGraph.WpfEdges}" />
+        <ItemsControl ItemsSource="{Binding OriginalWpfGraph.WpfNodes}" />
     </Grid>
 </Window>

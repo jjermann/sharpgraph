@@ -11,6 +11,7 @@ Bugs:
   o Trim surrounding parenthesis
 
 Possible design Improvements / refactorings:
+- Add a DataTemplate for Graph which then itself includes the whole logic for edges/nodes/subgraphs/etc
 - Make sure that property changes are propagated correctly, use INotifyPropertyChanged
 - Cleanup the initial WPF implementation
   o In particular use dependency properties

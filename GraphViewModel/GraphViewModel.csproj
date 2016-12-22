@@ -32,6 +32,7 @@
   <ItemGroup>
     <Compile Include="GraphViewModelHelper.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="WpfGraph.cs" />
     <Compile Include="WpfSubGraph.cs" />
     <Compile Include="WpfEdge.cs" />
     <Compile Include="WpfNode.cs" />
