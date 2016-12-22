@@ -11,7 +11,7 @@ Bugs:
   o Trim surrounding parenthesis
 
 Possible design Improvements / refactorings:
-- Find a nice design how to handle ids (See above)
+- Make sure that property changes are propagated correctly, use INotifyPropertyChanged
 - Cleanup the initial WPF implementation
   o In particular use dependency properties
   o For instance setting InputFile doesn't reload the graph
@@ -21,6 +21,7 @@ Possible design Improvements / refactorings:
   o Define some region/control/whatever where graph output is shown (possibly multiple times)
   o Make sure that nodes can be selected/etc, maybe also edges/paths(?)
   o Allow zooming in/out, maybe scrolling (?)
+- Find a nice design how to handle ids (See above)
 - Make sure the ToDot result is exactly the same as before
   o Maybe we don't want this...
   o This involves remembering the exact order and probably also subgraphs at ends of edges

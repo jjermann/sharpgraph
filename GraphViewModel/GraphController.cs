@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using SharpGraph.GraphModel;
+using SharpGraph.GraphViewModel.Properties;
 
 namespace SharpGraph.GraphViewModel {
-    public class GraphController {
+    public class GraphController : INotifyPropertyChanged {
         private string _inputFile;
         private IGraph _originalGraph;
         private IGraph _originalGraphLayout;
@@ -18,10 +21,6 @@ namespace SharpGraph.GraphViewModel {
             set { InitializeGraph(value); }
         }
 
-        public GraphController() {
-            InputFile = @"example.dot";
-        }
-
         private void InitializeGraph(string filename) {
             _inputFile = filename;
             _originalGraph = GraphParser.GraphParser.GetGraph(new FileInfo(_inputFile));
@@ -33,6 +32,15 @@ namespace SharpGraph.GraphViewModel {
             WpfNodes = _originalGraphLayout.GetNodes().Select(n => new WpfNode(n));
             WpfEdges = _originalGraphLayout.GetEdges().Select(e => new WpfEdge(e));
             WpfSubGraphs = _originalGraphLayout.GetSubGraphs().Select(g => new WpfSubGraph(g));
+            // ReSharper disable once ExplicitCallerInfoArgument
+            OnPropertyChanged("");
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

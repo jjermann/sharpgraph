@@ -4,6 +4,7 @@ namespace SharpGraph.GraphView {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+            ((GraphViewModel.GraphController) DataContext).InputFile = "example.dot";
         }
     }
 }
