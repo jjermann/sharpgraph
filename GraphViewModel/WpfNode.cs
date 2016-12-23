@@ -9,7 +9,6 @@ namespace SharpGraph.GraphViewModel {
         }
 
         public string Label => _nodeBehind.HasAttribute("label") ? _nodeBehind.GetAttribute("label") : _nodeBehind.Id;
-        public double Ppi => 96;
         public double Width => GraphViewModelHelper.StringToPixel(_nodeBehind.GetAttribute("width").Trim('"') + "in");
         public double Height => GraphViewModelHelper.StringToPixel(_nodeBehind.GetAttribute("height").Trim('"') + "in");
         private double CenterX => GraphViewModelHelper.StringToPixel(

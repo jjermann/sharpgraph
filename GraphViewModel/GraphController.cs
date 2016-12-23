@@ -11,7 +11,6 @@ namespace SharpGraph.GraphViewModel {
         private IGraph _originalLayoutGraph;
         private WpfGraph _originalWpfGraph;
 
-
         public string OriginalInputFile {
             get { return _originalInputFile; }
             set {

@@ -39,6 +39,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="GraphTemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -84,10 +88,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphModel\GraphModel.csproj">
-      <Project>{dabb9243-5896-4b2f-96b5-d6973a77b53d}</Project>
-      <Name>GraphModel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GraphViewModel\GraphViewModel.csproj">
       <Project>{648385fe-f294-4abc-a5af-a1e3cdd503f9}</Project>
       <Name>GraphViewModel</Name>

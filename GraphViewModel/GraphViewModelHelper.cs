@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace SharpGraph.GraphViewModel {
     public static class GraphViewModelHelper {
+        private const double DeviceIndependentPpi = 96.0;
         public static double StringToPixel(string input) {
             var inches = Regex.Match(input, "^(?<num>.*)in$").Groups["num"].Value;
             if (!string.IsNullOrEmpty(inches)) {
@@ -17,12 +18,12 @@ namespace SharpGraph.GraphViewModel {
             return double.Parse(input);
         }
 
-        public static double InchToPixel(double inches, double ppi = 96) {
-            return inches*ppi;
+        public static double InchToPixel(double inches) {
+            return inches* DeviceIndependentPpi;
         }
 
-        public static double PointToPixel(double points, double ppi = 96) {
-            return points*ppi/72;
+        public static double PointToPixel(double points) {
+            return points* DeviceIndependentPpi / 72;
         }
 
         public static string PosToGeometry(string pos) {
