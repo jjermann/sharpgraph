@@ -1,5 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using SharpGraph.GraphModel;
 using SharpGraph.GraphViewModel.Properties;
@@ -10,6 +14,16 @@ namespace SharpGraph.GraphViewModel {
         private IGraph _originalGraph;
         private IGraph _originalLayoutGraph;
         private WpfGraph _originalWpfGraph;
+        private Func<INode, bool> GetNodeSelector(IEnumerable<string> visibleIds) {
+            if (visibleIds == null) {
+                return null;
+            }
+            return node => visibleIds.Contains(node.Id);
+        }
+
+        public GraphController() {
+            VisibleNodeIds = new ObservableCollection<string>();
+        }
 
         public string OriginalInputFile {
             get { return _originalInputFile; }
@@ -28,13 +42,18 @@ namespace SharpGraph.GraphViewModel {
             }
         }
 
+        public ObservableCollection<string> VisibleNodeIds { get; }
+
         private void InitializeOriginalGraph(string filename) {
             _originalGraph = GraphParser.GraphParser.GetGraph(new FileInfo(filename));
+            foreach (var node in _originalGraph.GetNodes()) {
+                VisibleNodeIds.Add(node.Id);
+            }
             ReloadOriginalGraphLayout();
         }
 
         private void ReloadOriginalGraphLayout() {
-            _originalLayoutGraph = GraphParser.GraphParser.GetGraphLayout(_originalGraph.ToDot());
+            _originalLayoutGraph = GraphParser.GraphParser.GetGraphLayout(_originalGraph.ToDot(nodeSelector:GetNodeSelector(VisibleNodeIds)));
             OriginalWpfGraph = new WpfGraph(_originalLayoutGraph);
         }
 

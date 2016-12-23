@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -114,7 +115,7 @@ namespace SharpGraph.GraphModel {
             return ToDot(ModelHelper.OrderedByNames, ModelHelper.ShowRedundantNodes);
         }
 
-        public virtual string ToDot(bool orderedByName, bool showRedundantNodes, bool bodyOnly = false) {
+        public virtual string ToDot(bool orderedByName, bool showRedundantNodes, bool bodyOnly = false, Func<INode, bool> nodeSelector = null) {
             const string newLine = "\n";
             var depth = SubGraphDepth;
             var indent = string.Concat(Enumerable.Repeat("  ", depth));
@@ -142,17 +143,28 @@ namespace SharpGraph.GraphModel {
                 ? GetSubGraphSubGraphs(false).OrderBy(v => v)
                 : GetSubGraphSubGraphs(false);
             foreach (var subgraph in subgraphs) {
-                graphString += subgraph.ToDot(orderedByName, showRedundantNodes);
+                graphString += subgraph.ToDot(orderedByName, showRedundantNodes, nodeSelector: nodeSelector);
             }
 
             var nodes = orderedByName
                 ? GetSubGraphNodes(false).OrderBy(v => v)
                 : GetSubGraphNodes(false);
+            var edges = orderedByName
+                ? GetSubGraphEdges(false).OrderBy(v => v)
+                : GetSubGraphEdges(false);
+            var allEdges = Root.GetEdges().ToList();
+
+            if (nodeSelector != null) {
+                nodes = nodes.Where(n => nodeSelector(n));
+                edges = edges.Where(e => nodeSelector(e.SourceNode) && nodeSelector(e.EndNode));
+                allEdges = allEdges.Where(e => nodeSelector(e.SourceNode) && nodeSelector(e.EndNode)).ToList();
+            }
+
             foreach (var node in nodes) {
                 var containedInSourceEdges =
-                    Root.GetEdges().Where(e => e.SourceNode.Equals(node) && (e.Parent == node.Parent)).Count() > 0;
+                    allEdges.Any(e => e.SourceNode.Equals(node) && (e.Parent == node.Parent));
                 var containedInEndEdges =
-                    Root.GetEdges().Where(e => e.EndNode.Equals(node) && (e.Parent == node.Parent)).Count() > 0;
+                    allEdges.Any(e => e.EndNode.Equals(node) && (e.Parent == node.Parent));
                 var containedInEdges = containedInSourceEdges || containedInEndEdges;
                 var nodeAttributes = node.GetAttributes();
                 var hasAttribute = nodeAttributes.Count > 0;
@@ -166,9 +178,6 @@ namespace SharpGraph.GraphModel {
                 }
             }
 
-            var edges = orderedByName
-                ? GetSubGraphEdges(false).OrderBy(v => v)
-                : GetSubGraphEdges(false);
             foreach (var edge in edges) {
                 graphString += subIndent + edge + newLine;
             }

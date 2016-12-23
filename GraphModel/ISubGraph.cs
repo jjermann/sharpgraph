@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SharpGraph.GraphModel {
     public interface ISubGraph : IBaseObject {
@@ -30,6 +31,11 @@ namespace SharpGraph.GraphModel {
         IEnumerable<INode> GetSubGraphNodes(bool recursive = false);
         IEnumerable<IEdge> GetSubGraphEdges(bool recursive = false);
         IEnumerable<ISubGraph> GetSubGraphSubGraphs(bool recursive = false);
-        string ToDot(bool orderedByName = true, bool showRedundantNodes = false, bool bodyOnly = false);
+
+        string ToDot(
+            bool orderedByName = true,
+            bool showRedundantNodes = false,
+            bool bodyOnly = false,
+            Func<INode, bool> nodeSelector = null);
     }
 }

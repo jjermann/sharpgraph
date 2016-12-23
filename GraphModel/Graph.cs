@@ -103,11 +103,11 @@ namespace SharpGraph.GraphModel {
             return ToDot(ModelHelper.OrderedByNames, ModelHelper.ShowRedundantNodes);
         }
 
-        public override string ToDot(bool orderedByName, bool showRedundantNodes, bool bodyOnly = false) {
+        public override string ToDot(bool orderedByName, bool showRedundantNodes, bool bodyOnly = false, Func<INode, bool> nodeSelector = null) {
             var strict = IsStrict ? ModelHelper.StrictGraphName + " " : "";
             var graphType = IsDirected ? ModelHelper.DirectedGraphName : ModelHelper.UndirectedGraphName;
             var graphId = " " + Id;
-            var graphString = $"{strict}{graphType}{graphId} " + base.ToDot(orderedByName, showRedundantNodes, true);
+            var graphString = $"{strict}{graphType}{graphId} " + base.ToDot(orderedByName, showRedundantNodes, true, nodeSelector);
             return graphString;
         }
     }
