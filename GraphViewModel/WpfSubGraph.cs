@@ -16,6 +16,6 @@ namespace SharpGraph.GraphViewModel {
         public double Height => UpperRightY - Y;
         private double X => GraphViewModelHelper.StringToPixel(_subGraphBehind.GetAttribute("bb").Trim('"').Split(',')[0] + "pt");
         private double Y => GraphViewModelHelper.StringToPixel(_subGraphBehind.GetAttribute("bb").Trim('"').Split(',')[1] + "pt");
-        public string Margin => $"{X},{Y}";
+        public string Margin => $"{X},{Y},0,0";
     }
 }
