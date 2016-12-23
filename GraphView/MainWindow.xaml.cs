@@ -1,10 +1,11 @@
-﻿using System.Windows;
-namespace SharpGraph.GraphView {
-    // ReSharper disable once RedundantExtendsListEntry
-    public partial class MainWindow : Window {
-        public MainWindow() {
+﻿namespace SharpGraph.GraphView {
+    public partial class MainWindow {
+        public MainWindow(string initialFile = null) {
             InitializeComponent();
-            ((GraphViewModel.GraphController) DataContext).OriginalInputFile = "example.dot";
+            if (string.IsNullOrEmpty(initialFile)) {
+                initialFile = "example.dot";
+            }
+            ((GraphViewModel.GraphController) DataContext).OriginalInputFile = initialFile;
         }
     }
 }

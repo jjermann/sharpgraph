@@ -21,6 +21,21 @@
     </Window.Resources>
 
     <DockPanel>
+        <Menu DockPanel.Dock="Top" IsMainMenu="True">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open..." />
+                <MenuItem Header="_Save..." />
+                <MenuItem Header="_Save As..." />
+            </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Header="_Original Graph" IsCheckable="True"/>
+                <MenuItem Header="_File Source" IsCheckable="True"/>
+                <MenuItem Header="_Rendered Image" IsCheckable="True"/>
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <ContentControl Content="{Binding OriginalInputFile}" />
+        </StatusBar>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <ContentControl Content="{Binding OriginalWpfGraph}" />
         </ScrollViewer>
