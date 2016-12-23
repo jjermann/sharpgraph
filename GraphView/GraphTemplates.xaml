@@ -8,9 +8,19 @@
         <Grid Margin="{Binding Margin}" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Ellipse
                 Stroke="Black"
-                Fill="Aqua"
                 Width="{Binding Width}"
-                Height="{Binding Height}" />
+                Height="{Binding Height}">
+                <Ellipse.Style>
+                    <Style TargetType="{x:Type Ellipse}">
+                        <Setter Property="Fill" Value="Aqua"/>
+                        <Style.Triggers>
+                            <Trigger Property="Grid.IsMouseOver" Value="True">
+                                <Setter Property="Fill" Value="Aquamarine"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
             <ContentPresenter
                 Content="{Binding Label}"
                 HorizontalAlignment="Center"
