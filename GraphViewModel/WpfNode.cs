@@ -15,7 +15,8 @@ namespace SharpGraph.GraphViewModel {
             _nodeBehind.GetAttribute("pos").Trim('"').Split(',')[0] + "pt");
         private double CenterY => GraphViewModelHelper.StringToPixel(
             _nodeBehind.GetAttribute("pos").Trim('"').Split(',')[1] + "pt");
-        public double X => CenterX - Width/2;
-        public double Y => CenterY - Height/2;
+        private double X => CenterX - Width/2;
+        private double Y => CenterY - Height/2;
+        public string Margin => $"{X},{Y}";
     }
 }
