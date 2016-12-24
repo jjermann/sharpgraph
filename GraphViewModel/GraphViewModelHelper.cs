@@ -84,5 +84,12 @@ namespace SharpGraph.GraphViewModel {
             var p2 = StringToPixel(point.Split(',')[1] + "pt");
             return $"{p1},{p2}";
         }
+
+        public static string ConvertIdToText(string id) {
+            return id.Trim('"')
+                .Replace(@"\n", "\n")
+                .Replace(@"\t", "\t")
+                .Replace(@"\r", "\r");
+        }
     }
 }

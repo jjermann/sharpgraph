@@ -9,7 +9,7 @@ namespace SharpGraph.GraphViewModel {
         }
 
         public string Id => _nodeBehind.Id;
-        public string Label => _nodeBehind.HasAttribute("label") ? _nodeBehind.GetAttribute("label") : _nodeBehind.Id;
+        public string Label => GraphViewModelHelper.ConvertIdToText(_nodeBehind.HasAttribute("label") ? _nodeBehind.GetAttribute("label") : _nodeBehind.Id);
         public double Width => GraphViewModelHelper.StringToPixel(_nodeBehind.GetAttribute("width").Trim('"') + "in");
         public double Height => GraphViewModelHelper.StringToPixel(_nodeBehind.GetAttribute("height").Trim('"') + "in");
         private double CenterX => GraphViewModelHelper.StringToPixel(

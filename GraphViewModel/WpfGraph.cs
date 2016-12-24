@@ -17,6 +17,6 @@ namespace SharpGraph.GraphViewModel {
             WpfSubGraphs = _graphBehind.GetSubGraphs().Select(g => new WpfSubGraph(g));
         }
 
-        public override string Label => _graphBehind.HasAttribute("label") ? _graphBehind.GetAttribute("label") : _graphBehind.Id;
+        public override string Label => GraphViewModelHelper.ConvertIdToText(_graphBehind.HasAttribute("label") ? _graphBehind.GetAttribute("label") : _graphBehind.Id);
     }
 }

@@ -53,7 +53,8 @@ namespace SharpGraph.GraphViewModel {
         }
 
         private void ReloadOriginalGraphLayout() {
-            _originalLayoutGraph = GraphParser.GraphParser.GetGraphLayout(_originalGraph.ToDot(nodeSelector:GetNodeSelector(VisibleNodeIds)));
+            var graphDot = _originalGraph.ToDot(nodeSelector: GetNodeSelector(VisibleNodeIds));
+            _originalLayoutGraph = GraphParser.GraphParser.GetGraphLayout(graphDot);
             OriginalWpfGraph = new WpfGraph(_originalLayoutGraph);
         }
 
