@@ -5,11 +5,11 @@ digraph {
 	  A; B
 	}
   }
-  C [label="MyEdges"]
+  C [label="MyEdges", shape="rect"]
   D->B
   D [label="MyNodeD", shape="circle"];
   subgraph cluster0 {
-    E
+    E [shape="square"]
 	F->A
 	D->B
   }

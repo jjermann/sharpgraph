@@ -6,21 +6,41 @@
     <DataTemplate x:Key="EmptyTemplate" />
     <DataTemplate DataType="{x:Type viewmodels:WpfNode}">
         <Grid Margin="{Binding Margin}" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Ellipse
-                Stroke="Black"
-                Width="{Binding Width}"
-                Height="{Binding Height}">
-                <Ellipse.Style>
-                    <Style TargetType="{x:Type Ellipse}">
-                        <Setter Property="Fill" Value="Aqua"/>
+            <ContentControl Content="{Binding}">
+                <ContentControl.Resources>
+                    <Style x:Key="ShapeStyle" TargetType="{x:Type Shape}">
+                        <Setter Property="Width" Value="{Binding Width}" />
+                        <Setter Property="Height" Value="{Binding Height}" />
+                        <Setter Property="Fill" Value="Aqua" />
+                        <Setter Property="Stroke" Value="Black" />
                         <Style.Triggers>
-                            <Trigger Property="Grid.IsMouseOver" Value="True">
-                                <Setter Property="Fill" Value="Aquamarine"/>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Fill" Value="Aquamarine" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
-                </Ellipse.Style>
-            </Ellipse>
+                    <Style TargetType="ContentControl">
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <Ellipse Style="{StaticResource ShapeStyle}" />
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Shape}" Value="Rectangle">
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <Rectangle Style="{StaticResource ShapeStyle}" />
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Resources>
+            </ContentControl>
             <ContentPresenter
                 Content="{Binding Label}"
                 HorizontalAlignment="Center"

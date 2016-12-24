@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace SharpGraph.GraphViewModel {
-    public static class GraphViewModelHelper {
+    public static class WpfHelper {
         private const double DeviceIndependentPpi = 96.0;
         public static double StringToPixel(string input) {
             var inches = Regex.Match(input, "^(?<num>.*)in$").Groups["num"].Value;
@@ -90,6 +90,19 @@ namespace SharpGraph.GraphViewModel {
                 .Replace(@"\n", "\n")
                 .Replace(@"\t", "\t")
                 .Replace(@"\r", "\r");
+        }
+
+        public static string ConvertIdToShape(string id) {
+            var shape = ConvertIdToText(id).ToLower();
+            switch (shape) {
+                case "box":
+                case "rect":
+                case "rectangle":
+                case "square":
+                    return "Rectangle";
+                default:
+                    return "Ellipse";
+            }
         }
     }
 }

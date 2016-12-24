@@ -30,7 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GraphViewModelHelper.cs" />
+    <Compile Include="WpfHelper.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="WpfGraph.cs" />
     <Compile Include="WpfSubGraph.cs" />

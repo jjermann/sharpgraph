@@ -9,7 +9,7 @@ using SharpGraph.GraphModel;
 using SharpGraph.GraphViewModel.Properties;
 
 namespace SharpGraph.GraphViewModel {
-    public class GraphController : INotifyPropertyChanged {
+    public sealed class GraphController : INotifyPropertyChanged {
         private string _originalInputFile;
         private IGraph _originalGraph;
         private IGraph _originalLayoutGraph;
@@ -61,7 +61,7 @@ namespace SharpGraph.GraphViewModel {
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
