@@ -27,6 +27,7 @@ Possible design Improvements / refactorings:
 - Think about exception handling, add much more checks, make more restriction assumptions
 - Support (continious) changes in the original graph, maybe do redesigns accordingly
   and/or allow alternative ways to setup graphs.
+- Move several settings to app.config, maybe support user preferences
 - MAYBE: Make sure the ToDot result is exactly the same as before
   o Maybe we don't want this...
   o This involves remembering the exact order and probably also subgraphs at ends of edges

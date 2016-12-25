@@ -6,17 +6,20 @@ Sharpgraph
 A C# program to parse and interactively process files in the DOT format from Graphviz.
 
 See in particular also http://graphviz4net.codeplex.com/.
-They already achieve a similar goal and some basic ideas are based on it.
+They already achieved a similar goal and some ideas from the project were used here.
+
 The project started mainly as a way for me to get to know Antlr and WPF.
 It's essentially written from scratch and still early work-in-progress.
+
 I haven't decided on a specific license yet.
 
 Prerequisites:
-- VisualStudio 2015 / .NET Framework 4.6.2
+- VisualStudio 2015 / .NET Framework 4.6.2 / Resharper 2016
+- http://www.graphviz.org/ (binary installation required for ExternalRunners)
+
+  Make sure to set DotExecutablePath correctly in ExternalRunners (TODO: move this to the configuration file)
 - https://marketplace.visualstudio.com/items?itemName=SamHarwell.ANTLRLanguageSupport (recommended for DotParser)
 - http://www.antlr.org/ (Nuget package, used in DotParser, GraphParser)
-- http://www.graphviz.org/ (binary installation required for ExternalRunners)
-  Make sure to set DotExecutablePath correctly in ExternalRunners (TODO: move this to the configuration file)
 - https://diffplex.codeplex.com/ (Nuget package, used in ConsoleProgram)
 
 Here is a screenshot from 25.12.2016:
