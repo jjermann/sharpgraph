@@ -12,16 +12,10 @@ using SharpGraph.GraphViewModel.Properties;
 
 namespace SharpGraph.GraphControllerViewModel {
     public sealed class GraphController : INotifyPropertyChanged {
-        private string _originalInputFile;
-        private IGraph _originalGraph;
         private IGraph _currentLayoutGraph;
         private WpfGraph _currentWpfGraph;
-        private Func<INode, bool> GetNodeSelector(IEnumerable<string> visibleIds) {
-            if (visibleIds == null) {
-                return null;
-            }
-            return node => visibleIds.Contains(node.Id);
-        }
+        private IGraph _originalGraph;
+        private string _originalInputFile;
 
         public GraphController() {
             VisibleNodeIds = new ObservableCollection<string>();
@@ -50,6 +44,15 @@ namespace SharpGraph.GraphControllerViewModel {
         public Image CurrentImage => GraphParser.GraphParser.GetGraphImage(CurrentDotContent);
         public ObservableCollection<string> VisibleNodeIds { get; }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private Func<INode, bool> GetNodeSelector(IEnumerable<string> visibleIds) {
+            if (visibleIds == null) {
+                return null;
+            }
+            return node => visibleIds.Contains(node.Id);
+        }
+
         private void InitializeOriginalGraph(string filename) {
             _originalGraph = GraphParser.GraphParser.GetGraph(new FileInfo(filename));
             foreach (var node in _originalGraph.GetNodes()) {
@@ -62,8 +65,6 @@ namespace SharpGraph.GraphControllerViewModel {
             _currentLayoutGraph = GraphParser.GraphParser.GetGraphLayout(CurrentDotContent);
             CurrentWpfGraph = new WpfGraph(_currentLayoutGraph);
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         private void OnPropertyChanged([CallerMemberName] string propertyName = null) {

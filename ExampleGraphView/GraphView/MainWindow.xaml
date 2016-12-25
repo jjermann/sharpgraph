@@ -25,9 +25,9 @@
                 <MenuItem Header="_Save As..." />
             </MenuItem>
             <MenuItem Header="_View">
-                <MenuItem Header="_Original Graph" IsCheckable="True"/>
-                <MenuItem Header="_Current Dot Content" IsCheckable="True"/>
-                <MenuItem Header="_Rendered Image" IsCheckable="True"/>
+                <MenuItem Header="_Original Graph" IsCheckable="True" />
+                <MenuItem Header="_Current Dot Content" IsCheckable="True" />
+                <MenuItem Header="_Rendered Image" IsCheckable="True" />
             </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
@@ -38,4 +38,3 @@
         </ScrollViewer>
     </DockPanel>
 </Window>
-

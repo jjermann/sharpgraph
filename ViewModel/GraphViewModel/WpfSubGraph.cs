@@ -8,10 +8,17 @@ namespace SharpGraph.GraphViewModel {
             _subGraphBehind = subGraphBehind;
         }
 
-        public virtual string Label => _subGraphBehind.HasAttribute("label") ? _subGraphBehind.GetAttribute("label") : _subGraphBehind.Id;
+        public virtual string Label
+            => _subGraphBehind.HasAttribute("label") ? _subGraphBehind.GetAttribute("label") : _subGraphBehind.Id;
+
         public bool HasBoundingBox => _subGraphBehind.HasAttribute("bb");
-        private double UpperRightX => WpfHelper.StringToPixel(_subGraphBehind.GetAttribute("bb").Trim('"').Split(',')[2] + "pt");
-        private double UpperRightY => WpfHelper.StringToPixel(_subGraphBehind.GetAttribute("bb").Trim('"').Split(',')[3] + "pt");
+
+        private double UpperRightX
+            => WpfHelper.StringToPixel(_subGraphBehind.GetAttribute("bb").Trim('"').Split(',')[2] + "pt");
+
+        private double UpperRightY
+            => WpfHelper.StringToPixel(_subGraphBehind.GetAttribute("bb").Trim('"').Split(',')[3] + "pt");
+
         public double Width => UpperRightX - X;
         public double Height => UpperRightY - Y;
         private double X => WpfHelper.StringToPixel(_subGraphBehind.GetAttribute("bb").Trim('"').Split(',')[0] + "pt");

@@ -111,11 +111,8 @@ namespace SharpGraph.GraphModel {
             return subgraphs.Concat(subgraphs.SelectMany(g => g.GetSubGraphSubGraphs(true)));
         }
 
-        public override string ToString() {
-            return ToDot(ModelHelper.OrderedByNames, ModelHelper.ShowRedundantNodes);
-        }
-
-        public virtual string ToDot(bool orderedByName, bool showRedundantNodes, bool bodyOnly = false, Func<INode, bool> nodeSelector = null) {
+        public virtual string ToDot(bool orderedByName, bool showRedundantNodes, bool bodyOnly = false,
+            Func<INode, bool> nodeSelector = null) {
             const string newLine = "\n";
             var depth = SubGraphDepth;
             var indent = string.Concat(Enumerable.Repeat("  ", depth));
@@ -185,6 +182,10 @@ namespace SharpGraph.GraphModel {
             graphString += indent + "}" + newLine;
 
             return graphString;
+        }
+
+        public override string ToString() {
+            return ToDot(ModelHelper.OrderedByNames, ModelHelper.ShowRedundantNodes);
         }
     }
 }

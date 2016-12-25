@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 namespace SharpGraph.GraphViewModel {
     public static class WpfHelper {
         private const double DeviceIndependentPpi = 96.0;
+
         public static double StringToPixel(string input) {
             var inches = Regex.Match(input, "^(?<num>.*)in$").Groups["num"].Value;
             if (!string.IsNullOrEmpty(inches)) {
@@ -19,11 +20,11 @@ namespace SharpGraph.GraphViewModel {
         }
 
         public static double InchToPixel(double inches) {
-            return inches* DeviceIndependentPpi;
+            return inches*DeviceIndependentPpi;
         }
 
         public static double PointToPixel(double points) {
-            return points* DeviceIndependentPpi / 72;
+            return points*DeviceIndependentPpi/72;
         }
 
         public static string PosToGeometry(string pos) {

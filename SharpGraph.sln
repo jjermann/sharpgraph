@@ -3,28 +3,28 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleConsoleProgram\ConsoleProgram", "ExampleConsoleProgram\ConsoleProgram\ConsoleProgram.csproj", "{8E96E596-95DC-4DBF-8872-2D4EBE0099D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleProgram", "ExampleConsoleProgram\ConsoleProgram\ConsoleProgram.csproj", "{8E96E596-95DC-4DBF-8872-2D4EBE0099D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model\DotParser", "Model\DotParser\DotParser.csproj", "{82F53A86-0DC1-40E1-947B-029C3E87EFFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotParser", "Model\DotParser\DotParser.csproj", "{82F53A86-0DC1-40E1-947B-029C3E87EFFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model\ExternalRunners", "Model\ExternalRunners\ExternalRunners.csproj", "{C1178425-0F15-4A1F-8C71-69618F2B6954}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalRunners", "Model\ExternalRunners\ExternalRunners.csproj", "{C1178425-0F15-4A1F-8C71-69618F2B6954}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model\GraphModel", "Model\GraphModel\GraphModel.csproj", "{DABB9243-5896-4B2F-96B5-D6973A77B53D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphModel", "Model\GraphModel\GraphModel.csproj", "{DABB9243-5896-4B2F-96B5-D6973A77B53D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model\GraphParser", "Model\GraphParser\GraphParser.csproj", "{7C573114-44BF-4F8E-81BC-7B2BECAA88D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphParser", "Model\GraphParser\GraphParser.csproj", "{7C573114-44BF-4F8E-81BC-7B2BECAA88D8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{1D4A7505-4F4A-4F19-99D4-3EA642F7E5BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleGraphView\GraphView", "ExampleGraphView\GraphView\GraphView.csproj", "{CF3E0EE5-A17B-4A38-9ADF-80321BE396CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphView", "ExampleGraphView\GraphView\GraphView.csproj", "{CF3E0EE5-A17B-4A38-9ADF-80321BE396CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel\GraphViewModel", "ViewModel\GraphViewModel\GraphViewModel.csproj", "{648385FE-F294-4ABC-A5AF-A1E3CDD503F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphViewModel", "ViewModel\GraphViewModel\GraphViewModel.csproj", "{648385FE-F294-4ABC-A5AF-A1E3CDD503F9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "View", "View", "{D2A48438-C2F6-4D11-B14F-5A02E760F2DC}"
 	ProjectSection(SolutionItems) = preProject
-		GraphTemplates.xaml = GraphTemplates.xaml
+		View\GraphTemplates.xaml = View\GraphTemplates.xaml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleGraphView\GraphControllerViewModel", "ExampleGraphView\GraphControllerViewModel\GraphControllerViewModel.csproj", "{CD010999-4519-412B-BC88-AFDC8BD14CF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphControllerViewModel", "ExampleGraphView\GraphControllerViewModel\GraphControllerViewModel.csproj", "{CD010999-4519-412B-BC88-AFDC8BD14CF4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{9D096AC8-1809-47AD-9E07-9EFA2C0DC7F3}"
 EndProject

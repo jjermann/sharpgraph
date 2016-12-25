@@ -19,14 +19,6 @@ namespace SharpGraph.GraphModel {
         private static readonly Regex RegexForHtml = new Regex(@"^<(<.*?>|[^<>])*>$", RegexOptions.Singleline);
         private static readonly Regex RegexForNumber = new Regex(@"^[-]?([\.[0-9]+]|[0-9]+(\.[0-9]*)?)$");
 
-        private enum IdType {
-            Invalid = 0,
-            Id = 1,
-            String = 2,
-            Html = 3,
-            Number = 4
-        }
-
         public static string ReduceId(string id) {
             if (id == null) {
                 return null;
@@ -59,6 +51,14 @@ namespace SharpGraph.GraphModel {
                 return IdType.String;
             }
             return IdType.Invalid;
+        }
+
+        private enum IdType {
+            Invalid = 0,
+            Id = 1,
+            String = 2,
+            Html = 3,
+            Number = 4
         }
     }
 }

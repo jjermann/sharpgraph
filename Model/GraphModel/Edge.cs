@@ -17,6 +17,15 @@ namespace SharpGraph.GraphModel {
             }
         }
 
+        private bool IsDirected { get; }
+
+        protected virtual string Connector => IsDirected
+            ? ModelHelper.DirectedEdgeOpName
+            : ModelHelper.UndirectedEdgeOpName;
+
+        public virtual INode EndNode { get; }
+        public virtual INode SourceNode { get; }
+
         //This method is very important for equality and comparison!
         //It is closely related to the constructor of Edge (there is some code duplication).
         private static string GetNodeIdFromParameters(IBaseObject parent, IBaseObject a, IBaseObject b) {
@@ -35,10 +44,6 @@ namespace SharpGraph.GraphModel {
             return ModelHelper.ReduceId(id);
         }
 
-        private bool IsDirected { get; }
-        public virtual INode EndNode { get; }
-        public virtual INode SourceNode { get; }
-
         public override string ToString() {
             var output = $"{SourceNode.Id} {Connector} {EndNode.Id}";
             if (Attributes.Count > 0) {
@@ -46,9 +51,5 @@ namespace SharpGraph.GraphModel {
             }
             return output;
         }
-
-        protected virtual string Connector => IsDirected
-            ? ModelHelper.DirectedEdgeOpName
-            : ModelHelper.UndirectedEdgeOpName;
     }
 }

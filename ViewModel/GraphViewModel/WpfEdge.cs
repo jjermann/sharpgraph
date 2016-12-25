@@ -10,6 +10,5 @@ namespace SharpGraph.GraphViewModel {
 
         public string Label => _edgeBehind.HasAttribute("label") ? _edgeBehind.GetAttribute("label") : null;
         public string Geometry => WpfHelper.PosToGeometry(_edgeBehind.GetAttribute("pos"));
-
     }
 }

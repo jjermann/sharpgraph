@@ -63,20 +63,6 @@ namespace SharpGraph.GraphModel {
             //return Equals(Parent, other.Parent) && string.Equals(Id, other.Id);
         }
 
-        public override bool Equals(object obj) {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            var other = obj as IBaseObject;
-            return (other != null) && Equals(other);
-        }
-
-        public override int GetHashCode() {
-            unchecked {
-                return Id?.GetHashCode() ?? 0;
-                //return ((Parent?.GetHashCode() ?? 0) * 397) ^ (Id?.GetHashCode() ?? 0);
-            }
-        }
-
         public virtual int CompareTo(IBaseObject other) {
             if (other == null) {
                 throw new ArgumentNullException();
@@ -91,6 +77,20 @@ namespace SharpGraph.GraphModel {
                 return Parent.CompareTo(other.Parent);
             }
             return string.Compare(Id, other.Id, StringComparison.Ordinal);
+        }
+
+        public override bool Equals(object obj) {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            var other = obj as IBaseObject;
+            return (other != null) && Equals(other);
+        }
+
+        public override int GetHashCode() {
+            unchecked {
+                return Id?.GetHashCode() ?? 0;
+                //return ((Parent?.GetHashCode() ?? 0) * 397) ^ (Id?.GetHashCode() ?? 0);
+            }
         }
     }
 }

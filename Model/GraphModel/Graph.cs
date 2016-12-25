@@ -3,28 +3,6 @@ using System.Collections.Generic;
 
 namespace SharpGraph.GraphModel {
     public class Graph : SubGraph, IGraph {
-        public static IGraph CreateGraph(
-            string id = ModelHelper.DefaultGraphId,
-            bool isDirected = true,
-            bool isStrict = false,
-            IAttributeDictionary graphAttrs = null,
-            IAttributeDictionary nodeAttrs = null,
-            IAttributeDictionary edgeAttrs = null) {
-            var graph = new Graph(id, isDirected, isStrict);
-
-            if (graphAttrs != null) {
-                graph.Attributes.SetAttributes(graphAttrs);
-            }
-            if (nodeAttrs != null) {
-                graph.NodeAttributes.SetAttributes(nodeAttrs);
-            }
-            if (edgeAttrs != null) {
-                graph.EdgeAttributes.SetAttributes(edgeAttrs);
-            }
-
-            return graph;
-        }
-
         public Graph(string id, bool isDirected, bool isStrict = false) : base(null, id) {
             IsDirected = isDirected;
             IsStrict = isStrict;
@@ -33,11 +11,12 @@ namespace SharpGraph.GraphModel {
             SubGraphs = new Dictionary<ISubGraph, ISubGraph>();
         }
 
-        public bool IsStrict { get; }
-        public bool IsDirected { get; }
         private IDictionary<INode, INode> Nodes { get; }
         private IDictionary<IEdge, IEdge> Edges { get; }
         private IDictionary<ISubGraph, ISubGraph> SubGraphs { get; }
+
+        public bool IsStrict { get; }
+        public bool IsDirected { get; }
 
         public INode AddNode(INode node, bool checkParent = true) {
             if (!Equals(node.Parent) && !SubGraphs.ContainsKey(node.Parent)) {
@@ -99,16 +78,40 @@ namespace SharpGraph.GraphModel {
 
         public override IGraph Root => this;
 
-        public override string ToString() {
-            return ToDot(ModelHelper.OrderedByNames, ModelHelper.ShowRedundantNodes);
-        }
-
-        public override string ToDot(bool orderedByName, bool showRedundantNodes, bool bodyOnly = false, Func<INode, bool> nodeSelector = null) {
+        public override string ToDot(bool orderedByName, bool showRedundantNodes, bool bodyOnly = false,
+            Func<INode, bool> nodeSelector = null) {
             var strict = IsStrict ? ModelHelper.StrictGraphName + " " : "";
             var graphType = IsDirected ? ModelHelper.DirectedGraphName : ModelHelper.UndirectedGraphName;
             var graphId = " " + Id;
-            var graphString = $"{strict}{graphType}{graphId} " + base.ToDot(orderedByName, showRedundantNodes, true, nodeSelector);
+            var graphString = $"{strict}{graphType}{graphId} " +
+                              base.ToDot(orderedByName, showRedundantNodes, true, nodeSelector);
             return graphString;
+        }
+
+        public static IGraph CreateGraph(
+            string id = ModelHelper.DefaultGraphId,
+            bool isDirected = true,
+            bool isStrict = false,
+            IAttributeDictionary graphAttrs = null,
+            IAttributeDictionary nodeAttrs = null,
+            IAttributeDictionary edgeAttrs = null) {
+            var graph = new Graph(id, isDirected, isStrict);
+
+            if (graphAttrs != null) {
+                graph.Attributes.SetAttributes(graphAttrs);
+            }
+            if (nodeAttrs != null) {
+                graph.NodeAttributes.SetAttributes(nodeAttrs);
+            }
+            if (edgeAttrs != null) {
+                graph.EdgeAttributes.SetAttributes(edgeAttrs);
+            }
+
+            return graph;
+        }
+
+        public override string ToString() {
+            return ToDot(ModelHelper.OrderedByNames, ModelHelper.ShowRedundantNodes);
         }
     }
 }

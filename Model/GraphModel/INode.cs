@@ -1,3 +1,3 @@
 namespace SharpGraph.GraphModel {
-    public interface INode : IBaseObject { }
+    public interface INode : IBaseObject {}
 }

@@ -6,8 +6,11 @@ using SharpGraph.GraphModel;
 
 namespace SharpGraph.GraphParser {
     public static class GraphParser {
-        public static readonly Func<string, string> LayoutGenerator = new DotExeRunner<string>("-Tdot", reader => reader.ReadToEnd()).GetOutput;
-        public static readonly Func<string, Image> ImageGenerator = new DotExeRunner<Image>("-Tpng", reader => Image.FromStream(reader.BaseStream)).GetOutput;
+        public static readonly Func<string, string> LayoutGenerator =
+            new DotExeRunner<string>("-Tdot", reader => reader.ReadToEnd()).GetOutput;
+
+        public static readonly Func<string, Image> ImageGenerator =
+            new DotExeRunner<Image>("-Tpng", reader => Image.FromStream(reader.BaseStream)).GetOutput;
 
         public static IGraph GetGraph(StreamReader reader) {
             var tree = DotParser.DotParser.GetParseTree(reader);
@@ -46,4 +49,3 @@ namespace SharpGraph.GraphParser {
         }
     }
 }
-

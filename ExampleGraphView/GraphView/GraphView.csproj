@@ -66,6 +66,7 @@
     <Compile Include="DotOutput.xaml.cs">
       <DependentUpon>DotOutput.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ImageToBitmapSourceConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

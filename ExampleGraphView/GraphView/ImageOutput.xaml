@@ -5,7 +5,7 @@
         Title="Rendered Image"
         SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <local:ImageToBitmapSourceConverter x:Key="ImageConverter"/>
+        <local:ImageToBitmapSourceConverter x:Key="ImageConverter" />
     </Window.Resources>
 
     <DockPanel>
@@ -16,8 +16,7 @@
             </MenuItem>
         </Menu>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <Image Source="{Binding CurrentImage, Converter={StaticResource ImageConverter}}"/>
+            <Image Source="{Binding CurrentImage, Converter={StaticResource ImageConverter}}" />
         </ScrollViewer>
     </DockPanel>
 </Window>
-

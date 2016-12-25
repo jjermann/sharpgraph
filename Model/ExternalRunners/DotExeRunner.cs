@@ -62,7 +62,7 @@ namespace SharpGraph.ExternalRunners {
         private string GetLineContent(string input, int line, int margin = 3) {
             return input.Replace("\r", "")
                 .Split('\n')
-                .Select((v, i) => new { v, i })
+                .Select((v, i) => new {v, i})
                 .Where(e => Math.Abs(e.i - (line - 1)) <= margin)
                 .Select(e => (e.i == line - 1 ? "-> " : "   ") + e.v)
                 .Aggregate((v1, v2) => v1 + "\n" + v2);

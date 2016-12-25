@@ -1,7 +1,7 @@
 using System;
 
 namespace SharpGraph.GraphModel {
-    public interface IBaseObject: IEquatable<IBaseObject>, IComparable<IBaseObject> {
+    public interface IBaseObject : IEquatable<IBaseObject>, IComparable<IBaseObject> {
         ISubGraph Parent { get; }
         string Id { get; }
         int SubGraphDepth { get; }

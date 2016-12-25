@@ -8,6 +8,40 @@ namespace SharpGraph.GraphParser {
         [SetUp]
         public void Init() {}
 
+        private void CheckIdConsistencies(IGraph graph) {
+            Assert.IsFalse(graph.GetNodes().GroupBy(n => n.Id).Any(c => c.Count() > 1));
+            Assert.IsFalse(graph.GetSubGraphs().GroupBy(s => s.Id).Any(c => c.Count() > 1));
+            Assert.IsFalse(graph.GetEdges().GroupBy(e => e.Id).Any(c => c.Count() > 1));
+        }
+
+        [Test]
+        public void DigraphTypeTest() {
+            var input = TestHelper.ExampleDot.Replace("digraph {", "digraph {");
+            var graph = GraphParser.GetGraph(input);
+            Assert.IsTrue(graph.IsDirected);
+            Assert.IsFalse(graph.IsStrict);
+            Assert.IsTrue(graph.Id == ModelHelper.DefaultGraphId);
+            CheckIdConsistencies(graph);
+            Assert.IsTrue(graph.GetEdges().GroupBy(e => new {e.SourceNode, e.EndNode}).Any(c => c.Count() > 1));
+            var output = graph.ToDot();
+            Assert.IsTrue(output.StartsWith("digraph GraphId {"));
+        }
+
+        [Test]
+        public void DuplicateNodesTest() {
+            var input = "A\nA";
+            var graph = GraphParser.GetGraph($"digraph {{\n{input}\n}}");
+            var output = graph.ToDot();
+            var expectedOutput = "digraph GraphId {\n  A\n}\n";
+            Assert.AreEqual(expectedOutput, output);
+
+            input = "A->B\nA";
+            graph = GraphParser.GetGraph($"digraph {{\n{input}\n}}");
+            output = graph.ToDot();
+            expectedOutput = "digraph GraphId {\n  A -> B\n}\n";
+            Assert.AreEqual(expectedOutput, output);
+        }
+
         [Test]
         public void EmptyGraphTest() {
             var input = "";
@@ -22,19 +56,6 @@ namespace SharpGraph.GraphParser {
             var output = graph.ToDot();
             var expectedOutput = "digraph GraphId {\n}\n";
             Assert.AreEqual(expectedOutput, output);
-        }
-
-        [Test]
-        public void DigraphTypeTest() {
-            var input = TestHelper.ExampleDot.Replace("digraph {", "digraph {");
-            var graph = GraphParser.GetGraph(input);
-            Assert.IsTrue(graph.IsDirected);
-            Assert.IsFalse(graph.IsStrict);
-            Assert.IsTrue(graph.Id == ModelHelper.DefaultGraphId);
-            CheckIdConsistencies(graph);
-            Assert.IsTrue(graph.GetEdges().GroupBy(e => new {e.SourceNode, e.EndNode}).Any(c => c.Count() > 1));
-            var output = graph.ToDot();
-            Assert.IsTrue(output.StartsWith("digraph GraphId {"));
         }
 
         [Test]
@@ -62,27 +83,6 @@ namespace SharpGraph.GraphParser {
             Assert.IsTrue(graph.GetEdges().All(e => e.Id == "node" + e.SourceNode.Id + e.EndNode.Id));
             var output = graph.ToDot();
             Assert.IsTrue(output.StartsWith("strict digraph MyId {"));
-        }
-
-        private void CheckIdConsistencies(IGraph graph) {
-            Assert.IsFalse(graph.GetNodes().GroupBy(n => n.Id).Any(c => c.Count() > 1));
-            Assert.IsFalse(graph.GetSubGraphs().GroupBy(s => s.Id).Any(c => c.Count() > 1));
-            Assert.IsFalse(graph.GetEdges().GroupBy(e => e.Id).Any(c => c.Count() > 1));
-        }
-
-        [Test]
-        public void DuplicateNodesTest() {
-            var input = "A\nA";
-            var graph = GraphParser.GetGraph($"digraph {{\n{input}\n}}");
-            var output = graph.ToDot();
-            var expectedOutput = "digraph GraphId {\n  A\n}\n";
-            Assert.AreEqual(expectedOutput, output);
-
-            input = "A->B\nA";
-            graph = GraphParser.GetGraph($"digraph {{\n{input}\n}}");
-            output = graph.ToDot();
-            expectedOutput = "digraph GraphId {\n  A -> B\n}\n";
-            Assert.AreEqual(expectedOutput, output);
         }
     }
 }

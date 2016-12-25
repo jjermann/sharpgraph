@@ -4,8 +4,6 @@ using System.Reflection;
 
 namespace SharpGraph {
     internal static class TestHelper {
-        public static string ExampleDot { get; }
-
         static TestHelper() {
             var executingAssembly = Assembly.GetExecutingAssembly();
             using (var stream = executingAssembly.GetManifestResourceStream(@"SharpGraph.TestExamples.example.dot")) {
@@ -17,5 +15,7 @@ namespace SharpGraph {
                 }
             }
         }
+
+        public static string ExampleDot { get; }
     }
 }
