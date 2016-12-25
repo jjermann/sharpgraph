@@ -72,19 +72,19 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotParser\DotParser.csproj">
+    <ProjectReference Include="..\Model\DotParser\DotParser.csproj">
       <Project>{82f53a86-0dc1-40e1-947b-029c3e87efff}</Project>
       <Name>DotParser</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ExternalRunners\ExternalRunners.csproj">
+    <ProjectReference Include="..\Model\ExternalRunners\ExternalRunners.csproj">
       <Project>{c1178425-0f15-4a1f-8c71-69618f2b6954}</Project>
       <Name>ExternalRunners</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphModel\GraphModel.csproj">
+    <ProjectReference Include="..\Model\GraphModel\GraphModel.csproj">
       <Project>{dabb9243-5896-4b2f-96b5-d6973a77b53d}</Project>
       <Name>GraphModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphParser\GraphParser.csproj">
+    <ProjectReference Include="..\Model\GraphParser\GraphParser.csproj">
       <Project>{7c573114-44bf-4f8e-81bc-7b2becaa88d8}</Project>
       <Name>GraphParser</Name>
     </ProjectReference>

@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7C573114-44BF-4F8E-81BC-7B2BECAA88D8}</ProjectGuid>
+    <ProjectGuid>{648385FE-F294-4ABC-A5AF-A1E3CDD503F9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpGraph.GraphParser</RootNamespace>
-    <AssemblyName>GraphParser</AssemblyName>
+    <RootNamespace>SharpGraph.GraphViewModel</RootNamespace>
+    <AssemblyName>GraphViewModel</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,33 +30,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GraphVisitor.cs" />
+    <Compile Include="WpfHelper.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="WpfGraph.cs" />
+    <Compile Include="WpfSubGraph.cs" />
+    <Compile Include="WpfEdge.cs" />
+    <Compile Include="WpfNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GraphParser.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotParser\DotParser.csproj">
-      <Project>{82f53a86-0dc1-40e1-947b-029c3e87efff}</Project>
-      <Name>DotParser</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ExternalRunners\ExternalRunners.csproj">
-      <Project>{c1178425-0f15-4a1f-8c71-69618f2b6954}</Project>
-      <Name>ExternalRunners</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GraphModel\GraphModel.csproj">
-      <Project>{dabb9243-5896-4b2f-96b5-d6973a77b53d}</Project>
+    <ProjectReference Include="..\..\Model\GraphModel\GraphModel.csproj">
+      <Project>{DABB9243-5896-4B2F-96B5-D6973A77B53D}</Project>
       <Name>GraphModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Antlr4.Runtime, Version=4.5.0.0, Culture=neutral, PublicKeyToken=e9931a4108ef2354, processorArchitecture=MSIL">
-      <HintPath>..\packages\Antlr4.Runtime.4.5.4-beta001\lib\net45\Antlr4.Runtime.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Drawing" />
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

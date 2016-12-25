@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using SharpGraph.GraphModel;
+using SharpGraph.GraphViewModel;
 using SharpGraph.GraphViewModel.Properties;
 
-namespace SharpGraph.GraphViewModel {
+namespace SharpGraph.GraphControllerViewModel {
     public sealed class GraphController : INotifyPropertyChanged {
         private string _originalInputFile;
         private IGraph _originalGraph;
-        private IGraph _originalLayoutGraph;
-        private WpfGraph _originalWpfGraph;
+        private IGraph _currentLayoutGraph;
+        private WpfGraph _currentWpfGraph;
         private Func<INode, bool> GetNodeSelector(IEnumerable<string> visibleIds) {
             if (visibleIds == null) {
                 return null;
@@ -34,14 +36,18 @@ namespace SharpGraph.GraphViewModel {
             }
         }
 
-        public WpfGraph OriginalWpfGraph {
-            get { return _originalWpfGraph; }
+        public WpfGraph CurrentWpfGraph {
+            get { return _currentWpfGraph; }
             private set {
-                _originalWpfGraph = value;
+                _currentWpfGraph = value;
                 OnPropertyChanged();
             }
         }
 
+        public string OriginalDotContent => _originalGraph.ToDot();
+        public Image OriginalImage => GraphParser.GraphParser.GetGraphImage(OriginalDotContent);
+        public string CurrentDotContent => _originalGraph.ToDot(nodeSelector: GetNodeSelector(VisibleNodeIds));
+        public Image CurrentImage => GraphParser.GraphParser.GetGraphImage(CurrentDotContent);
         public ObservableCollection<string> VisibleNodeIds { get; }
 
         private void InitializeOriginalGraph(string filename) {
@@ -49,13 +55,12 @@ namespace SharpGraph.GraphViewModel {
             foreach (var node in _originalGraph.GetNodes()) {
                 VisibleNodeIds.Add(node.Id);
             }
-            ReloadOriginalGraphLayout();
+            ReloadCurrentGraphLayout();
         }
 
-        private void ReloadOriginalGraphLayout() {
-            var graphDot = _originalGraph.ToDot(nodeSelector: GetNodeSelector(VisibleNodeIds));
-            _originalLayoutGraph = GraphParser.GraphParser.GetGraphLayout(graphDot);
-            OriginalWpfGraph = new WpfGraph(_originalLayoutGraph);
+        private void ReloadCurrentGraphLayout() {
+            _currentLayoutGraph = GraphParser.GraphParser.GetGraphLayout(CurrentDotContent);
+            CurrentWpfGraph = new WpfGraph(_currentLayoutGraph);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

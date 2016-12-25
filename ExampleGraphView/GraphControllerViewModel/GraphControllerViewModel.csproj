@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{648385FE-F294-4ABC-A5AF-A1E3CDD503F9}</ProjectGuid>
+    <ProjectGuid>{CD010999-4519-412B-BC88-AFDC8BD14CF4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpGraph.GraphViewModel</RootNamespace>
-    <AssemblyName>GraphViewModel</AssemblyName>
+    <RootNamespace>SharpGraph.GraphControllerViewModel</RootNamespace>
+    <AssemblyName>GraphControllerViewModel</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,27 +30,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="WpfHelper.cs" />
-    <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="WpfGraph.cs" />
-    <Compile Include="WpfSubGraph.cs" />
-    <Compile Include="WpfEdge.cs" />
-    <Compile Include="WpfNode.cs" />
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="GraphController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphModel\GraphModel.csproj">
-      <Project>{DABB9243-5896-4B2F-96B5-D6973A77B53D}</Project>
+    <ProjectReference Include="..\..\Model\GraphModel\GraphModel.csproj">
+      <Project>{dabb9243-5896-4b2f-96b5-d6973a77b53d}</Project>
       <Name>GraphModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphParser\GraphParser.csproj">
+    <ProjectReference Include="..\..\Model\GraphParser\GraphParser.csproj">
       <Project>{7c573114-44bf-4f8e-81bc-7b2becaa88d8}</Project>
       <Name>GraphParser</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
+    <ProjectReference Include="..\..\ViewModel\GraphViewModel\GraphViewModel.csproj">
+      <Project>{648385fe-f294-4abc-a5af-a1e3cdd503f9}</Project>
+      <Name>GraphViewModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

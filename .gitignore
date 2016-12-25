@@ -4,3 +4,4 @@ obj
 /packages
 *.csproj.user
 *.DotSettings.user
+*.bak

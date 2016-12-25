@@ -9,6 +9,7 @@ namespace SharpGraph.GraphViewModel {
         public IEnumerable<WpfNode> WpfNodes { get; private set; }
         public IEnumerable<WpfEdge> WpfEdges { get; private set; }
         public IEnumerable<WpfSubGraph> WpfSubGraphs { get; private set; }
+        public string DotContent => _graphBehind.ToDot();
 
         public WpfGraph(IGraph graphBehind) : base(graphBehind) {
             _graphBehind = graphBehind;

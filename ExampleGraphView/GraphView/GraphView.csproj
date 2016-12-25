@@ -39,7 +39,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="GraphTemplates.xaml">
+    <Page Include="..\..\View\GraphTemplates.xaml">
+      <Link>GraphTemplates.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ImageOutput.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DotOutput.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -50,6 +59,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ImageOutput.xaml.cs">
+      <DependentUpon>ImageOutput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DotOutput.xaml.cs">
+      <DependentUpon>DotOutput.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -74,7 +89,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="..\UnitTests\TestExamples\example.dot">
+    <Content Include="..\..\UnitTests\TestExamples\example.dot">
       <Link>example.dot</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -88,7 +103,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphViewModel\GraphViewModel.csproj">
+    <ProjectReference Include="..\GraphControllerViewModel\GraphControllerViewModel.csproj">
+      <Project>{CD010999-4519-412B-BC88-AFDC8BD14CF4}</Project>
+      <Name>GraphControllerViewModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ViewModel\GraphViewModel\GraphViewModel.csproj">
       <Project>{648385fe-f294-4abc-a5af-a1e3cdd503f9}</Project>
       <Name>GraphViewModel</Name>
     </ProjectReference>
@@ -97,6 +116,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
