@@ -16,7 +16,7 @@ namespace SharpGraph.GraphModel {
 
         private static readonly Regex RegexForId = new Regex(@"^[a-zA-Z\u0080-\u00FF]([a-zA-Z\u0080-\u00FF]|[0-9])*$");
         private static readonly Regex RegexForString = new Regex(@"^""(\""|.)*?""$", RegexOptions.Singleline);
-        private static readonly Regex RegexForHtml = new Regex(@"^<(<.*?>|~[<>])*>$", RegexOptions.Singleline);
+        private static readonly Regex RegexForHtml = new Regex(@"^<(<.*?>|[^<>])*>$", RegexOptions.Singleline);
         private static readonly Regex RegexForNumber = new Regex(@"^[-]?([\.[0-9]+]|[0-9]+(\.[0-9]*)?)$");
 
         private enum IdType {
