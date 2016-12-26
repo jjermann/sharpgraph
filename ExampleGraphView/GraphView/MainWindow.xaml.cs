@@ -1,6 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using Microsoft.Win32;
+using SharpGraph.GraphControllerViewModel;
 
 namespace SharpGraph.GraphView {
     public partial class MainWindow {
@@ -9,8 +9,10 @@ namespace SharpGraph.GraphView {
             if (string.IsNullOrEmpty(initialFile)) {
                 initialFile = "example.dot";
             }
-            ((GraphControllerViewModel.GraphController) DataContext).OriginalInputFile = initialFile;
-
+            var vm = (GraphController) DataContext;
+            if (vm.OpenFileCommand.CanExecute(initialFile)) {
+                vm.OpenFileCommand.Execute(initialFile);
+            }
             DotOutputWindow = new DotOutput(DataContext);
             ImageOutputWindow = new ImageOutput(DataContext);
 
@@ -21,14 +23,13 @@ namespace SharpGraph.GraphView {
         private DotOutput DotOutputWindow { get; }
         private ImageOutput ImageOutputWindow { get; }
 
-        private void MenuItem_OnClick(object sender, RoutedEventArgs e) {
+        private void FileOpen_OnClick(object sender, RoutedEventArgs e) {
             var openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true) {
-                var vm = DataContext as GraphControllerViewModel.GraphController;
-                if (vm == null) {
-                    throw new ArgumentException("No valid ViewModel!");
+                var vm = (GraphController) DataContext;
+                if (vm.OpenFileCommand.CanExecute(openFileDialog.FileName)) {
+                    vm.OpenFileCommand.Execute(openFileDialog.FileName);
                 }
-                vm.OpenFileCommand.Execute(openFileDialog.FileName);
             }
         }
     }

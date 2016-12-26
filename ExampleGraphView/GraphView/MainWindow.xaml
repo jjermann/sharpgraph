@@ -20,11 +20,12 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top" IsMainMenu="True">
             <MenuItem Header="_File">
-                <MenuItem Header="_Open..." Click="MenuItem_OnClick" />
-                <MenuItem Header="_Save..." />
-                <MenuItem Header="_Save As..." />
+                <MenuItem Header="_Open..." Click="FileOpen_OnClick" />
+                <MenuItem Header="_Save..." IsEnabled="False" />
+                <MenuItem Header="_Save As..." IsEnabled="False" />
             </MenuItem>
             <MenuItem Header="_View">
+                <MenuItem Header="_Graph Input Box" IsCheckable="True" />
                 <MenuItem Header="_Original Graph" IsCheckable="True" />
                 <MenuItem Header="_Current Dot Content" IsCheckable="True" />
                 <MenuItem Header="_Rendered Image" IsCheckable="True" />
