@@ -1,0 +1,15 @@
+﻿<Window x:Class="SharpGraph.GraphView.DotInput"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Dot Input"
+        SizeToContent="WidthAndHeight">
+
+    <StackPanel>
+        <Button Command="{Binding OriginalDotToOriginalGraph}" Width="100" Height="50" HorizontalAlignment="Left">
+            Apply
+        </Button>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <TextBox Text="{Binding OriginalDotContent, Mode=TwoWay}" />
+        </ScrollViewer>
+    </StackPanel>
+</Window>

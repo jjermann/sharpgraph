@@ -42,7 +42,6 @@ namespace SharpGraph.GraphControllerViewModel {
             set {
                 _originalGraph = value;
                 OnPropertyChanged();
-                UpdateOriginalContent();
             }
         }
 
@@ -51,11 +50,6 @@ namespace SharpGraph.GraphControllerViewModel {
             CurrentImage = GraphParser.GraphParser.GetGraphImage(CurrentDotContent);
             CurrentLayoutGraph = GraphParser.GraphParser.GetGraphLayout(CurrentDotContent);
             CurrentWpfGraph = new WpfGraph(CurrentLayoutGraph);
-        }
-
-        private void UpdateOriginalContent() {
-            OriginalDotContent = OriginalGraph.ToDot();
-            OriginalImage = GraphParser.GraphParser.GetGraphImage(OriginalDotContent);
         }
 
         private Func<INode, bool> GetNodeSelector(IEnumerable<string> visibleIds) {
@@ -67,6 +61,7 @@ namespace SharpGraph.GraphControllerViewModel {
 
         private void InitializeOriginalGraph(string filename) {
             OriginalGraph = GraphParser.GraphParser.GetGraph(new FileInfo(filename));
+            OriginalDotContent = OriginalGraph.ToDot();
 
             IsDirty = true;
             foreach (var node in OriginalGraph.GetNodes()) {
@@ -83,6 +78,18 @@ namespace SharpGraph.GraphControllerViewModel {
 
         #endregion Private
         #region PublicProperties
+        private RelayCommand _originalDotToOriginalGraph;
+        public ICommand OriginalDotToOriginalGraph {
+            get {
+                return _originalDotToOriginalGraph ?? (_originalDotToOriginalGraph = new RelayCommand(
+                           param => {
+                               OriginalGraph = GraphParser.GraphParser.GetGraph(OriginalDotContent);
+                               VisibleNodeIds = null;
+                               UpdateCurrentContent();
+                           }
+                       ));
+            }
+        }
 
         private RelayCommand _openFileCommand;
         public ICommand OpenFileCommand {
@@ -178,9 +185,10 @@ namespace SharpGraph.GraphControllerViewModel {
         private string _originalDotContent;
         public string OriginalDotContent {
             get { return _originalDotContent; }
-            private set {
+            set {
                 _originalDotContent = value;
                 OnPropertyChanged();
+                OriginalImage = GraphParser.GraphParser.GetGraphImage(OriginalDotContent);
             }
         }
 
@@ -211,7 +219,7 @@ namespace SharpGraph.GraphControllerViewModel {
             }
         }
 
-        public ObservableCollection<string> VisibleNodeIds { get; }
+        public ObservableCollection<string> VisibleNodeIds { get; private set; }
 
         #endregion PublicProperties
     }

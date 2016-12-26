@@ -44,6 +44,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="DotInput.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ImageOutput.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -59,6 +63,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DotInput.xaml.cs">
+      <DependentUpon>DotInput.xaml</DependentUpon>
     </Compile>
     <Compile Include="ImageOutput.xaml.cs">
       <DependentUpon>ImageOutput.xaml</DependentUpon>

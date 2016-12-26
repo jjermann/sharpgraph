@@ -15,13 +15,16 @@ namespace SharpGraph.GraphView {
             }
             DotOutputWindow = new DotOutput(DataContext);
             ImageOutputWindow = new ImageOutput(DataContext);
+            DotInputWindow = new DotInput(DataContext);
 
             DotOutputWindow.Show();
             ImageOutputWindow.Show();
+            DotInputWindow.Show();
         }
 
         private DotOutput DotOutputWindow { get; }
         private ImageOutput ImageOutputWindow { get; }
+        private DotInput DotInputWindow { get; }
 
         private void FileOpen_OnClick(object sender, RoutedEventArgs e) {
             var openFileDialog = new OpenFileDialog();
