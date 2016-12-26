@@ -20,7 +20,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top" IsMainMenu="True">
             <MenuItem Header="_File">
-                <MenuItem Header="_Open..." />
+                <MenuItem Header="_Open..." Click="MenuItem_OnClick" />
                 <MenuItem Header="_Save..." />
                 <MenuItem Header="_Save As..." />
             </MenuItem>

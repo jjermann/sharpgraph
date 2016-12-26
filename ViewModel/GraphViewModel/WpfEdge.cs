@@ -2,13 +2,18 @@
 
 namespace SharpGraph.GraphViewModel {
     public class WpfEdge {
-        private readonly IEdge _edgeBehind;
-
         public WpfEdge(IEdge edgeBehind) {
-            _edgeBehind = edgeBehind;
+            EdgeBehind = edgeBehind;
+            UpdatePropertyValues();
         }
 
-        public string Label => _edgeBehind.HasAttribute("label") ? _edgeBehind.GetAttribute("label") : null;
-        public string Geometry => WpfHelper.PosToGeometry(_edgeBehind.GetAttribute("pos"));
+        protected IEdge EdgeBehind { get; }
+        public string Label { get; protected set; }
+        public string Geometry { get; protected set; }
+
+        private void UpdatePropertyValues() {
+            Label = EdgeBehind.HasAttribute("label") ? EdgeBehind.GetAttribute("label") : null;
+            Geometry = WpfHelper.PosToGeometry(EdgeBehind.GetAttribute("pos"));
+        }
     }
 }
