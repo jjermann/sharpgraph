@@ -22,6 +22,11 @@ Prerequisites:
 - http://www.antlr.org/ (Nuget package, used in DotParser, GraphParser)
 - https://diffplex.codeplex.com/ (Nuget package, used in ConsoleProgram)
 
-Here is a screenshot from 25.12.2016:
+
+Screenshot from 26.12.2016:
+
+![sharpgraph 20161226](https://cloud.githubusercontent.com/assets/1377808/21485976/43a80bee-cbac-11e6-9cb3-64855dd6286c.png)
+
+Screenshot from 25.12.2016:
 
 ![sharpgraph 20161225](https://cloud.githubusercontent.com/assets/1377808/21469092/0a97e0f0-ca39-11e6-95a5-92e2536b1201.png)

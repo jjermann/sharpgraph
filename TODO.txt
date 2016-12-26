@@ -5,28 +5,33 @@ Bugs:
     In particular path geometries need to be handled!
   o The important part is to keep the View (e.g. ActualHeight) separated from the Viewmodel!
   o Maybe LayoutTransform? But what about Labels? We don't want to transform those...
+- Add missing arrow heads (see content improvements)
+- Proper edge support:
+  Currently we use cubic bezier segments but dot seems to use (global) cubic splines.
+  We could maybe use http://numerics.mathdotnet.com/ for this...
+  This is kind of important because incorrect paths might interfere with node positions.
 - Fix the different results from dot output (i.e. implement/imitate the sometimes strange dot behavior)
 - Fix the content of various objects (ids):
   o Fix Encodings
   o Apply special characters like \n
   o Trim surrounding parenthesis
   o => A proper solution would be to introduce a new class for this that handles all of it
-- Proper edge support:
-  Currently we use cubic bezier segments but dot seems to use (global) cubic splines.
-  We could maybe use http://numerics.mathdotnet.com/ for this...
-  This is kind of important because incorrect paths might interfere with node positions.
 
 Possible design Improvements / refactorings:
 - Cleanup the initial WPF implementation
-  o Make sure that property changes are propagated correctly, use INotifyPropertyChanged
-    Make much more observable, in particular also on the model
-  o maybe dependency properties?
+  o Review by someone experienced (the overall design and in particualar property changes)
+  o Finer property updates, in particular also on the model
+  o maybe dependency properties could/should be used somewhere?
+- Refactor the whole design of the example application (analyse it first)
+  o Graphs from file and/or input box?
+  o Changes to visible nodes vs. original graph vs. input box?
+  o More modifications on the graph, in particular attribute changes like filled/not-filled
+    In the end we don't really get around having a second "currentgraph".
+  o ... (it is getting complex and a design analysis would be a good idea)
 - Take default settings from the parent graph into consideration (add model methods accordingly)
 - Find a nice design how to handle ids (See above), maybe support HTML dot files and/or structs
 - More unit tests
 - Think about exception handling, add much more checks, make more restriction assumptions
-- Support (continious) changes in the original graph, maybe do redesigns accordingly
-  and/or allow alternative ways to setup graphs.
 - Move several settings to app.config, maybe support user preferences
 - MAYBE: Make sure the ToDot result is exactly the same as before
   o Maybe we don't want this...
@@ -39,7 +44,6 @@ Content improvements:
 - Arrow heads
 - Support many more basic attributes (a never ending task)
 - Make everything much more interactive:
-  o Open, Save, SaveAs, View checkboxes for all windows
   o Click events on nodes
     In particular change VisibleNodes properly (also see above regarding INotifyPropertyChanged).
 	Maybe: Allow more changes to the graph.
