@@ -22,6 +22,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "View", "View", "{D2A48438-C2F6-4D11-B14F-5A02E760F2DC}"
 	ProjectSection(SolutionItems) = preProject
 		View\GraphTemplates.xaml = View\GraphTemplates.xaml
+		View\ImageToBitmapSourceConverter.cs = View\ImageToBitmapSourceConverter.cs
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphControllerViewModel", "ExampleGraphView\GraphControllerViewModel\GraphControllerViewModel.csproj", "{CD010999-4519-412B-BC88-AFDC8BD14CF4}"
