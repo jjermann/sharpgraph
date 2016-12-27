@@ -35,15 +35,26 @@ namespace SharpGraph.ExternalRunners {
             process.StandardInput.Write(input);
             process.StandardInput.Close();
 
-            var output = OutputProcessor(process.StandardOutput);
+            T output = default(T);
+            string outputExceptionMessage = null;
+            try {
+                output = OutputProcessor(process.StandardOutput);
+            } catch (Exception e) {
+                outputExceptionMessage = e.Message;
+            }
 
             var errorOutput = process.StandardError.ReadToEnd();
             process.WaitForExit();
 
-            if (process.ExitCode > 0) {
-                var message = errorOutput + "\n";
-                message += GetImprovedExceptionInformation(errorOutput, input);
-                throw new Exception(message);
+            if (process.ExitCode > 0 || outputExceptionMessage != null) {
+                string exceptionMessage;
+                if (process.ExitCode > 0) {
+                    exceptionMessage = errorOutput.Replace("Error: <stdin>: ","") + "\n";
+                    exceptionMessage += GetImprovedExceptionInformation(errorOutput, input);
+                } else {
+                    exceptionMessage = outputExceptionMessage + "\n";
+                }
+                throw new Exception(exceptionMessage);
             }
 
             return output;

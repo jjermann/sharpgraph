@@ -1,8 +1,12 @@
 ﻿<Window x:Class="SharpGraph.GraphView.DotInput"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:SharpGraph.GraphView"
         Title="Dot Input"
         SizeToContent="WidthAndHeight">
+    <Window.Resources>
+        <local:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+    </Window.Resources>
 
     <DockPanel>
         <Menu DockPanel.Dock="Top" IsMainMenu="True">
@@ -11,16 +15,50 @@
                 <MenuItem Header="_Save As..." Click="FileSaveAs_OnClick" />
             </MenuItem>
         </Menu>
-        <StackPanel>
-            <Button
-                Command="{Binding OriginalDotToOriginalGraph}"
-                Width="100"
-                Height="50"
-                HorizontalAlignment="Left"
-                Content="Apply" />
+        <StackPanel Orientation="Vertical">
+            <DockPanel VerticalAlignment="Top">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Vertical" Margin="10 10 10 0">
+                        <RadioButton
+                            GroupName="One"
+                            IsChecked="{Binding
+                                Path=GraphUpdateMode,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource EnumToBoolConverter},
+                                ConverterParameter=ManualUpdate}"
+                            Content="Manual Update" />
+                        <RadioButton
+                            GroupName="One"
+                            IsChecked="{Binding
+                                Path=GraphUpdateMode,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource EnumToBoolConverter},
+                                ConverterParameter=ImmediateUpdate}"
+                            Content="Immediate Update" />
+                    </StackPanel>
+                    <Button
+                        Command="{Binding OriginalDotToOriginalGraph}"
+                        Height="50"
+                        Margin="10 10 10 10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Top"
+                        Content="Apply" />
+                </StackPanel>
+                <ScrollViewer
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Auto"
+                    Margin="0 10 10 10">
+                    <Border BorderThickness="1" BorderBrush="Black">
+                        <TextBlock Text="{Binding ParseFailureMessageOriginalDotContent}" Foreground="Red" />
+                    </Border>
+                </ScrollViewer>
+            </DockPanel>
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                <TextBox AcceptsReturn="True" Text="{Binding OriginalDotContent, Mode=TwoWay}" />
+                <TextBox AcceptsReturn="True"
+                         Text="{Binding OriginalDotContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </ScrollViewer>
         </StackPanel>
     </DockPanel>
-</Window>
+</Window> 
