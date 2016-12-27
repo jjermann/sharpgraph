@@ -4,12 +4,23 @@
         Title="Dot Input"
         SizeToContent="WidthAndHeight">
 
-    <StackPanel>
-        <Button Command="{Binding OriginalDotToOriginalGraph}" Width="100" Height="50" HorizontalAlignment="Left">
-            Apply
-        </Button>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <TextBox AcceptsReturn="True" Text="{Binding OriginalDotContent, Mode=TwoWay}" />
-        </ScrollViewer>
-    </StackPanel>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" IsMainMenu="True">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Save..." Click="FileSave_OnClick" />
+                <MenuItem Header="_Save As..." Click="FileSaveAs_OnClick" />
+            </MenuItem>
+        </Menu>
+        <StackPanel>
+            <Button
+                Command="{Binding OriginalDotToOriginalGraph}"
+                Width="100"
+                Height="50"
+                HorizontalAlignment="Left"
+                Content="Apply" />
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <TextBox AcceptsReturn="True" Text="{Binding OriginalDotContent, Mode=TwoWay}" />
+            </ScrollViewer>
+        </StackPanel>
+    </DockPanel>
 </Window>

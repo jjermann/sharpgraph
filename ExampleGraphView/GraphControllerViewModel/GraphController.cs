@@ -16,7 +16,7 @@ namespace SharpGraph.GraphControllerViewModel {
         public GraphController() {
             VisibleNodeIds = new ObservableCollection<string>();
             VisibleNodeIds.CollectionChanged += (sender, e) => {
-                if (!IsDirty) {
+                if (!IsDirty && RestrictVisibility) {
                     UpdateCurrentContent();
                 }
             };
@@ -26,6 +26,13 @@ namespace SharpGraph.GraphControllerViewModel {
         #region Private
 
         private bool IsDirty { get; set; }
+        private bool RestrictVisibility {
+            get { return _restrictVisibility; }
+            set {
+                _restrictVisibility = value;
+                UpdateCurrentContent();
+            }
+        }
 
         private IGraph _currentLayoutGraph;
         private IGraph CurrentLayoutGraph {
@@ -46,7 +53,10 @@ namespace SharpGraph.GraphControllerViewModel {
         }
 
         private void UpdateCurrentContent() {
-            CurrentDotContent = OriginalGraph.ToDot(nodeSelector: GetNodeSelector(VisibleNodeIds));
+            var nodeSelector = RestrictVisibility
+                ? GetNodeSelector(VisibleNodeIds)
+                : null;
+            CurrentDotContent = OriginalGraph.ToDot(nodeSelector: nodeSelector);
             CurrentImage = GraphParser.GraphParser.GetGraphImage(CurrentDotContent);
             CurrentLayoutGraph = GraphParser.GraphParser.GetGraphLayout(CurrentDotContent);
             CurrentWpfGraph = new WpfGraph(CurrentLayoutGraph);
@@ -68,7 +78,8 @@ namespace SharpGraph.GraphControllerViewModel {
                 VisibleNodeIds.Add(node.Id);
             }
             IsDirty = false;
-            UpdateCurrentContent();
+            //This will also update the current content...
+            RestrictVisibility = true;
         }
 
         [NotifyPropertyChangedInvocator]
@@ -85,8 +96,8 @@ namespace SharpGraph.GraphControllerViewModel {
                 return _originalDotToOriginalGraph ?? (_originalDotToOriginalGraph = new RelayCommand(
                            param => {
                                OriginalGraph = GraphParser.GraphParser.GetGraph(OriginalDotContent);
-                               VisibleNodeIds = null;
-                               UpdateCurrentContent();
+                               //This will also update the current content
+                               RestrictVisibility = false;
                            }
                        ));
             }
@@ -105,7 +116,7 @@ namespace SharpGraph.GraphControllerViewModel {
         private string _savedDotFile;
         public string SavedDotFile {
             get { return _savedDotFile; }
-            set {
+            private set {
                 _savedDotFile = value;
                 OnPropertyChanged();
             }
@@ -125,10 +136,33 @@ namespace SharpGraph.GraphControllerViewModel {
             }
         }
 
+        private string _savedOriginalDotFile;
+        public string SavedOriginalDotFile {
+            get { return _savedOriginalDotFile; }
+            private set {
+                _savedOriginalDotFile = value;
+                OnPropertyChanged();
+            }
+        }
+        private RelayCommand _saveOriginalDotFileCommand;
+        public ICommand SaveOriginalDotFileCommand {
+            get {
+                return _saveOriginalDotFileCommand ?? (_saveOriginalDotFileCommand = new RelayCommand(
+                           param => {
+                               var filename = (string) param;
+                               if (filename != null) {
+                                   SavedOriginalDotFile = filename;
+                               }
+                               File.WriteAllText(SavedOriginalDotFile, OriginalDotContent);
+                           }
+                       ));
+            }
+        }
+
         private string _savedImageFile;
         public string SavedImageFile {
             get { return _savedImageFile; }
-            set {
+            private set {
                 _savedImageFile = value;
                 OnPropertyChanged();
             }
@@ -196,6 +230,7 @@ namespace SharpGraph.GraphControllerViewModel {
         }
 
         private Image _currentImage;
+        private bool _restrictVisibility;
         public Image CurrentImage {
             get { return _currentImage; }
             private set {

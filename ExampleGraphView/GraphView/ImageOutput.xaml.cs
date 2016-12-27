@@ -11,26 +11,18 @@ namespace SharpGraph.GraphView {
 
         private void FileSave_OnClick(object sender, RoutedEventArgs e) {
             var vm = (GraphController) DataContext;
-            var filename = vm.SavedImageFile ?? GetSaveFileDialogResult();
-            if (vm.SaveImageFileCommand.CanExecute(filename)) {
+            var filename = vm.SavedImageFile ?? FileDialogHandler<SaveFileDialog>.OpenDialog();
+            if ((filename != null) && vm.SaveImageFileCommand.CanExecute(filename)) {
                 vm.SaveImageFileCommand.Execute(filename);
             }
         }
 
         private void FileSaveAs_OnClick(object sender, RoutedEventArgs e) {
             var vm = (GraphController) DataContext;
-            var filename = GetSaveFileDialogResult();
-            if (vm.SaveImageFileCommand.CanExecute(filename)) {
+            var filename = FileDialogHandler<SaveFileDialog>.OpenDialog(vm.SavedImageFile);
+            if ((filename != null) && vm.SaveImageFileCommand.CanExecute(filename)) {
                 vm.SaveImageFileCommand.Execute(filename);
             }
-        }
-
-        private string GetSaveFileDialogResult() {
-            var saveFileDialog = new SaveFileDialog();
-            if (saveFileDialog.ShowDialog() == true) {
-                return saveFileDialog.FileName;
-            }
-            return null;
         }
     }
 }

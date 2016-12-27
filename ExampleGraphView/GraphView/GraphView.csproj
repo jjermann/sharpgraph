@@ -67,6 +67,7 @@
     <Compile Include="DotInput.xaml.cs">
       <DependentUpon>DotInput.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FileDialogHandler.cs" />
     <Compile Include="ImageOutput.xaml.cs">
       <DependentUpon>ImageOutput.xaml</DependentUpon>
     </Compile>
