@@ -113,14 +113,7 @@ namespace SharpGraph.GraphControllerViewModel {
             }
         }
 
-        private string _savedDotFile;
-        public string SavedDotFile {
-            get { return _savedDotFile; }
-            private set {
-                _savedDotFile = value;
-                OnPropertyChanged();
-            }
-        }
+        public string SavedDotFile { get; private set; }
         private RelayCommand _saveDotFileCommand;
         public ICommand SaveDotFileCommand {
             get {
@@ -136,14 +129,7 @@ namespace SharpGraph.GraphControllerViewModel {
             }
         }
 
-        private string _savedOriginalDotFile;
-        public string SavedOriginalDotFile {
-            get { return _savedOriginalDotFile; }
-            private set {
-                _savedOriginalDotFile = value;
-                OnPropertyChanged();
-            }
-        }
+        public string SavedOriginalDotFile { get; private set; }
         private RelayCommand _saveOriginalDotFileCommand;
         public ICommand SaveOriginalDotFileCommand {
             get {
@@ -159,14 +145,7 @@ namespace SharpGraph.GraphControllerViewModel {
             }
         }
 
-        private string _savedImageFile;
-        public string SavedImageFile {
-            get { return _savedImageFile; }
-            private set {
-                _savedImageFile = value;
-                OnPropertyChanged();
-            }
-        }
+        public string SavedImageFile { get; private set; }
         private RelayCommand _saveImageFileCommand;
         public ICommand SaveImageFileCommand {
             get {
