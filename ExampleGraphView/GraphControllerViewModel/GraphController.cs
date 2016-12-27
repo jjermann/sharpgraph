@@ -102,20 +102,12 @@ namespace SharpGraph.GraphControllerViewModel {
             }
         }
 
-        private bool _hasSavedDotFile;
-        public bool HasSavedDotFile {
-            get { return _hasSavedDotFile; }
-            set {
-                _hasSavedDotFile = value;
-                OnPropertyChanged();
-            }
-        }
         private string _savedDotFile;
-        private string SavedDotFile {
+        public string SavedDotFile {
             get { return _savedDotFile; }
             set {
                 _savedDotFile = value;
-                HasSavedDotFile = !string.IsNullOrEmpty(_savedDotFile);
+                OnPropertyChanged();
             }
         }
         private RelayCommand _saveDotFileCommand;
@@ -133,20 +125,12 @@ namespace SharpGraph.GraphControllerViewModel {
             }
         }
 
-        private bool _hasSavedImageFile;
-        public bool HasSavedImageFile {
-            get { return _hasSavedImageFile; }
-            set {
-                _hasSavedImageFile = value;
-                OnPropertyChanged();
-            }
-        }
         private string _savedImageFile;
-        private string SavedImageFile {
+        public string SavedImageFile {
             get { return _savedImageFile; }
             set {
                 _savedImageFile = value;
-                HasSavedImageFile = !string.IsNullOrEmpty(_savedImageFile);
+                OnPropertyChanged();
             }
         }
         private RelayCommand _saveImageFileCommand;

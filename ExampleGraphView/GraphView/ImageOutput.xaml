@@ -11,8 +11,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top" IsMainMenu="True">
             <MenuItem Header="_File">
-                <MenuItem Header="_Save..." Command="{Binding SaveImageFileCommand}"
-                          IsEnabled="{Binding HasSavedImageFile}" />
+                <MenuItem Header="_Save..." Click="FileSave_OnClick" />
                 <MenuItem Header="_Save As..." Click="FileSaveAs_OnClick" />
             </MenuItem>
         </Menu>

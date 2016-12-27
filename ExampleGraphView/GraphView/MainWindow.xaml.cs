@@ -27,13 +27,19 @@ namespace SharpGraph.GraphView {
         private DotInput DotInputWindow { get; }
 
         private void FileOpen_OnClick(object sender, RoutedEventArgs e) {
+            var vm = (GraphController) DataContext;
+            var filename = GetOpenFileDialogResult();
+            if (vm.OpenFileCommand.CanExecute(filename)) {
+                vm.OpenFileCommand.Execute(filename);
+            }
+        }
+
+        private string GetOpenFileDialogResult() {
             var openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true) {
-                var vm = (GraphController) DataContext;
-                if (vm.OpenFileCommand.CanExecute(openFileDialog.FileName)) {
-                    vm.OpenFileCommand.Execute(openFileDialog.FileName);
-                }
+                return openFileDialog.FileName;
             }
+            return null;
         }
     }
 }
