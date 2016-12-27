@@ -5,7 +5,7 @@ namespace SharpGraph.GraphView {
     public class EnumToBoolConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter,
             System.Globalization.CultureInfo culture) {
-            if (value == null || parameter == null) {
+            if ((value == null) || (parameter == null)) {
                 return false;
             }
             var checkValue = value.ToString();
@@ -15,10 +15,10 @@ namespace SharpGraph.GraphView {
 
         public object ConvertBack(object value, Type targetType, object parameter,
             System.Globalization.CultureInfo culture) {
-            if (value == null || parameter == null) {
+            if ((value == null) || (parameter == null)) {
                 return null;
             }
-            var useValue = (bool)value;
+            var useValue = (bool) value;
             var targetValue = parameter.ToString();
             if (useValue) {
                 return Enum.Parse(targetType, targetValue);
