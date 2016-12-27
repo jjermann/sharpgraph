@@ -9,7 +9,7 @@
             Apply
         </Button>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <TextBox Text="{Binding OriginalDotContent, Mode=TwoWay}" />
+            <TextBox AcceptsReturn="True" Text="{Binding OriginalDotContent, Mode=TwoWay}" />
         </ScrollViewer>
     </StackPanel>
 </Window>

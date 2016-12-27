@@ -78,6 +78,7 @@ namespace SharpGraph.GraphControllerViewModel {
 
         #endregion Private
         #region PublicProperties
+
         private RelayCommand _originalDotToOriginalGraph;
         public ICommand OriginalDotToOriginalGraph {
             get {

@@ -1,4 +1,6 @@
-﻿using SharpGraph.GraphModel;
+﻿using System.Collections.Generic;
+using System.Linq;
+using SharpGraph.GraphModel;
 
 namespace SharpGraph.GraphViewModel {
     public class WpfSubGraph {
@@ -9,6 +11,8 @@ namespace SharpGraph.GraphViewModel {
 
         private ISubGraph SubGraphBehind { get; }
         public string Label { get; protected set; }
+        public bool IsCluster { get; protected set; }
+
         public bool HasBoundingBox { get; protected set; }
         private double UpperRightX { get; set; }
         private double UpperRightY { get; set; }
@@ -18,8 +22,16 @@ namespace SharpGraph.GraphViewModel {
         private double Y { get; set; }
         public string Margin { get; protected set; }
 
+        protected IEnumerable<string> Styles { get; set; }
+        public string FillColor { get; protected set; }
+        public string StrokeColor { get; protected set; }
+
         private void UpdatePropertyValues() {
-            Label = SubGraphBehind.HasAttribute("label") ? SubGraphBehind.GetAttribute("label") : SubGraphBehind.Id;
+            Label = SubGraphBehind.HasAttribute("label")
+                ? SubGraphBehind.GetAttribute("label")
+                : SubGraphBehind.Id;
+            IsCluster = Label.StartsWith("cluster");
+
             HasBoundingBox = SubGraphBehind.HasAttribute("bb");
             if (HasBoundingBox) {
                 UpperRightX = WpfHelper.StringToPixel(
@@ -33,7 +45,41 @@ namespace SharpGraph.GraphViewModel {
                 Width = UpperRightX - X;
                 Height = UpperRightY - Y;
                 Margin = $"{X},{Y},0,0";
+
+                Styles = WpfHelper.ConvertIdToStyles(
+                    SubGraphBehind.HasAttribute("style", true)
+                        ? SubGraphBehind.GetAttribute("style", true)
+                        : null);
+                FillColor = GetSubGraphFillColor();
+                StrokeColor = GetSubGraphStrokeColor();
             }
+        }
+
+        private string GetSubGraphFillColor() {
+            var bgColor = WpfHelper.ConvertIdToText(
+                SubGraphBehind.HasAttribute("bgcolor", true)
+                    ? SubGraphBehind.GetAttribute("bgcolor", true)
+                    : null);
+            var color = WpfHelper.ConvertIdToText(
+                SubGraphBehind.HasAttribute("color", true)
+                    ? SubGraphBehind.GetAttribute("color", true)
+                    : null);
+            var fillcolor = WpfHelper.ConvertIdToText(
+                SubGraphBehind.HasAttribute("fillcolor", true)
+                    ? SubGraphBehind.GetAttribute("fillcolor", true)
+                    : null);
+            if (Styles.Contains("filled")) {
+                return fillcolor ?? color ?? bgColor;
+            }
+            return bgColor;
+        }
+
+        private string GetSubGraphStrokeColor() {
+            var color = WpfHelper.ConvertIdToText(
+                SubGraphBehind.HasAttribute("color", true)
+                    ? SubGraphBehind.GetAttribute("color", true)
+                    : "black");
+            return color;
         }
     }
 }

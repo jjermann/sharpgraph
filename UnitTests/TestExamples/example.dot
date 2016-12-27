@@ -1,4 +1,6 @@
 digraph {
+  bgcolor="bisque"
+  node [style=filled, fillcolor="lightblue"]
   A
   B->C->{
     A; D; {

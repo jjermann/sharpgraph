@@ -20,12 +20,12 @@ namespace SharpGraph.GraphModel {
             IAttributeDictionary edgeAttrs = null);
 
         void SetNodeAttributes(IAttributeDictionary attrs);
-        bool HasNodeAttribute(string attr);
-        string GetNodeAttribute(string attr);
+        bool HasNodeAttribute(string attr, bool recursive = false);
+        string GetNodeAttribute(string attr, bool recursive = false);
         IAttributeDictionary GetNodeAttributes();
         void SetEdgeAttributes(IAttributeDictionary attrs);
-        bool HasEdgeAttribute(string attr);
-        string GetEdgeAttribute(string attr);
+        bool HasEdgeAttribute(string attr, bool recursive = false);
+        string GetEdgeAttribute(string attr, bool recursive = false);
         IAttributeDictionary GetEdgeAttributes();
 
         IEnumerable<INode> GetSubGraphNodes(bool recursive = false);

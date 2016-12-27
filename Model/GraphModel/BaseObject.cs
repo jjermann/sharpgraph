@@ -14,13 +14,20 @@ namespace SharpGraph.GraphModel {
             Attributes.SetAttributes(attrs);
         }
 
-        public virtual bool HasAttribute(string attr) {
-            return Attributes.ContainsKey(attr);
+        public virtual bool HasAttribute(string attr, bool recursive = false) {
+            var hasLocalAttr = Attributes.ContainsKey(attr);
+            if (!recursive || hasLocalAttr || (Parent == null)) {
+                return hasLocalAttr;
+            }
+            return Parent.HasAttribute(attr, true);
         }
 
         //Warning: This function will throw an exception in case the attribute doesn't exist!
-        public virtual string GetAttribute(string attr) {
-            return Attributes[attr];
+        public virtual string GetAttribute(string attr, bool recursive = false) {
+            if (!recursive || (Parent == null) || Attributes.ContainsKey(attr)) {
+                return Attributes[attr];
+            }
+            return Parent.GetAttribute(attr, true);
         }
 
         public virtual IAttributeDictionary GetAttributes() {

@@ -26,6 +26,22 @@ namespace SharpGraph.GraphModel {
         public virtual INode EndNode { get; }
         public virtual INode SourceNode { get; }
 
+        public override bool HasAttribute(string attr, bool recursive = false) {
+            var hasLocalAttr = Attributes.ContainsKey(attr);
+            if (!recursive || hasLocalAttr || (Parent == null)) {
+                return hasLocalAttr;
+            }
+            return Parent.HasEdgeAttribute(attr, true);
+        }
+
+        //Warning: This function will throw an exception in case the attribute doesn't exist!
+        public override string GetAttribute(string attr, bool recursive = false) {
+            if (!recursive || (Parent == null) || Attributes.ContainsKey(attr)) {
+                return Attributes[attr];
+            }
+            return Parent.GetEdgeAttribute(attr, true);
+        }
+
         //This method is very important for equality and comparison!
         //It is closely related to the constructor of Edge (there is some code duplication).
         private static string GetNodeIdFromParameters(IBaseObject parent, IBaseObject a, IBaseObject b) {

@@ -16,13 +16,20 @@ namespace SharpGraph.GraphModel {
             NodeAttributes.SetAttributes(attrs);
         }
 
-        public virtual bool HasNodeAttribute(string attr) {
-            return NodeAttributes.ContainsKey(attr);
+        public virtual bool HasNodeAttribute(string attr, bool recursive = false) {
+            var hasLocalAttr = NodeAttributes.ContainsKey(attr);
+            if (!recursive || hasLocalAttr || (Parent == null)) {
+                return hasLocalAttr;
+            }
+            return Parent.HasNodeAttribute(attr, true);
         }
 
         //Warning: This function will throw an exception in case the attribute doesn't exist!
-        public virtual string GetNodeAttribute(string attr) {
-            return NodeAttributes[attr];
+        public virtual string GetNodeAttribute(string attr, bool recursive = false) {
+            if (!recursive || (Parent == null) || NodeAttributes.ContainsKey(attr)) {
+                return NodeAttributes[attr];
+            }
+            return Parent.GetNodeAttribute(attr, true);
         }
 
         public virtual IAttributeDictionary GetNodeAttributes() {
@@ -37,13 +44,20 @@ namespace SharpGraph.GraphModel {
             EdgeAttributes.SetAttributes(attrs);
         }
 
-        public virtual bool HasEdgeAttribute(string attr) {
-            return EdgeAttributes.ContainsKey(attr);
+        public virtual bool HasEdgeAttribute(string attr, bool recursive = false) {
+            var hasLocalAttr = EdgeAttributes.ContainsKey(attr);
+            if (!recursive || hasLocalAttr || (Parent == null)) {
+                return hasLocalAttr;
+            }
+            return Parent.HasEdgeAttribute(attr, true);
         }
 
         //Warning: This function will throw an exception in case the attribute doesn't exist!
-        public virtual string GetEdgeAttribute(string attr) {
-            return EdgeAttributes[attr];
+        public virtual string GetEdgeAttribute(string attr, bool recursive = false) {
+            if (!recursive || (Parent == null) || EdgeAttributes.ContainsKey(attr)) {
+                return EdgeAttributes[attr];
+            }
+            return Parent.GetEdgeAttribute(attr, true);
         }
 
         public virtual IAttributeDictionary GetEdgeAttributes() {

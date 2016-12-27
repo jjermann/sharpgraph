@@ -11,8 +11,8 @@
                     <Style x:Key="ShapeStyle" TargetType="{x:Type Shape}">
                         <Setter Property="Width" Value="{Binding Width}" />
                         <Setter Property="Height" Value="{Binding Height}" />
-                        <Setter Property="Fill" Value="Aqua" />
-                        <Setter Property="Stroke" Value="Black" />
+                        <Setter Property="Fill" Value="{Binding FillColor}" />
+                        <Setter Property="Stroke" Value="{Binding StrokeColor}" />
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Fill" Value="Aquamarine" />
@@ -53,7 +53,8 @@
     <DataTemplate x:Key="SubGraphBoundingBox" DataType="viewmodels:WpfSubGraph">
         <Grid Margin="{Binding Margin}" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Rectangle
-                Stroke="Black"
+                Stroke="{Binding StrokeColor}"
+                Fill="{Binding FillColor}"
                 Width="{Binding Width}"
                 Height="{Binding Height}" />
         </Grid>
@@ -72,7 +73,10 @@
         </DataTemplate.Triggers>
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodels:WpfGraph}">
-        <Grid Background="Bisque" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid
+            Background="{Binding FillColor}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
             <ItemsControl ItemsSource="{Binding WpfSubGraphs}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

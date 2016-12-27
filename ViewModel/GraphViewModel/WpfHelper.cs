@@ -87,7 +87,7 @@ namespace SharpGraph.GraphViewModel {
         }
 
         public static string ConvertIdToText(string id) {
-            return id.Trim('"')
+            return id?.Trim('"')
                 .Replace(@"\n", "\n")
                 .Replace(@"\t", "\t")
                 .Replace(@"\r", "\r");
@@ -104,6 +104,42 @@ namespace SharpGraph.GraphViewModel {
                 default:
                     return "Ellipse";
             }
+        }
+
+        public static IEnumerable<string> ConvertIdToStyles(string id) {
+            if (id == null) {
+                return new List<string>();
+            }
+            return ConvertIdToText(id).ToLower()
+                .Split(';')
+                .Select(s => s.Trim());
+
+            //switch (style) {
+            //    //For Nodes and Edges
+            //    case "dashed":
+            //    case "dotted":
+            //    case "solid":
+            //    case "invis":
+            //    case "bold":
+
+            //    //For Edges
+            //    case "tapered":
+
+            //    //For Nodes
+            //    case "wedged":
+            //    case "diagonals":
+
+            //    //For Nodes and Clusters
+            //    case "filled":
+            //    case "striped":
+            //    case "rounded":
+
+            //    //For Nodes, Clusters and Graphs
+            //    case "radial":
+            //        return style;
+            //    default:
+            //        return null;
+            //}
         }
     }
 }

@@ -19,6 +19,10 @@ namespace SharpGraph.GraphParser {
             ParsedGraph = Graph.CreateGraph(id, isDirected, isStrict);
             CurrentSubGraph = ParsedGraph;
 
+            ParsedGraph.SetAttributes(GetGraphAttributes(context.stmt_list().stmt()));
+            ParsedGraph.SetNodeAttributes(GetNodeAttributes(context.stmt_list().stmt()));
+            ParsedGraph.SetEdgeAttributes(GetEdgeAttributes(context.stmt_list().stmt()));
+
             foreach (var stmtContext in context.stmt_list().stmt()) {
                 HandleNode(stmtContext.node_stmt());
                 HandleEdgeLine(stmtContext.edge_stmt());
