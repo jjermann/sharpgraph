@@ -5,7 +5,6 @@ Bugs:
     In particular path geometries need to be handled!
   o The important part is to keep the View (e.g. ActualHeight) separated from the Viewmodel!
   o Maybe LayoutTransform? But what about Labels? We don't want to transform those...
-- Add missing arrow heads (see content improvements)
 - Proper edge support:
   Currently we use cubic bezier segments but dot seems to use (global) cubic splines.
   We could maybe use http://numerics.mathdotnet.com/ for this...
@@ -28,7 +27,6 @@ Possible design Improvements / refactorings:
   o More modifications on the graph, in particular attribute changes like filled/not-filled
     In the end we don't really get around having a second "currentgraph".
   o ... (it is getting complex and a design analysis would be a good idea)
-- Take default settings from the parent graph into consideration (add model methods accordingly)
 - Find a nice design how to handle ids (See above), maybe support HTML dot files and/or structs
 - More unit tests
 - Think about exception handling, add much more checks, make more restriction assumptions
@@ -41,10 +39,9 @@ Possible design Improvements / refactorings:
 - MAYBE: Aim to get the equivalent layout output as from the original dot file
 
 Content improvements:
-- Arrow heads
 - Support many more basic attributes (a never ending task)
 - Make everything much more interactive:
-  o Click events on nodes
+  o MAIN ONE: Click events on nodes
     In particular change VisibleNodes properly (also see above regarding INotifyPropertyChanged).
 	Maybe: Allow more changes to the graph.
   o Zoom support
