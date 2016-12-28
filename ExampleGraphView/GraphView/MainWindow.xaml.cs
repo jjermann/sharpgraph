@@ -1,4 +1,4 @@
-﻿using System.Windows;
+﻿using System.Windows.Input;
 using Microsoft.Win32;
 using SharpGraph.GraphControllerViewModel;
 
@@ -26,11 +26,18 @@ namespace SharpGraph.GraphView {
         private ImageOutput ImageOutputWindow { get; }
         private DotInput DotInputWindow { get; }
 
-        private void FileOpen_OnClick(object sender, RoutedEventArgs e) {
-            var vm = (GraphController) DataContext;
-            var filename = FileDialogHandler<OpenFileDialog>.OpenDialog(vm.OriginalInputFile);
-            if ((filename != null) && vm.OpenFileCommand.CanExecute(filename)) {
-                vm.OpenFileCommand.Execute(filename);
+        private RelayCommand _openCommand;
+        public ICommand OpenCommand {
+            get {
+                return _openCommand ?? (_openCommand = new RelayCommand(
+                           param => {
+                               var vm = (GraphController) DataContext;
+                               var filename = FileDialogHandler<OpenFileDialog>.OpenDialog(vm.OriginalInputFile);
+                               if ((filename != null) && vm.OpenFileCommand.CanExecute(filename)) {
+                                   vm.OpenFileCommand.Execute(filename);
+                               }
+                           }
+                       ));
             }
         }
     }

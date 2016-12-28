@@ -1,14 +1,19 @@
 ﻿<Window x:Class="SharpGraph.GraphView.DotOutput"
+        x:Name="DotOutputName"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Current Dot Content"
         SizeToContent="WidthAndHeight">
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Control" Key="S" Command="{Binding Path=SaveCommand, ElementName=DotOutputName}" />
+        <KeyBinding Modifiers="Shift+Control" Key="S" Command="{Binding Path=SaveAsCommand, ElementName=DotOutputName}" />
+    </Window.InputBindings>
 
     <DockPanel>
         <Menu DockPanel.Dock="Top" IsMainMenu="True">
             <MenuItem Header="_File">
-                <MenuItem Header="_Save..." Click="FileSave_OnClick" />
-                <MenuItem Header="_Save As..." Click="FileSaveAs_OnClick" />
+                <MenuItem Header="_Save..." Command="{Binding Path=SaveCommand, ElementName=DotOutputName}" />
+                <MenuItem Header="_Save As..." Command="{Binding Path=SaveAsCommand, ElementName=DotOutputName}" />
             </MenuItem>
         </Menu>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">

@@ -7,7 +7,9 @@ namespace SharpGraph.GraphView {
             if (e.Args.Length > 0) {
                 initialFile = e.Args[0];
             }
-            new MainWindow(initialFile).Show();
+            var mainWindow = new MainWindow(initialFile);
+            MainWindow = mainWindow;
+            mainWindow.Show();
         }
     }
 }
