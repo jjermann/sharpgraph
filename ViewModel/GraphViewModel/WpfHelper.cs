@@ -7,6 +7,95 @@ namespace SharpGraph.GraphViewModel {
     public static class WpfHelper {
         private const double DeviceIndependentPpi = 96.0;
 
+        public class Point {
+            public double X { get; }
+            public double Y { get; }
+
+            public Point(double x, double y) {
+                X = x;
+                Y = y;
+            }
+
+            public override string ToString() {
+                return $"{X},{Y}";
+            }
+
+            public Point Rotate(double angle, Point center = null) {
+                if (center == null) {
+                    center = new Point(0, 0);
+                }
+                var x = (X - center.X)*Math.Cos(angle) - (Y - center.Y)*Math.Sin(angle) + center.X;
+                var y = (X - center.X)*Math.Sin(angle) + (Y - center.Y)*Math.Cos(angle) + center.Y;
+                return new Point(x, y);
+            }
+
+            public Point Translate(Point shift) {
+                var x = X + shift.X;
+                var y = Y + shift.Y;
+                return new Point(x, y);
+            }
+        }
+
+        public class ArrowHead {
+            private const double BaseWidth = 8.0;
+            private const double Length = BaseWidth*2;
+            public Point Head { get; }
+            public Point Source { get; }
+            public double Angle { get; }
+            public Point LeftBase { get; }
+            public Point RightBase { get; }
+
+            public ArrowHead(Point head, Point source) {
+                Head = head;
+                Source = source;
+                Angle = Math.Atan2(Head.Y - Source.Y, Head.X - Source.X);
+                LeftBase = new Point(-Length, BaseWidth/2.0).Rotate(Angle).Translate(Head);
+                RightBase = new Point(-Length, -BaseWidth/2.0).Rotate(Angle).Translate(Head);
+            }
+
+            public override string ToString() {
+                return "M " + Head + " L " + LeftBase + " L " + RightBase + " Z";
+            }
+        }
+
+        public class PathGeometryData {
+            public IEnumerable<PathFigureData> FigureData { get; }
+
+            public PathGeometryData(IEnumerable<PathFigureData> figureData) {
+                FigureData = figureData;
+            }
+
+            public string PathGeometry {
+                get { return string.Join(" ", FigureData.Select(d => d.FigureGeometry)); }
+            }
+        }
+
+        public class PathFigureData {
+            public Point StartPoint { get; set; }
+            public Point MainPoint { get; set; }
+            public IEnumerable<IEnumerable<Point>> CubicTriples { get; set; }
+            public Point EndPoint { get; set; }
+            public string FigureGeometry {
+                get {
+                    var pathFigureGeometry = new List<string>();
+                    if (StartPoint == null) {
+                        pathFigureGeometry.Add($"M {MainPoint}");
+                    } else {
+                        pathFigureGeometry.Add($"M {StartPoint}");
+                        pathFigureGeometry.Add($"L {MainPoint}");
+                    }
+                    foreach (var cubicTriple in CubicTriples) {
+                        var bezierSegment = "C " + string.Join(" ", cubicTriple);
+                        pathFigureGeometry.Add(bezierSegment);
+                    }
+                    if (EndPoint != null) {
+                        pathFigureGeometry.Add($"L {EndPoint}");
+                    }
+                    return string.Join(" ", pathFigureGeometry);
+                }
+            }
+        }
+
         public static double StringToPixel(string input) {
             var inches = Regex.Match(input, "^(?<num>.*)in$").Groups["num"].Value;
             if (!string.IsNullOrEmpty(inches)) {
@@ -14,7 +103,7 @@ namespace SharpGraph.GraphViewModel {
             }
             var points = Regex.Match(input, "^(?<num>.*)pt$").Groups["num"].Value;
             if (!string.IsNullOrEmpty(points)) {
-                return PointToPixel(double.Parse(points));
+                return PtToPixel(double.Parse(points));
             }
             return double.Parse(input);
         }
@@ -23,21 +112,49 @@ namespace SharpGraph.GraphViewModel {
             return inches*DeviceIndependentPpi;
         }
 
-        public static double PointToPixel(double points) {
+        public static double PtToPixel(double points) {
             return points*DeviceIndependentPpi/72;
         }
 
         public static string PosToGeometry(string pos) {
-            const string num = @"[-]?([\.[0-9]+]|[0-9]+(\.[0-9]*)?)";
-            var point = $"({num},{num})";
-            var splineExp = new Regex(
-                $"^"
-                + $"(e,(?<endPoint>{point}) )?"
-                + $"(s,(?<startPoint>{point}) )?"
-                + $"(?<mainPoint>{point})"
-                + $"( (?<cubicTriple>{point} {point} {point}))*"
-                + "$");
+            var pathGeometryData = ParsePathGeometryData(pos);
+            return pathGeometryData.PathGeometry;
+        }
 
+        public static string PosToArrowHeadGeometry(string pos) {
+            return PosToArrowHead(pos).ToString();
+        }
+
+        private static ArrowHead PosToArrowHead(string pos) {
+            var lastPathFigureData = ParsePathGeometryData(pos).FigureData.Last();
+            var cubics = lastPathFigureData.CubicTriples.ToList();
+            Point head, source;
+            if (cubics.Any()) {
+                var lastCubic = cubics.Last().ToList();
+                if (lastPathFigureData.EndPoint != null) {
+                    head = lastPathFigureData.EndPoint;
+                    source = lastCubic[2];
+                } else {
+                    head = lastCubic[2];
+                    source = lastCubic[0];
+                }
+            } else {
+                if (lastPathFigureData.EndPoint != null) {
+                    head = lastPathFigureData.EndPoint;
+                    source = lastPathFigureData.MainPoint;
+                } else {
+                    if (lastPathFigureData.StartPoint == null) {
+                        throw new NotImplementedException();
+                    }
+                    head = lastPathFigureData.MainPoint;
+                    source = lastPathFigureData.StartPoint;
+                }
+            }
+
+            return new ArrowHead(head, source);
+        }
+
+        private static PathGeometryData ParsePathGeometryData(string pos) {
             pos = pos.Replace("\r", "")
                 .Replace("\n", "")
                 .Replace("\\", "")
@@ -45,45 +162,49 @@ namespace SharpGraph.GraphViewModel {
                 .Trim('"')
                 .Trim(' ');
             var splines = pos.Split(';');
-            var pathGeometry = new List<string>();
-            foreach (var spline in splines) {
-                var match = splineExp.Match(spline);
-                if (!match.Success) {
-                    throw new ArgumentException($"Unable to interpret as a spline: {spline}");
-                }
-                var startPoint = match.Groups["startPoint"].Value;
-                var mainPoint = match.Groups["mainPoint"].Value;
-                var cubicTriples = match.Groups["cubicTriple"].Captures
-                    .OfType<Group>()
-                    .Select(g => g.Value).ToList();
-
-                var endPoint = match.Groups["endPoint"].Value;
-
-                var pathFigureGeometry = new List<string>();
-                if (string.IsNullOrEmpty(startPoint)) {
-                    pathFigureGeometry.Add($"M {ConvertSegmentPointToPixel(mainPoint)}");
-                } else {
-                    pathFigureGeometry.Add($"M {ConvertSegmentPointToPixel(startPoint)}");
-                    pathFigureGeometry.Add($"L {ConvertSegmentPointToPixel(mainPoint)}");
-                }
-                foreach (var cubicTriple in cubicTriples) {
-                    var convertedPoints = cubicTriple.Split(' ').Select(ConvertSegmentPointToPixel);
-                    var bezierSegment = "C " + string.Join(" ", convertedPoints);
-                    pathFigureGeometry.Add(bezierSegment);
-                }
-                if (!string.IsNullOrEmpty(endPoint)) {
-                    pathFigureGeometry.Add($"L {ConvertSegmentPointToPixel(endPoint)}");
-                }
-                pathGeometry.Add(string.Join(" ", pathFigureGeometry));
-            }
-
-            return string.Join(" ", pathGeometry);
+            return new PathGeometryData(splines.Select(ParsePathFigureData));
         }
 
-        private static string ConvertSegmentPointToPixel(string point) {
+        private static PathFigureData ParsePathFigureData(string spline) {
+            const string num = @"[-]?([\.[0-9]+]|[0-9]+(\.[0-9]*)?)";
+            var pointStr = $"({num},{num})";
+            var splineExp = new Regex(
+                $"^"
+                + $"(e,(?<endPoint>{pointStr}) )?"
+                + $"(s,(?<startPoint>{pointStr}) )?"
+                + $"(?<mainPoint>{pointStr})"
+                + $"( (?<cubicTriple>{pointStr} {pointStr} {pointStr}))*"
+                + "$");
+
+            var match = splineExp.Match(spline);
+            if (!match.Success) {
+                throw new ArgumentException($"Unable to interpret as a spline: {spline}");
+            }
+
+            var startPointStr = match.Groups["startPoint"].Value;
+            var mainPointStr = match.Groups["mainPoint"].Value;
+            var cubicTriplesStr = match.Groups["cubicTriple"].Captures
+                .OfType<Group>()
+                .Select(g => g.Value).ToList();
+            var endPointStr = match.Groups["endPoint"].Value;
+
+            var startPoint = string.IsNullOrEmpty(startPointStr) ? null : ConvertStringToPoint(startPointStr);
+            var mainPoint = string.IsNullOrEmpty(mainPointStr) ? null : ConvertStringToPoint(mainPointStr);
+            var cubicTriples = cubicTriplesStr.Select(t => t.Split(' ').Select(ConvertStringToPoint));
+            var endPoint = string.IsNullOrEmpty(endPointStr) ? null : ConvertStringToPoint(endPointStr);
+
+            return new PathFigureData {
+                StartPoint = startPoint,
+                MainPoint = mainPoint,
+                CubicTriples = cubicTriples,
+                EndPoint = endPoint
+            };
+        }
+
+        private static Point ConvertStringToPoint(string point) {
             var p1 = StringToPixel(point.Split(',')[0] + "pt");
             var p2 = StringToPixel(point.Split(',')[1] + "pt");
-            return $"{p1},{p2}";
+            return new Point(p1, p2);
         }
 
         public static string ConvertIdToText(string id) {

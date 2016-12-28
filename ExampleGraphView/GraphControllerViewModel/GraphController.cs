@@ -54,7 +54,7 @@ namespace SharpGraph.GraphControllerViewModel {
 
         private void UpdateCurrentContent() {
             var nodeSelector = RestrictVisibility
-                ? GetNodeSelector(VisibleNodeIds)
+                ? GetNeighbourNodeSelector(VisibleNodeIds)
                 : null;
             CurrentDotContent = OriginalGraph.ToDot(nodeSelector: nodeSelector);
             CurrentImage = GraphParser.GraphParser.GetGraphImage(CurrentDotContent);
@@ -62,7 +62,25 @@ namespace SharpGraph.GraphControllerViewModel {
             CurrentWpfGraph = new WpfGraph(CurrentLayoutGraph);
         }
 
-        private Func<INode, bool> GetNodeSelector(IEnumerable<string> visibleIds) {
+        //TODO: improve performance?
+        private Func<INode, bool> GetNeighbourNodeSelector(IEnumerable<string> visibleIds) {
+            if (visibleIds == null) {
+                return null;
+            }
+            var visibleIdList = visibleIds.ToList();
+            return node => {
+                if (visibleIdList.Contains(node.Id)) {
+                    return true;
+                }
+                var neighbours = node.Root.IsDirected
+                    ? node.IncomingNeighbours()
+                    : node.ConnectedNeighbours();
+                return visibleIdList.Intersect(neighbours.Select(n => n.Id)).Any();
+            };
+        }
+
+        // ReSharper disable once UnusedMember.Local
+        private Func<INode, bool> GetVisibleNodeSelector(IEnumerable<string> visibleIds) {
             if (visibleIds == null) {
                 return null;
             }
@@ -90,10 +108,12 @@ namespace SharpGraph.GraphControllerViewModel {
                 OriginalGraph = graph;
                 OriginalImage = originalImage;
                 ParseFailureMessageOriginalDotContent = "";
-                //This will also update the current content
-                RestrictVisibility = false;
             } catch (Exception e) {
                 ParseFailureMessageOriginalDotContent = e.Message;
+            }
+            if (string.IsNullOrEmpty(ParseFailureMessageOriginalDotContent)) {
+                //This will also update the current content
+                RestrictVisibility = false;
             }
         }
 

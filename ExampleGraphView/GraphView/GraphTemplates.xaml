@@ -1,8 +1,10 @@
 ﻿<ResourceDictionary x:Class="SharpGraph.GraphView.GraphTemplates"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:SharpGraph.GraphView"
                     xmlns:viewmodels="clr-namespace:SharpGraph.GraphViewModel;assembly=GraphViewModel">
 
+    <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <DataTemplate x:Key="EmptyTemplate" />
     <DataTemplate DataType="{x:Type viewmodels:WpfNode}">
         <Grid Margin="{Binding Margin}" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -48,7 +50,13 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodels:WpfEdge}">
-        <Path Data="{Binding Geometry}" Stroke="Black" />
+        <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Path Data="{Binding Geometry}" Stroke="Black" />
+            <Path Data="{Binding ArrowHeadGeometry}"
+                  Stroke="Black" 
+                  Fill="Black" 
+                  Visibility="{Binding HasArrowHead, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        </Grid>
     </DataTemplate>
     <DataTemplate x:Key="SubGraphBoundingBox" DataType="viewmodels:WpfSubGraph">
         <Grid Margin="{Binding Margin}" HorizontalAlignment="Left" VerticalAlignment="Top">
