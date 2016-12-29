@@ -18,9 +18,11 @@ namespace SharpGraph.GraphViewModel {
                 EdgeBehind.HasAttribute("label")
                     ? EdgeBehind.GetAttribute("label")
                     : null);
-            Geometry = WpfHelper.PosToGeometry(WpfHelper.ConvertIdToText(EdgeBehind.GetAttribute("pos")));
+            Geometry = WpfHelper.PosToGeometry(WpfHelper.ConvertIdToText(
+                EdgeBehind.GetAttribute("pos")));
             HasArrowHead = EdgeBehind.Root.IsDirected;
-            ArrowHeadGeometry = WpfHelper.PosToArrowHeadGeometry(WpfHelper.ConvertIdToText(EdgeBehind.GetAttribute("pos")));
+            ArrowHeadGeometry = WpfHelper.PosToArrowHeadGeometry(WpfHelper.ConvertIdToText(
+                EdgeBehind.GetAttribute("pos")));
         }
     }
 }

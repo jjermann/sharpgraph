@@ -135,6 +135,23 @@ namespace SharpGraph.GraphControllerViewModel {
         #endregion OtherPublic
         #region PublicCommands
 
+        private RelayCommand _toggleNodeSelectionCommand;
+        public ICommand ToggleNodeVisibilityCommand {
+            get {
+                return _toggleNodeSelectionCommand ?? (_toggleNodeSelectionCommand = new RelayCommand(
+                           param => {
+                               var id = (string) param;
+                               if (VisibleNodeIds.Contains(id)) {
+                                   VisibleNodeIds.Remove(id);
+                               } else {
+                                   VisibleNodeIds.Add(id);
+                               }
+                           },
+                           param => RestrictVisibility
+                       ));
+            }
+        }
+
         private RelayCommand _originalDotToOriginalGraph;
         public ICommand OriginalDotToOriginalGraph {
             get {

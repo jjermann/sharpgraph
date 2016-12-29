@@ -5,81 +5,102 @@
                     xmlns:viewmodels="clr-namespace:SharpGraph.GraphViewModel;assembly=GraphViewModel">
 
     <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-    <DataTemplate x:Key="EmptyTemplate" />
-    <DataTemplate DataType="{x:Type viewmodels:WpfNode}">
-        <Grid Margin="{Binding Margin}" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <ContentControl Content="{Binding}">
-                <ContentControl.Resources>
-                    <Style x:Key="ShapeStyle" TargetType="{x:Type Shape}">
-                        <Setter Property="Width" Value="{Binding Width}" />
-                        <Setter Property="Height" Value="{Binding Height}" />
-                        <Setter Property="Fill" Value="{Binding FillColor}" />
-                        <Setter Property="Stroke" Value="{Binding StrokeColor}" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Fill" Value="Aquamarine" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                    <Style TargetType="ContentControl">
-                        <Setter Property="ContentTemplate">
-                            <Setter.Value>
-                                <DataTemplate>
-                                    <Ellipse Style="{StaticResource ShapeStyle}" />
-                                </DataTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Shape}" Value="Rectangle">
-                                <Setter Property="ContentTemplate">
-                                    <Setter.Value>
-                                        <DataTemplate>
-                                            <Rectangle Style="{StaticResource ShapeStyle}" />
-                                        </DataTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ContentControl.Resources>
-            </ContentControl>
+
+    <Style x:Key="NodeShapeStyle" TargetType="{x:Type Shape}">
+        <Setter Property="Width" Value="{Binding Width}" />
+        <Setter Property="Height" Value="{Binding Height}" />
+        <Setter Property="Fill" Value="{Binding FillColor}" />
+        <Setter Property="Stroke" Value="{Binding StrokeColor}" />
+        <Style.Triggers>
+            <DataTrigger
+                Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}}"
+                Value="True">
+                <Setter Property="Fill" Value="Aquamarine" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="NodeShapeControl" TargetType="ContentControl">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Ellipse Style="{StaticResource NodeShapeStyle}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Shape}" Value="Rectangle">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Rectangle Style="{StaticResource NodeShapeStyle}" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <ControlTemplate x:Key="NodeTemplate" TargetType="{x:Type ContentControl}">
+        <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+            <ContentControl
+                x:Name="NodeShape"
+                Content="{Binding}"
+                Style="{StaticResource NodeShapeControl}" />
             <ContentPresenter
                 Content="{Binding Label}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center" />
         </Grid>
+    </ControlTemplate>
+    <Style x:Key="NodeStyle" TargetType="{x:Type ContentControl}">
+        <Setter Property="Template" Value="{StaticResource NodeTemplate}" />
+        <Setter Property="Margin" Value="{Binding Margin}" />
+    </Style>
+    <DataTemplate DataType="{x:Type viewmodels:WpfNode}">
+        <Button Style="{StaticResource NodeStyle}"
+                Command="{Binding Path=DataContext.ToggleNodeVisibilityCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                CommandParameter="{Binding Id}" />
     </DataTemplate>
+
     <DataTemplate DataType="{x:Type viewmodels:WpfEdge}">
         <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
             <Path Data="{Binding Geometry}" Stroke="Black" />
             <Path Data="{Binding ArrowHeadGeometry}"
-                  Stroke="Black" 
-                  Fill="Black" 
-                  Visibility="{Binding HasArrowHead, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                  Stroke="Black"
+                  Fill="Black"
+                  Visibility="{Binding HasArrowHead, Converter={StaticResource BoolToVisibilityConverter}}" />
         </Grid>
     </DataTemplate>
-    <DataTemplate x:Key="SubGraphBoundingBox" DataType="viewmodels:WpfSubGraph">
-        <Grid Margin="{Binding Margin}" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Rectangle
-                Stroke="{Binding StrokeColor}"
-                Fill="{Binding FillColor}"
-                Width="{Binding Width}"
-                Height="{Binding Height}" />
-        </Grid>
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type viewmodels:WpfSubGraph}">
-        <ContentControl x:Name="cc" Content="{Binding}" ContentTemplate="{StaticResource EmptyTemplate}" />
-        <DataTemplate.Triggers>
-            <DataTrigger
-                Binding="{Binding HasBoundingBox}"
-                Value="True">
-                <Setter
-                    TargetName="cc"
-                    Property="ContentTemplate"
-                    Value="{StaticResource SubGraphBoundingBox}" />
+
+    <Style x:Key="SubGraphShapeStyle" TargetType="{x:Type Shape}">
+        <Setter Property="Width" Value="{Binding Width}" />
+        <Setter Property="Height" Value="{Binding Height}" />
+        <Setter Property="Fill" Value="{Binding FillColor}" />
+        <Setter Property="Stroke" Value="{Binding StrokeColor}" />
+    </Style>
+    <Style x:Key="SubGraphShapeControl" TargetType="ContentControl">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding HasBoundingBox}" Value="True">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Grid Margin="{Binding Margin}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Rectangle Style="{StaticResource SubGraphShapeStyle}" />
+                            </Grid>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
             </DataTrigger>
-        </DataTemplate.Triggers>
+        </Style.Triggers>
+    </Style>
+    <DataTemplate DataType="{x:Type viewmodels:WpfSubGraph}">
+        <ContentControl Content="{Binding}" Style="{StaticResource SubGraphShapeControl}" />
     </DataTemplate>
+
     <DataTemplate DataType="{x:Type viewmodels:WpfGraph}">
         <Grid
             Background="{Binding FillColor}"
@@ -108,5 +129,4 @@
             </ItemsControl>
         </Grid>
     </DataTemplate>
-
 </ResourceDictionary>
