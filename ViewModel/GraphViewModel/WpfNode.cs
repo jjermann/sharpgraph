@@ -8,8 +8,8 @@ using SharpGraph.GraphViewModel.Properties;
 
 namespace SharpGraph.GraphViewModel {
     public class WpfNode : INotifyPropertyChanged {
-        public WpfNode(WpfGraph parent, INode nodeBehind, bool isSelected = false) {
-            Parent = parent;
+        public WpfNode(WpfGraph root, INode nodeBehind, bool isSelected = false) {
+            Root = root;
             NodeBehind = nodeBehind;
             UpdatePropertyValues();
             _isSelected = isSelected;
@@ -24,7 +24,7 @@ namespace SharpGraph.GraphViewModel {
             }
         }
 
-        protected WpfGraph Parent { get; }
+        protected WpfGraph Root { get; }
         protected INode NodeBehind { get; }
         public string Id { get; protected set; }
         public string Label { get; protected set; }
@@ -52,7 +52,7 @@ namespace SharpGraph.GraphViewModel {
                 _isSelected = value;
                 OnPropertyChanged();
                 if (hasChanged) {
-                    Parent.RaiseChanged();
+                    Root.RaiseChanged();
                 }
             }
         }
@@ -100,7 +100,7 @@ namespace SharpGraph.GraphViewModel {
                         ? NodeBehind.GetAttribute("fillcolor", true)
                         : null);
                 return fillcolor ?? color;
-            }
+            }        
             return null;
         }
 

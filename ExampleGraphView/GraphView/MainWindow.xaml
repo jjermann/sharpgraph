@@ -36,10 +36,9 @@
                 <MenuItem Header="_Deselect All" Command="{Binding DeselectAllCommand}" />
             </MenuItem>
             <MenuItem Header="_View">
-                <MenuItem Header="_Graph Input Box" IsCheckable="True" />
-                <MenuItem Header="_Original Graph" IsCheckable="True" />
-                <MenuItem Header="_Current Dot Content" IsCheckable="True" />
-                <MenuItem Header="_Rendered Image" IsCheckable="True" />
+                <MenuItem Header="_Graph Input Box" IsCheckable="True" IsChecked="{Binding Path=ShowDotInput, ElementName=MainWindowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <MenuItem Header="_Current Dot Content" IsCheckable="True" IsChecked="{Binding Path=ShowDotOutput, ElementName=MainWindowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <MenuItem Header="_Rendered Image" IsCheckable="True" IsChecked="{Binding Path=ShowImageOutput, ElementName=MainWindowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">

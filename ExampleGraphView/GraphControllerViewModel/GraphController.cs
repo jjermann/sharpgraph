@@ -33,12 +33,14 @@ namespace SharpGraph.GraphControllerViewModel {
             }
         }
 
-        private void UpdateCurrentContent() {
+        public void UpdateCurrentContent() {
             var nodeSelector = RestrictVisibility
                 ? GetNeighbourNodeSelector(SelectedNodeIds)
                 : null;
             CurrentDotContent = OriginalGraph.ToDot(nodeSelector: nodeSelector);
-            CurrentImage = GraphParser.GraphParser.GetGraphImage(CurrentDotContent);
+            if (UpdateCurrentImage) {
+                CurrentImage = GraphParser.GraphParser.GetGraphImage(CurrentDotContent);
+            }
             CurrentLayoutGraph = GraphParser.GraphParser.GetGraphLayout(CurrentDotContent);
 
             if (CurrentWpfGraph != null) {
@@ -233,6 +235,17 @@ namespace SharpGraph.GraphControllerViewModel {
             set {
                 _graphUpdateMode = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private bool _updateCurrentImage;
+        public bool UpdateCurrentImage {
+            get { return _updateCurrentImage; }
+            set {
+                _updateCurrentImage = value;
+                if (_updateCurrentImage) {
+                    UpdateCurrentContent();
+                }
             }
         }
 

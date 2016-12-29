@@ -1,10 +1,13 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Microsoft.Win32;
 using SharpGraph.GraphControllerViewModel;
+using SharpGraph.GraphView.Properties;
 using SharpGraph.GraphViewModel;
 
 namespace SharpGraph.GraphView {
-    public partial class MainWindow {
+    public partial class MainWindow : INotifyPropertyChanged {
         public MainWindow(string initialFile = null) {
             InitializeComponent();
             if (string.IsNullOrEmpty(initialFile)) {
@@ -14,20 +17,79 @@ namespace SharpGraph.GraphView {
             if (vm.OpenFileCommand.CanExecute(initialFile)) {
                 vm.OpenFileCommand.Execute(initialFile);
             }
-            DotOutputWindow = new DotOutput(DataContext);
-            ImageOutputWindow = new ImageOutput(DataContext);
-            DotInputWindow = new DotInput(DataContext);
-
-            DotOutputWindow.Show();
-            ImageOutputWindow.Show();
-            DotInputWindow.Show();
+            ShowDotOutput = false;
+            ShowImageOutput = false;
+            ShowDotInput = true;
         }
 
-        private DotOutput DotOutputWindow { get; }
-        private ImageOutput ImageOutputWindow { get; }
-        private DotInput DotInputWindow { get; }
+        private DotOutput DotOutputWindow { get; set; }
+        private ImageOutput ImageOutputWindow { get; set; }
+        private DotInput DotInputWindow { get; set; }
+
+        public bool ShowDotOutput {
+            get { return _showDotOutput; }
+            set {
+                _showDotOutput = value;
+                if (_showDotOutput) {
+                    if (DotOutputWindow == null) {
+                        DotOutputWindow = new DotOutput(DataContext);
+                        DotOutputWindow.Show();
+                    }
+                } else {
+                    if (DotOutputWindow != null) {
+                        DotOutputWindow.Close();
+                        DotOutputWindow = null;
+                    }
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ShowImageOutput {
+            get { return _showImageOutput; }
+            set {
+                _showImageOutput = value;
+                var vm = (GraphController) DataContext;
+                if (_showImageOutput) {
+                    vm.UpdateCurrentImage = true;
+                    if (ImageOutputWindow == null) {
+                        ImageOutputWindow = new ImageOutput(DataContext);
+                        ImageOutputWindow.Show();
+                    }
+                } else {
+                    vm.UpdateCurrentImage = false;
+                    if (ImageOutputWindow != null) {
+                        ImageOutputWindow.Close();
+                        ImageOutputWindow = null;
+                    }
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ShowDotInput {
+            get { return _showDotInput; }
+            set {
+                _showDotInput = value;
+                if (_showDotInput) {
+                    if (DotInputWindow == null) {
+                        DotInputWindow = new DotInput(DataContext);
+                        DotInputWindow.Show();
+                    }
+                } else {
+                    if (DotInputWindow != null) {
+                        DotInputWindow.Close();
+                        DotInputWindow = null;
+                    }
+                }
+                OnPropertyChanged();
+            }
+        }
 
         private RelayCommand _openCommand;
+        private bool _showDotOutput;
+        private bool _showImageOutput;
+        private bool _showDotInput;
         public ICommand OpenCommand {
             get {
                 return _openCommand ?? (_openCommand = new RelayCommand(
@@ -40,6 +102,12 @@ namespace SharpGraph.GraphView {
                            }
                        ));
             }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
