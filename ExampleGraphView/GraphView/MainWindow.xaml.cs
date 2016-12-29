@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using Microsoft.Win32;
 using SharpGraph.GraphControllerViewModel;
+using SharpGraph.GraphViewModel;
 
 namespace SharpGraph.GraphView {
     public partial class MainWindow {

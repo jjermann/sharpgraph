@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace SharpGraph.GraphControllerViewModel {
+namespace SharpGraph.GraphViewModel {
     public class RelayCommand : ICommand {
         private readonly Predicate<object> _canExecute;
         private readonly Action<object> _execute;

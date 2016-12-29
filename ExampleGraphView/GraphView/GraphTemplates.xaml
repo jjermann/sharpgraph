@@ -15,7 +15,14 @@
             <DataTrigger
                 Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}}"
                 Value="True">
-                <Setter Property="Fill" Value="Aquamarine" />
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect BlurRadius="50" ShadowDepth="0" />
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                <Setter Property="Fill" Value="SlateGray" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -57,8 +64,7 @@
     </Style>
     <DataTemplate DataType="{x:Type viewmodels:WpfNode}">
         <Button Style="{StaticResource NodeStyle}"
-                Command="{Binding Path=DataContext.ToggleNodeVisibilityCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                CommandParameter="{Binding Id}" />
+                Command="{Binding ToggleNodeSelectionCommand}" />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type viewmodels:WpfEdge}">

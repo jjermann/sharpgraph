@@ -1,14 +1,30 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using SharpGraph.GraphModel;
+using SharpGraph.GraphViewModel.Properties;
 
 namespace SharpGraph.GraphViewModel {
-    public class WpfNode {
-        public WpfNode(INode nodeBehind) {
+    public class WpfNode : INotifyPropertyChanged {
+        public WpfNode(WpfGraph parent, INode nodeBehind, bool isSelected = false) {
+            Parent = parent;
             NodeBehind = nodeBehind;
             UpdatePropertyValues();
+            _isSelected = isSelected;
         }
 
+        private RelayCommand _toggleNodeSelectionCommand;
+        public ICommand ToggleNodeSelectionCommand {
+            get {
+                return _toggleNodeSelectionCommand ?? (_toggleNodeSelectionCommand = new RelayCommand(
+                           param => { IsSelected = !IsSelected; }
+                       ));
+            }
+        }
+
+        protected WpfGraph Parent { get; }
         protected INode NodeBehind { get; }
         public string Id { get; protected set; }
         public string Label { get; protected set; }
@@ -26,6 +42,20 @@ namespace SharpGraph.GraphViewModel {
         private IEnumerable<string> Styles { get; set; }
         public string FillColor { get; protected set; }
         public string StrokeColor { get; protected set; }
+
+        //Properties that can be changed
+        private bool _isSelected;
+        public bool IsSelected {
+            get { return _isSelected; }
+            set {
+                var hasChanged = _isSelected != value;
+                _isSelected = value;
+                OnPropertyChanged();
+                if (hasChanged) {
+                    Parent.RaiseChanged();
+                }
+            }
+        }
 
         private void UpdatePropertyValues() {
             Id = NodeBehind.Id;
@@ -80,6 +110,13 @@ namespace SharpGraph.GraphViewModel {
                     ? NodeBehind.GetAttribute("color", true)
                     : "black");
             return color;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

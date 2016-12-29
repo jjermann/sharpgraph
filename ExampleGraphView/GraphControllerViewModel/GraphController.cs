@@ -13,17 +13,7 @@ using SharpGraph.GraphViewModel.Properties;
 
 namespace SharpGraph.GraphControllerViewModel {
     public sealed class GraphController : INotifyPropertyChanged {
-        public GraphController() {
-            VisibleNodeIds = new ObservableCollection<string>();
-            VisibleNodeIds.CollectionChanged += (sender, e) => {
-                if (!IsDirty && RestrictVisibility) {
-                    UpdateCurrentContent();
-                }
-            };
-        }
         #region Private
-
-        private bool IsDirty { get; set; }
 
         private bool _restrictVisibility;
         private bool RestrictVisibility {
@@ -54,51 +44,52 @@ namespace SharpGraph.GraphControllerViewModel {
 
         private void UpdateCurrentContent() {
             var nodeSelector = RestrictVisibility
-                ? GetNeighbourNodeSelector(VisibleNodeIds)
+                ? GetNeighbourNodeSelector(SelectedNodeIds)
                 : null;
             CurrentDotContent = OriginalGraph.ToDot(nodeSelector: nodeSelector);
             CurrentImage = GraphParser.GraphParser.GetGraphImage(CurrentDotContent);
             CurrentLayoutGraph = GraphParser.GraphParser.GetGraphLayout(CurrentDotContent);
-            CurrentWpfGraph = new WpfGraph(CurrentLayoutGraph);
+            if (CurrentWpfGraph != null) {
+                CurrentWpfGraph.Changed -= CurrentWpfGraphChanged;
+            }
+            CurrentWpfGraph = new WpfGraph(CurrentLayoutGraph, SelectedNodeIds);
+            CurrentWpfGraph.Changed += CurrentWpfGraphChanged;
+        }
+
+        private void CurrentWpfGraphChanged(object sender, EventArgs e) {
+            SelectedNodeIds = new ObservableCollection<string>(
+                CurrentWpfGraph.WpfNodes.Where(wn => wn.IsSelected).Select(wn => wn.Id));
+            UpdateCurrentContent();
         }
 
         //TODO: improve performance?
-        private Func<INode, bool> GetNeighbourNodeSelector(IEnumerable<string> visibleIds) {
-            if (visibleIds == null) {
+        private Func<INode, bool> GetNeighbourNodeSelector(IEnumerable<string> selectedIds) {
+            if (selectedIds == null) {
                 return null;
             }
-            var visibleIdList = visibleIds.ToList();
+            var selectedIdList = selectedIds.ToList();
             return node => {
-                if (visibleIdList.Contains(node.Id)) {
+                if (selectedIdList.Contains(node.Id)) {
                     return true;
                 }
                 var neighbours = node.Root.IsDirected
                     ? node.IncomingNeighbours()
                     : node.ConnectedNeighbours();
-                return visibleIdList.Intersect(neighbours.Select(n => n.Id)).Any();
+                return selectedIdList.Intersect(neighbours.Select(n => n.Id)).Any();
             };
-        }
-
-        // ReSharper disable once UnusedMember.Local
-        private Func<INode, bool> GetVisibleNodeSelector(IEnumerable<string> visibleIds) {
-            if (visibleIds == null) {
-                return null;
-            }
-            return node => visibleIds.Contains(node.Id);
         }
 
         private void InitializeOriginalGraph(string filename) {
             OriginalGraph = GraphParser.GraphParser.GetGraph(new FileInfo(filename));
             OriginalDotContent = OriginalGraph.ToDot();
             OriginalImage = GraphParser.GraphParser.GetGraphImage(OriginalDotContent);
-
-            IsDirty = true;
-            foreach (var node in OriginalGraph.GetNodes()) {
-                VisibleNodeIds.Add(node.Id);
-            }
-            IsDirty = false;
-            //This will also update the current content...
+            SelectedNodeIds = GetInitialSelectionList();
+            //This will also update the current content (which should always be updated after SelectedNodeIds changed)...
             RestrictVisibility = true;
+        }
+
+        private IList<string> GetInitialSelectionList() {
+            return new List<string>(OriginalGraph.GetNodes().Select(n => n.Id));
         }
 
         private void UpdateOriginalGraphFromDotContent() {
@@ -112,8 +103,8 @@ namespace SharpGraph.GraphControllerViewModel {
                 ParseFailureMessageOriginalDotContent = e.Message;
             }
             if (string.IsNullOrEmpty(ParseFailureMessageOriginalDotContent)) {
-                //This will also update the current content
-                RestrictVisibility = false;
+                SelectedNodeIds = new ObservableCollection<string>(SelectedNodeIds.Intersect(GetInitialSelectionList()));
+                UpdateCurrentContent();
             }
         }
 
@@ -134,23 +125,6 @@ namespace SharpGraph.GraphControllerViewModel {
 
         #endregion OtherPublic
         #region PublicCommands
-
-        private RelayCommand _toggleNodeSelectionCommand;
-        public ICommand ToggleNodeVisibilityCommand {
-            get {
-                return _toggleNodeSelectionCommand ?? (_toggleNodeSelectionCommand = new RelayCommand(
-                           param => {
-                               var id = (string) param;
-                               if (VisibleNodeIds.Contains(id)) {
-                                   VisibleNodeIds.Remove(id);
-                               } else {
-                                   VisibleNodeIds.Add(id);
-                               }
-                           },
-                           param => RestrictVisibility
-                       ));
-            }
-        }
 
         private RelayCommand _originalDotToOriginalGraph;
         public ICommand OriginalDotToOriginalGraph {
@@ -297,7 +271,7 @@ namespace SharpGraph.GraphControllerViewModel {
             }
         }
 
-        public ObservableCollection<string> VisibleNodeIds { get; }
+        public IList<string> SelectedNodeIds { get; set; }
 
         #endregion PublicProperties
     }
