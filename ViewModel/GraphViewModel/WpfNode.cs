@@ -99,9 +99,9 @@ namespace SharpGraph.GraphViewModel {
                     NodeBehind.HasAttribute("fillcolor", true)
                         ? NodeBehind.GetAttribute("fillcolor", true)
                         : null);
-                return fillcolor ?? color;
-            }        
-            return null;
+                return fillcolor ?? color ?? "Transparent";
+            }
+            return "Transparent";
         }
 
         private string GetNodeStrokeColor() {

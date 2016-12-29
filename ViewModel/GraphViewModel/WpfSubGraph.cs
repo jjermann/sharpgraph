@@ -69,9 +69,9 @@ namespace SharpGraph.GraphViewModel {
                     ? SubGraphBehind.GetAttribute("fillcolor", true)
                     : null);
             if (Styles.Contains("filled")) {
-                return fillcolor ?? color ?? bgColor;
+                return fillcolor ?? color ?? bgColor ?? "Transparent";
             }
-            return bgColor;
+            return bgColor ?? "Transparent";
         }
 
         private string GetSubGraphStrokeColor() {
