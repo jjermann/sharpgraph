@@ -57,6 +57,12 @@ namespace SharpGraph.GraphControllerViewModel {
         }
 
         //TODO: improve performance?
+        //All selected nodes are visible.
+        //For directed graphs in addition also nodes connected to a selected node are visible.
+        //For undirected graphs in addition nodes also nodes for which all incomding neighbours are selected are visible.
+        //In particular nodes without incoming edges are visible (even if nothing is selected).
+        //In particular: If nothing is selected then cycles are invisible.
+        //To make them visible add one incoming neighbour.
         private Func<INode, bool> GetNeighbourNodeSelector(IEnumerable<string> selectedIds) {
             if (selectedIds == null) {
                 return null;
@@ -66,10 +72,11 @@ namespace SharpGraph.GraphControllerViewModel {
                 if (selectedIdList.Contains(node.Id)) {
                     return true;
                 }
-                var neighbours = node.Root.IsDirected
-                    ? node.IncomingNeighbours()
-                    : node.ConnectedNeighbours();
-                return selectedIdList.Intersect(neighbours.Select(n => n.Id)).Any();
+                if (node.Root.IsDirected) {
+                    var areAllIncomingNodesSelected = !node.IncomingNeighbours().Select(n => n.Id).Except(selectedIdList).Any();
+                    return areAllIncomingNodesSelected;
+                }
+                return selectedIdList.Intersect(node.ConnectedNeighbours().Select(n => n.Id)).Any();
             };
         }
 
@@ -77,7 +84,8 @@ namespace SharpGraph.GraphControllerViewModel {
             OriginalGraph = GraphParser.GraphParser.GetGraph(new FileInfo(filename));
             OriginalDotContent = OriginalGraph.ToDot();
             OriginalImage = GraphParser.GraphParser.GetGraphImage(OriginalDotContent);
-            SelectAll();
+            //TODO: Figure out a better start selection resp. parse it...
+            DeselectAll();
             // This also updates the current context
             RestrictVisibility = true;
         }
