@@ -93,7 +93,7 @@
             <DataTrigger Binding="{Binding HasBoundingBox}" Value="True">
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
-                        <DataTemplate>
+                        <DataTemplate DataType="{x:Type viewmodels:WpfSubGraph}">
                             <Grid Margin="{Binding Margin}" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <Rectangle Style="{StaticResource SubGraphShapeStyle}" />
                             </Grid>

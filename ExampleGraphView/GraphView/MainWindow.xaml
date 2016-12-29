@@ -29,6 +29,12 @@
                 <MenuItem Header="_Save..." IsEnabled="False" />
                 <MenuItem Header="_Save As..." IsEnabled="False" />
             </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Reduce visibility" IsCheckable="True" IsChecked="{Binding RestrictVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Separator />
+                <MenuItem Header="_Select All" Command="{Binding SelectAllCommand}" />
+                <MenuItem Header="_Deselect All" Command="{Binding DeselectAllCommand}" />
+            </MenuItem>
             <MenuItem Header="_View">
                 <MenuItem Header="_Graph Input Box" IsCheckable="True" />
                 <MenuItem Header="_Original Graph" IsCheckable="True" />

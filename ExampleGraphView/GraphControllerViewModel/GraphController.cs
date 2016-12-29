@@ -15,15 +15,6 @@ namespace SharpGraph.GraphControllerViewModel {
     public sealed class GraphController : INotifyPropertyChanged {
         #region Private
 
-        private bool _restrictVisibility;
-        private bool RestrictVisibility {
-            get { return _restrictVisibility; }
-            set {
-                _restrictVisibility = value;
-                UpdateCurrentContent();
-            }
-        }
-
         private IGraph _currentLayoutGraph;
         private IGraph CurrentLayoutGraph {
             get { return _currentLayoutGraph; }
@@ -49,6 +40,7 @@ namespace SharpGraph.GraphControllerViewModel {
             CurrentDotContent = OriginalGraph.ToDot(nodeSelector: nodeSelector);
             CurrentImage = GraphParser.GraphParser.GetGraphImage(CurrentDotContent);
             CurrentLayoutGraph = GraphParser.GraphParser.GetGraphLayout(CurrentDotContent);
+
             if (CurrentWpfGraph != null) {
                 CurrentWpfGraph.Changed -= CurrentWpfGraphChanged;
             }
@@ -83,13 +75,21 @@ namespace SharpGraph.GraphControllerViewModel {
             OriginalGraph = GraphParser.GraphParser.GetGraph(new FileInfo(filename));
             OriginalDotContent = OriginalGraph.ToDot();
             OriginalImage = GraphParser.GraphParser.GetGraphImage(OriginalDotContent);
-            SelectedNodeIds = GetInitialSelectionList();
-            //This will also update the current content (which should always be updated after SelectedNodeIds changed)...
+            SelectAll();
+            // This also updates the current context
             RestrictVisibility = true;
         }
 
-        private IList<string> GetInitialSelectionList() {
-            return new List<string>(OriginalGraph.GetNodes().Select(n => n.Id));
+        private void RestrictSelection() {
+            SelectedNodeIds = new List<string>(SelectedNodeIds.Intersect(OriginalGraph.GetNodes().Select(n => n.Id)));
+        }
+
+        private void SelectAll() {
+            SelectedNodeIds = new List<string>(OriginalGraph.GetNodes().Select(n => n.Id));
+        }
+
+        private void DeselectAll() {
+            SelectedNodeIds = new List<string>();
         }
 
         private void UpdateOriginalGraphFromDotContent() {
@@ -103,7 +103,7 @@ namespace SharpGraph.GraphControllerViewModel {
                 ParseFailureMessageOriginalDotContent = e.Message;
             }
             if (string.IsNullOrEmpty(ParseFailureMessageOriginalDotContent)) {
-                SelectedNodeIds = new ObservableCollection<string>(SelectedNodeIds.Intersect(GetInitialSelectionList()));
+                RestrictSelection();
                 UpdateCurrentContent();
             }
         }
@@ -125,6 +125,28 @@ namespace SharpGraph.GraphControllerViewModel {
 
         #endregion OtherPublic
         #region PublicCommands
+
+        private RelayCommand _selectAllCommand;
+        public ICommand SelectAllCommand {
+            get {
+                return _selectAllCommand ?? (_selectAllCommand = new RelayCommand(
+                           param => {
+                               SelectAll();
+                               UpdateCurrentContent();
+                           }));
+            }
+        }
+
+        private RelayCommand _deselectAllCommand;
+        public ICommand DeselectAllCommand {
+            get {
+                return _deselectAllCommand ?? (_deselectAllCommand = new RelayCommand(
+                           param => {
+                               DeselectAll();
+                               UpdateCurrentContent();
+                           }));
+            }
+        }
 
         private RelayCommand _originalDotToOriginalGraph;
         public ICommand OriginalDotToOriginalGraph {
@@ -194,6 +216,16 @@ namespace SharpGraph.GraphControllerViewModel {
 
         #endregion PublicCommands
         #region PublicProperties
+
+        private bool _restrictVisibility;
+        public bool RestrictVisibility {
+            get { return _restrictVisibility; }
+            set {
+                _restrictVisibility = value;
+                OnPropertyChanged();
+                UpdateCurrentContent();
+            }
+        }
 
         private UpdateMode _graphUpdateMode;
         public UpdateMode GraphUpdateMode {
