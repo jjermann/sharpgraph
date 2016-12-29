@@ -58,11 +58,10 @@ namespace SharpGraph.GraphControllerViewModel {
 
         //TODO: improve performance?
         //All selected nodes are visible.
-        //For directed graphs in addition also nodes connected to a selected node are visible.
-        //For undirected graphs in addition nodes also nodes for which all incomding neighbours are selected are visible.
-        //In particular nodes without incoming edges are visible (even if nothing is selected).
-        //In particular: If nothing is selected then cycles are invisible.
-        //To make them visible add one incoming neighbour.
+        //For directed graphs *in addition* also nodes connected to a selected node are visible.
+        //For undirected graphs *in addition* also nodes satisfying the following conditions are visible:
+        //  1. They have an incoming neighbour / edge.
+        //  2. All incoming neighbours are selected.
         private Func<INode, bool> GetNeighbourNodeSelector(IEnumerable<string> selectedIds) {
             if (selectedIds == null) {
                 return null;
@@ -73,8 +72,9 @@ namespace SharpGraph.GraphControllerViewModel {
                     return true;
                 }
                 if (node.Root.IsDirected) {
+                    var hasIncomingNode = node.IncomingNeighbours().Any();
                     var areAllIncomingNodesSelected = !node.IncomingNeighbours().Select(n => n.Id).Except(selectedIdList).Any();
-                    return areAllIncomingNodesSelected;
+                    return areAllIncomingNodesSelected && hasIncomingNode;
                 }
                 return selectedIdList.Intersect(node.ConnectedNeighbours().Select(n => n.Id)).Any();
             };
@@ -87,7 +87,7 @@ namespace SharpGraph.GraphControllerViewModel {
             //TODO: Figure out a better start selection resp. parse it...
             DeselectAll();
             // This also updates the current context
-            RestrictVisibility = true;
+            RestrictVisibility = false;
         }
 
         private void RestrictSelection() {

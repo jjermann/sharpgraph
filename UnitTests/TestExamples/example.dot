@@ -11,6 +11,7 @@ digraph {
   D->B
   D [label="MyNodeD", shape="circle"];
   subgraph cluster0 {
+    graph [bgcolor="yellow"]
     E [shape="square"]
 	F->A
 	D->B
