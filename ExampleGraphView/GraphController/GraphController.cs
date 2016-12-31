@@ -11,7 +11,7 @@ using SharpGraph.GraphModel;
 using SharpGraph.GraphViewModel;
 using SharpGraph.GraphViewModel.Properties;
 
-namespace SharpGraph.GraphControllerViewModel {
+namespace ExampleGraphView {
     public sealed class GraphController : INotifyPropertyChanged {
         #region Private
 
@@ -39,9 +39,9 @@ namespace SharpGraph.GraphControllerViewModel {
                 : null;
             CurrentDotContent = OriginalGraph.ToDot(nodeSelector: nodeSelector);
             if (UpdateCurrentImage) {
-                CurrentImage = GraphParser.GraphParser.GetGraphImage(CurrentDotContent);
+                CurrentImage = SharpGraph.GraphParser.GraphParser.GetGraphImage(CurrentDotContent);
             }
-            CurrentLayoutGraph = GraphParser.GraphParser.GetGraphLayout(CurrentDotContent);
+            CurrentLayoutGraph = SharpGraph.GraphParser.GraphParser.GetGraphLayout(CurrentDotContent);
 
             if (CurrentWpfGraph != null) {
                 CurrentWpfGraph.Changed -= CurrentWpfGraphChanged;
@@ -81,9 +81,9 @@ namespace SharpGraph.GraphControllerViewModel {
         }
 
         private void InitializeOriginalGraph(string filename) {
-            OriginalGraph = GraphParser.GraphParser.GetGraph(new FileInfo(filename));
+            OriginalGraph = SharpGraph.GraphParser.GraphParser.GetGraph(new FileInfo(filename));
             OriginalDotContent = OriginalGraph.ToDot();
-            OriginalImage = GraphParser.GraphParser.GetGraphImage(OriginalDotContent);
+            OriginalImage = SharpGraph.GraphParser.GraphParser.GetGraphImage(OriginalDotContent);
             //TODO: Figure out a better start selection resp. parse it...
             DeselectAll();
             // This also updates the current context
@@ -104,8 +104,8 @@ namespace SharpGraph.GraphControllerViewModel {
 
         private void UpdateOriginalGraphFromDotContent() {
             try {
-                var graph = GraphParser.GraphParser.GetGraph(OriginalDotContent);
-                var originalImage = GraphParser.GraphParser.GetGraphImage(OriginalDotContent);
+                var graph = SharpGraph.GraphParser.GraphParser.GetGraph(OriginalDotContent);
+                var originalImage = SharpGraph.GraphParser.GraphParser.GetGraphImage(OriginalDotContent);
                 OriginalGraph = graph;
                 OriginalImage = originalImage;
                 ParseFailureMessageOriginalDotContent = "";

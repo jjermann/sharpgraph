@@ -7,8 +7,8 @@
     <ProjectGuid>{CD010999-4519-412B-BC88-AFDC8BD14CF4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpGraph.GraphControllerViewModel</RootNamespace>
-    <AssemblyName>GraphControllerViewModel</AssemblyName>
+    <RootNamespace>ExampleGraphView</RootNamespace>
+    <AssemblyName>GraphController</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

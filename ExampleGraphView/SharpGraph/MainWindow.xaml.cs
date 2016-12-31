@@ -2,11 +2,11 @@
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Microsoft.Win32;
-using SharpGraph.GraphControllerViewModel;
+using SharpGraph.GraphView;
 using SharpGraph.GraphView.Properties;
 using SharpGraph.GraphViewModel;
 
-namespace SharpGraph.GraphView {
+namespace ExampleGraphView {
     public partial class MainWindow : INotifyPropertyChanged {
         public MainWindow(string initialFile = null) {
             InitializeComponent();

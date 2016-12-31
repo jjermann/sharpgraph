@@ -1,4 +1,4 @@
-﻿<Window x:Class="SharpGraph.GraphView.DotOutput"
+﻿<Window x:Class="ExampleGraphView.DotOutput"
         x:Name="DotOutputName"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

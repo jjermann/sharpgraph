@@ -15,11 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphParser", "Model\GraphP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{1D4A7505-4F4A-4F19-99D4-3EA642F7E5BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphView", "ExampleGraphView\GraphView\GraphView.csproj", "{CF3E0EE5-A17B-4A38-9ADF-80321BE396CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpGraph", "ExampleGraphView\SharpGraph\SharpGraph.csproj", "{CF3E0EE5-A17B-4A38-9ADF-80321BE396CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphViewModel", "ViewModel\GraphViewModel\GraphViewModel.csproj", "{648385FE-F294-4ABC-A5AF-A1E3CDD503F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphControllerViewModel", "ExampleGraphView\GraphControllerViewModel\GraphControllerViewModel.csproj", "{CD010999-4519-412B-BC88-AFDC8BD14CF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphController", "ExampleGraphView\GraphController\GraphController.csproj", "{CD010999-4519-412B-BC88-AFDC8BD14CF4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{9D096AC8-1809-47AD-9E07-9EFA2C0DC7F3}"
 EndProject

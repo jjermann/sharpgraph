@@ -4,7 +4,7 @@ using DiffPlex;
 using DiffPlex.DiffBuilder;
 using DiffPlex.DiffBuilder.Model;
 
-namespace SharpGraph {
+namespace ExampleConsoleProgram {
     public static class DiffHelper {
         private const int Margin = 2;
 

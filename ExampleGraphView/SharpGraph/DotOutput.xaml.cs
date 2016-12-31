@@ -1,11 +1,11 @@
 ﻿using System.Windows.Input;
 using Microsoft.Win32;
-using SharpGraph.GraphControllerViewModel;
+using SharpGraph.GraphView;
 using SharpGraph.GraphViewModel;
 
-namespace SharpGraph.GraphView {
-    public partial class DotInput {
-        public DotInput(object dataContext) {
+namespace ExampleGraphView {
+    public partial class DotOutput {
+        public DotOutput(object dataContext) {
             DataContext = dataContext;
             InitializeComponent();
         }
@@ -16,10 +16,9 @@ namespace SharpGraph.GraphView {
                 return _saveCommand ?? (_saveCommand = new RelayCommand(
                            param => {
                                var vm = (GraphController) DataContext;
-                               var filename = vm.SavedOriginalDotFile
-                                              ?? FileDialogHandler<SaveFileDialog>.OpenDialog(vm.OriginalInputFile);
-                               if ((filename != null) && vm.SaveOriginalDotFileCommand.CanExecute(filename)) {
-                                   vm.SaveOriginalDotFileCommand.Execute(filename);
+                               var filename = vm.SavedDotFile ?? FileDialogHandler<SaveFileDialog>.OpenDialog();
+                               if ((filename != null) && vm.SaveDotFileCommand.CanExecute(filename)) {
+                                   vm.SaveDotFileCommand.Execute(filename);
                                }
                            }
                        ));
@@ -32,10 +31,9 @@ namespace SharpGraph.GraphView {
                 return _saveAsCommand ?? (_saveAsCommand = new RelayCommand(
                            param => {
                                var vm = (GraphController) DataContext;
-                               var filename = FileDialogHandler<SaveFileDialog>.OpenDialog(
-                                   vm.SavedOriginalDotFile ?? vm.OriginalInputFile);
-                               if ((filename != null) && vm.SaveOriginalDotFileCommand.CanExecute(filename)) {
-                                   vm.SaveOriginalDotFileCommand.Execute(filename);
+                               var filename = FileDialogHandler<SaveFileDialog>.OpenDialog(vm.SavedDotFile);
+                               if ((filename != null) && vm.SaveDotFileCommand.CanExecute(filename)) {
+                                   vm.SaveDotFileCommand.Execute(filename);
                                }
                            }
                        ));

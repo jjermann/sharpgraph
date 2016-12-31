@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace SharpGraph {
+namespace ExampleConsoleProgram {
     public static class ConsoleProgram {
         private const string DefaultInputFile = @"Examples\example.dot";
 
@@ -11,7 +11,7 @@ namespace SharpGraph {
                 throw new Exception($"File {file.FullName} not found!");
             }
 
-            var graph = GraphParser.GraphParser.GetGraph(file);
+            var graph = SharpGraph.GraphParser.GraphParser.GetGraph(file);
             var graphDot = graph.ToDot();
             Console.Write(graphDot);
             Console.WriteLine("Press any key...");
@@ -19,8 +19,8 @@ namespace SharpGraph {
 
             try {
                 var originalDot = file.OpenText().ReadToEnd();
-                var initialDot = GraphParser.GraphParser.GetGraphLayoutDot(originalDot);
-                var reparsedDot = GraphParser.GraphParser.GetGraphLayoutDot(graphDot);
+                var initialDot = SharpGraph.GraphParser.GraphParser.GetGraphLayoutDot(originalDot);
+                var reparsedDot = SharpGraph.GraphParser.GraphParser.GetGraphLayoutDot(graphDot);
                 var diff = DiffHelper.GetDiff(initialDot, reparsedDot);
                 //var initialReparsed = GraphParser.GraphParser.GetGraph(initialDot).ToDot();
                 //var reparsedReparsed = GraphParser.GraphParser.GetGraph(reparsedDot).ToDot();
@@ -44,8 +44,8 @@ namespace SharpGraph {
         }
 
         private static void GenerateOutput(string originalDot, string graphDot, string reparsedDot) {
-            GraphParser.GraphParser.GetGraphImage(originalDot).Save("outOriginal.png");
-            GraphParser.GraphParser.GetGraphImage(graphDot).Save("out.png");
+            SharpGraph.GraphParser.GraphParser.GetGraphImage(originalDot).Save("outOriginal.png");
+            SharpGraph.GraphParser.GraphParser.GetGraphImage(graphDot).Save("out.png");
             File.WriteAllText("layout.dot", reparsedDot);
         }
     }

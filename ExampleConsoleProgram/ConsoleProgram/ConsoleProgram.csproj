@@ -7,7 +7,7 @@
     <ProjectGuid>{8E96E596-95DC-4DBF-8872-2D4EBE0099D2}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpGraph</RootNamespace>
+    <RootNamespace>ExampleConsoleProgram</RootNamespace>
     <AssemblyName>ConsoleProgram</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>SharpGraph.ConsoleProgram</StartupObject>
+    <StartupObject>ExampleConsoleProgram.ConsoleProgram</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DiffPlex, Version=1.2.0.0, Culture=neutral, PublicKeyToken=1d35e91d1bd7bc0f, processorArchitecture=MSIL">

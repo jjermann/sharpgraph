@@ -1,9 +1,9 @@
 ﻿using System.Windows.Input;
 using Microsoft.Win32;
-using SharpGraph.GraphControllerViewModel;
+using SharpGraph.GraphView;
 using SharpGraph.GraphViewModel;
 
-namespace SharpGraph.GraphView {
+namespace ExampleGraphView {
     public partial class ImageOutput {
         public ImageOutput(object dataContext) {
             DataContext = dataContext;
