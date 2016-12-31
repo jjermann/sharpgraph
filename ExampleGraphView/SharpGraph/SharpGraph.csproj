@@ -46,10 +46,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GraphTemplates.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="ImageOutput.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -66,7 +62,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BoolToVisibilityConverter.cs" />
     <Compile Include="DotInput.xaml.cs">
       <DependentUpon>DotInput.xaml</DependentUpon>
     </Compile>
@@ -117,13 +112,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\View\GraphView\GraphView.csproj">
+      <Project>{8f29791b-9d6e-421b-9544-69cf3a88b232}</Project>
+      <Name>GraphView</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphController\GraphController.csproj">
       <Project>{CD010999-4519-412B-BC88-AFDC8BD14CF4}</Project>
       <Name>GraphController</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ViewModel\GraphViewModel\GraphViewModel.csproj">
-      <Project>{648385fe-f294-4abc-a5af-a1e3cdd503f9}</Project>
-      <Name>GraphViewModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

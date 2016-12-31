@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using ExampleGraphView.Properties;
 using Microsoft.Win32;
-using SharpGraph.GraphViewModel;
 
 namespace ExampleGraphView {
     public partial class MainWindow : INotifyPropertyChanged {

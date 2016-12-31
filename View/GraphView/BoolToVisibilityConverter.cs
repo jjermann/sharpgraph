@@ -2,7 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Data;
 
-namespace ExampleGraphView {
+namespace SharpGraph.GraphView {
     public class BoolToVisibilityConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter,
             System.Globalization.CultureInfo culture) {
