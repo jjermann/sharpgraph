@@ -2,11 +2,11 @@
         x:Name="ImageOutputName"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:SharpGraph.GraphView"
+        xmlns:exampleGraphView="clr-namespace:ExampleGraphView"
         Title="Rendered Image"
         SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <local:ImageToBitmapSourceConverter x:Key="ImageConverter" />
+        <exampleGraphView:ImageToBitmapSourceConverter x:Key="ImageConverter" />
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Modifiers="Control" Key="S" Command="{Binding Path=SaveCommand, ElementName=ImageOutputName}" />

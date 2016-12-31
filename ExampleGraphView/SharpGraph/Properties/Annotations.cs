@@ -30,7 +30,7 @@ using System;
 // ReSharper disable MemberCanBeProtected.Global
 // ReSharper disable InconsistentNaming
 
-namespace SharpGraph.GraphView.Properties {
+namespace ExampleGraphView.Properties {
     /// <summary>
     ///     Indicates that the value of the marked element could be <c>null</c> sometimes,
     ///     so the check for <c>null</c> is necessary before its usage.

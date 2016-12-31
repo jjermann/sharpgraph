@@ -73,7 +73,10 @@ namespace ExampleGraphView {
                 }
                 if (node.Root.IsDirected) {
                     var hasIncomingNode = node.IncomingNeighbours().Any();
-                    var areAllIncomingNodesSelected = !node.IncomingNeighbours().Select(n => n.Id).Except(selectedIdList).Any();
+                    var areAllIncomingNodesSelected = !node.IncomingNeighbours()
+                        .Select(n => n.Id)
+                        .Except(selectedIdList)
+                        .Any();
                     return areAllIncomingNodesSelected && hasIncomingNode;
                 }
                 return selectedIdList.Intersect(node.ConnectedNeighbours().Select(n => n.Id)).Any();

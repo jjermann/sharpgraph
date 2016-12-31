@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using ExampleGraphView.Properties;
 using Microsoft.Win32;
-using SharpGraph.GraphView;
-using SharpGraph.GraphView.Properties;
 using SharpGraph.GraphViewModel;
 
 namespace ExampleGraphView {

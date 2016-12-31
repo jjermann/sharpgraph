@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 
-namespace SharpGraph.GraphView {
+namespace ExampleGraphView {
     public class EnumToBoolConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter,
             System.Globalization.CultureInfo culture) {

@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
-namespace SharpGraph.GraphView {
+namespace ExampleGraphView {
     [ValueConversion(typeof(Image), typeof(BitmapSource))]
     public class ImageToBitmapSourceConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter,

@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Microsoft.Win32;
 
-namespace SharpGraph.GraphView {
+namespace ExampleGraphView {
     public static class FileDialogHandler<T> where T : FileDialog, new() {
         public static string OpenDialog(string defaultFilename = null) {
             var saveFileDialog = new T();

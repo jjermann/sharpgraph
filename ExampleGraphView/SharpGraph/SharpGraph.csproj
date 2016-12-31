@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>SharpGraph.GraphView.App</StartupObject>
+    <StartupObject>ExampleGraphView.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
