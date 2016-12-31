@@ -86,7 +86,7 @@ namespace ExampleGraphView {
         private void InitializeOriginalGraph(string filename) {
             OriginalGraph = SharpGraph.GraphParser.GraphParser.GetGraph(new FileInfo(filename));
             OriginalDotContent = OriginalGraph.ToDot();
-            OriginalImage = SharpGraph.GraphParser.GraphParser.GetGraphImage(OriginalDotContent);
+            SharpGraph.GraphParser.GraphParser.CheckSyntax(OriginalDotContent);
             //TODO: Figure out a better start selection resp. parse it...
             DeselectAll();
             // This also updates the current context
@@ -108,9 +108,8 @@ namespace ExampleGraphView {
         private void UpdateOriginalGraphFromDotContent() {
             try {
                 var graph = SharpGraph.GraphParser.GraphParser.GetGraph(OriginalDotContent);
-                var originalImage = SharpGraph.GraphParser.GraphParser.GetGraphImage(OriginalDotContent);
+                SharpGraph.GraphParser.GraphParser.CheckSyntax(OriginalDotContent);
                 OriginalGraph = graph;
-                OriginalImage = originalImage;
                 ParseFailureMessageOriginalDotContent = "";
             } catch (Exception e) {
                 ParseFailureMessageOriginalDotContent = e.Message;
@@ -297,15 +296,6 @@ namespace ExampleGraphView {
                 if (GraphUpdateMode == UpdateMode.ImmediateUpdate) {
                     UpdateOriginalGraphFromDotContent();
                 }
-            }
-        }
-
-        private Image _originalImage;
-        public Image OriginalImage {
-            get { return _originalImage; }
-            private set {
-                _originalImage = value;
-                OnPropertyChanged();
             }
         }
 

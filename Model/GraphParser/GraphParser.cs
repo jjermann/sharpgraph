@@ -12,6 +12,12 @@ namespace SharpGraph.GraphParser {
         public static readonly Func<string, Image> ImageGenerator =
             new DotExeRunner<Image>("-Tpng", reader => Image.FromStream(reader.BaseStream)).GetOutput;
 
+        public static readonly Func<string, bool> SyntaxChecker =
+            new DotExeRunner<bool>("-Tcanon", reader => {
+                reader.ReadToEnd();
+                return true;
+            }).GetOutput;
+
         public static IGraph GetGraph(StreamReader reader) {
             var tree = DotParser.DotParser.GetParseTree(reader);
             return new GraphVisitor().Visit(tree);
@@ -46,6 +52,10 @@ namespace SharpGraph.GraphParser {
 
         public static Image GetGraphImage(string graphDot) {
             return ImageGenerator(graphDot);
+        }
+
+        public static bool CheckSyntax(string graphDot) {
+            return SyntaxChecker(graphDot);
         }
     }
 }
