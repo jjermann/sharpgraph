@@ -5,7 +5,7 @@ using ExampleGraphView.Properties;
 using Microsoft.Win32;
 
 namespace ExampleGraphView {
-    public partial class MainWindow : INotifyPropertyChanged {
+    public sealed partial class MainWindow : INotifyPropertyChanged {
         public MainWindow(string initialFile = null) {
             InitializeComponent();
             if (string.IsNullOrEmpty(initialFile)) {
@@ -105,7 +105,7 @@ namespace ExampleGraphView {
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }

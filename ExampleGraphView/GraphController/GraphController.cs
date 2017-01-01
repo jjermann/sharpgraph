@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,8 @@ using SharpGraph.GraphViewModel;
 using SharpGraph.GraphViewModel.Properties;
 
 namespace ExampleGraphView {
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public sealed class GraphController : INotifyPropertyChanged {
         #region Private
 
@@ -33,7 +36,7 @@ namespace ExampleGraphView {
             }
         }
 
-        public void UpdateCurrentContent() {
+        private void UpdateCurrentContent() {
             var nodeSelector = RestrictVisibility
                 ? GetNeighbourNodeSelector(SelectedNodeIds)
                 : null;

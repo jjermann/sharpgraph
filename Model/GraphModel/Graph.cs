@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace SharpGraph.GraphModel {
     public class Graph : SubGraph, IGraph {
+        // ReSharper disable once MemberCanBePrivate.Global
         public Graph(string id, bool isDirected, bool isStrict = false) : base(null, id) {
             IsDirected = isDirected;
             IsStrict = isStrict;

@@ -19,12 +19,13 @@ namespace SharpGraph.GraphModel {
 
         private bool IsDirected { get; }
 
-        protected virtual string Connector => IsDirected
+        // ReSharper disable once MemberCanBePrivate.Global
+        protected string Connector => IsDirected
             ? ModelHelper.DirectedEdgeOpName
             : ModelHelper.UndirectedEdgeOpName;
 
-        public virtual INode EndNode { get; }
-        public virtual INode SourceNode { get; }
+        public INode EndNode { get; }
+        public INode SourceNode { get; }
 
         public override bool HasAttribute(string attr, bool recursive = false) {
             var hasLocalAttr = Attributes.ContainsKey(attr);

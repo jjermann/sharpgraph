@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using SharpGraph.ExternalRunners;
 using SharpGraph.GraphModel;
 
 namespace SharpGraph.GraphParser {
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public static class GraphParser {
         public static readonly Func<string, string> LayoutGenerator =
             new DotExeRunner<string>("-Tdot", reader => reader.ReadToEnd()).GetOutput;
@@ -54,6 +56,7 @@ namespace SharpGraph.GraphParser {
             return ImageGenerator(graphDot);
         }
 
+        // ReSharper disable once UnusedMethodReturnValue.Global
         public static bool CheckSyntax(string graphDot) {
             return SyntaxChecker(graphDot);
         }

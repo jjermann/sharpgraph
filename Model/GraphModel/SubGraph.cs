@@ -4,13 +4,14 @@ using System.Linq;
 
 namespace SharpGraph.GraphModel {
     public class SubGraph : BaseObject, ISubGraph {
+        // ReSharper disable once MemberCanBeProtected.Global
         public SubGraph(ISubGraph parentGraph, string id) : base(parentGraph, id) {
             NodeAttributes = new AttributeDictionary();
             EdgeAttributes = new AttributeDictionary();
         }
 
-        protected virtual IAttributeDictionary NodeAttributes { get; }
-        protected virtual IAttributeDictionary EdgeAttributes { get; }
+        protected IAttributeDictionary NodeAttributes { get; }
+        protected IAttributeDictionary EdgeAttributes { get; }
 
         public virtual void SetNodeAttributes(IAttributeDictionary attrs) {
             NodeAttributes.SetAttributes(attrs);
@@ -166,7 +167,7 @@ namespace SharpGraph.GraphModel {
             var allEdges = Root.GetEdges().ToList();
 
             if (nodeSelector != null) {
-                nodes = nodes.Where(n => nodeSelector(n));
+                nodes = nodes.Where(nodeSelector);
                 edges = edges.Where(e => nodeSelector(e.SourceNode) && nodeSelector(e.EndNode));
                 allEdges = allEdges.Where(e => nodeSelector(e.SourceNode) && nodeSelector(e.EndNode)).ToList();
             }

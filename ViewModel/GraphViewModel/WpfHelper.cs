@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace SharpGraph.GraphViewModel {
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public static class WpfHelper {
         private const double DeviceIndependentPpi = 96.0;
 
@@ -80,7 +82,7 @@ namespace SharpGraph.GraphViewModel {
             const string num = @"[-]?([\.[0-9]+]|[0-9]+(\.[0-9]*)?)";
             var pointStr = $"({num},{num})";
             var splineExp = new Regex(
-                $"^"
+                "^"
                 + $"(e,(?<endPoint>{pointStr}) )?"
                 + $"(s,(?<startPoint>{pointStr}) )?"
                 + $"(?<mainPoint>{pointStr})"

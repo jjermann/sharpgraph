@@ -83,7 +83,7 @@
             <ContentControl Content="{Binding OriginalInputFile}" />
         </StatusBar>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <ContentControl Name="GraphContent" Content="{Binding CurrentWpfGraph}">
+            <ContentControl Content="{Binding CurrentWpfGraph}">
                 <ContentControl.LayoutTransform>
                     <ScaleTransform
                         CenterX="0"

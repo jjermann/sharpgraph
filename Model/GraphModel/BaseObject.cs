@@ -8,7 +8,7 @@ namespace SharpGraph.GraphModel {
             Attributes = new AttributeDictionary();
         }
 
-        protected virtual IAttributeDictionary Attributes { get; }
+        protected IAttributeDictionary Attributes { get; }
 
         public virtual void SetAttributes(IAttributeDictionary attrs) {
             Attributes.SetAttributes(attrs);

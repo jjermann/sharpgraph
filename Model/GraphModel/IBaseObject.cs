@@ -1,6 +1,8 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SharpGraph.GraphModel {
+    [SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
     public interface IBaseObject : IEquatable<IBaseObject>, IComparable<IBaseObject> {
         ISubGraph Parent { get; }
         string Id { get; }

@@ -1,6 +1,8 @@
-﻿using SharpGraph.GraphModel;
+﻿using System.Diagnostics.CodeAnalysis;
+using SharpGraph.GraphModel;
 
 namespace SharpGraph.GraphViewModel {
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class WpfEdge {
         public WpfEdge(IEdge edgeBehind) {
             EdgeBehind = edgeBehind;
@@ -8,6 +10,7 @@ namespace SharpGraph.GraphViewModel {
         }
 
         protected IEdge EdgeBehind { get; }
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public string Label { get; protected set; }
         public string Geometry { get; protected set; }
         public bool HasArrowHead { get; protected set; }
