@@ -43,6 +43,9 @@
                 <MenuItem Header="_Current Dot Content"
                           IsCheckable="True"
                           IsChecked="{Binding Path=ShowDotOutput, ElementName=MainWindowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <MenuItem Header="_Current Dot Layout Content"
+                          IsCheckable="True"
+                          IsChecked="{Binding Path=ShowDotLayoutOutput, ElementName=MainWindowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <MenuItem Header="_Rendered Image"
                           IsCheckable="True"
                           IsChecked="{Binding Path=ShowImageOutput, ElementName=MainWindowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

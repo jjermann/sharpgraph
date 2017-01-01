@@ -46,6 +46,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="DotLayoutOutput.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ImageOutput.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -64,6 +68,9 @@
     </Compile>
     <Compile Include="DotInput.xaml.cs">
       <DependentUpon>DotInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DotLayoutOutput.xaml.cs">
+      <DependentUpon>DotLayoutOutput.xaml</DependentUpon>
     </Compile>
     <Compile Include="FileDialogHandler.cs" />
     <Compile Include="ImageOutput.xaml.cs">

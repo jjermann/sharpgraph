@@ -44,7 +44,8 @@ namespace ExampleGraphView {
             if (UpdateCurrentImage) {
                 CurrentImage = SharpGraph.GraphParser.GraphParser.GetGraphImage(CurrentDotContent);
             }
-            CurrentLayoutGraph = SharpGraph.GraphParser.GraphParser.GetGraphLayout(CurrentDotContent);
+            CurrentDotLayoutContent = SharpGraph.GraphParser.GraphParser.GetGraphLayoutDot(CurrentDotContent);
+            CurrentLayoutGraph = SharpGraph.GraphParser.GraphParser.GetGraph(CurrentDotLayoutContent);
 
             if (CurrentWpfGraph != null) {
                 CurrentWpfGraph.Changed -= CurrentWpfGraphChanged;
@@ -307,6 +308,15 @@ namespace ExampleGraphView {
             get { return _currentDotContent; }
             private set {
                 _currentDotContent = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _currentDotLayoutContent;
+        public string CurrentDotLayoutContent {
+            get { return _currentDotLayoutContent; }
+            private set {
+                _currentDotLayoutContent = value;
                 OnPropertyChanged();
             }
         }

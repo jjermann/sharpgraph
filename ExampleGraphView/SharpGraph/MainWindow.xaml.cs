@@ -16,11 +16,13 @@ namespace ExampleGraphView {
                 vm.OpenFileCommand.Execute(initialFile);
             }
             ShowDotOutput = false;
+            ShowDotLayoutOutput = false;
             ShowImageOutput = false;
             ShowDotInput = true;
         }
 
         private DotOutput DotOutputWindow { get; set; }
+        private DotLayoutOutput DotLayoutOutputWindow { get; set; }
         private ImageOutput ImageOutputWindow { get; set; }
         private DotInput DotInputWindow { get; set; }
 
@@ -38,6 +40,26 @@ namespace ExampleGraphView {
                     if (DotOutputWindow != null) {
                         DotOutputWindow.Close();
                         DotOutputWindow = null;
+                    }
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _showDotLayoutOutput;
+        public bool ShowDotLayoutOutput {
+            get { return _showDotLayoutOutput; }
+            set {
+                _showDotLayoutOutput = value;
+                if (_showDotLayoutOutput) {
+                    if (DotLayoutOutputWindow == null) {
+                        DotLayoutOutputWindow = new DotLayoutOutput(DataContext);
+                        DotLayoutOutputWindow.Show();
+                    }
+                } else {
+                    if (DotLayoutOutputWindow != null) {
+                        DotLayoutOutputWindow.Close();
+                        DotLayoutOutputWindow = null;
                     }
                 }
                 OnPropertyChanged();
