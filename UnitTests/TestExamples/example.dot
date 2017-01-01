@@ -1,19 +1,20 @@
 digraph {
   bgcolor="bisque"
+  pad="0.5,0.4"
   node [style=filled, fillcolor="lightblue"]
   A
   B->C->{
     A; D; {
-	  A; B
+	  A; B [width=0.3, height=0.3, penwidth=3, color=red]
 	}
   }
-  C [label="MyEdges", shape="rect"]
-  D->B
+  C [label="MyNodeC", shape="rect", fillcolor=orange, width=1, height=2]
+  D->B [label="MyEdgeLabel"]
   D [label="MyNodeD", shape="circle"];
   subgraph cluster0 {
-    graph [bgcolor="yellow"]
+    graph [bgcolor="yellow", pencolor="green", penwidth=2]
     E [shape="square"]
 	F->A
-	D->B
+	D->B [label="bar"]
   }
 }

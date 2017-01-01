@@ -38,6 +38,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MoveToMiddleProperty.cs" />
     <Compile Include="BoolToVisibilityConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Data;
 
 namespace SharpGraph.GraphView {
+    [ValueConversion(typeof(bool), typeof(Visibility))]
     public class BoolToVisibilityConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter,
             System.Globalization.CultureInfo culture) {

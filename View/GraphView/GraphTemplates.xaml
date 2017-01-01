@@ -4,6 +4,7 @@
                     xmlns:viewmodels="clr-namespace:SharpGraph.GraphViewModel;assembly=GraphViewModel"
                     xmlns:graphView="clr-namespace:SharpGraph.GraphView">
     <graphView:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    <graphView:CenterConverter x:Key="CenterConverter" />
 
     <Style x:Key="NodeShapeStyle" TargetType="{x:Type Shape}">
         <Setter Property="Width" Value="{Binding Width}" />
@@ -52,8 +53,8 @@
                 x:Name="NodeShape"
                 Content="{Binding}"
                 Style="{StaticResource NodeShapeControl}" />
-            <ContentPresenter
-                Content="{Binding Label}"
+            <TextBlock
+                Text="{Binding Label}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center" />
         </Grid>
@@ -74,6 +75,13 @@
                   Stroke="Black"
                   Fill="Black"
                   Visibility="{Binding HasArrowHead, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <TextBlock
+                Name="foo"
+                Text="{Binding Label}"
+                Margin="{Binding LabelMargin}"
+                graphView:Mover.MoveToMiddle="True"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" />
         </Grid>
     </DataTemplate>
 
