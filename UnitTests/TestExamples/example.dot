@@ -1,6 +1,8 @@
 digraph {
   bgcolor="bisque"
   pad="0.5,0.4"
+  label="Example Graph"
+  fontsize=20
   node [style=filled, fillcolor="lightblue"]
   A
   B->C->{
@@ -13,6 +15,9 @@ digraph {
   D [label="MyNodeD", shape="circle"];
   subgraph cluster0 {
     graph [bgcolor="yellow", pencolor="green", penwidth=2]
+	label="Subgraph Label"
+	fontsize=14
+	fontcolor=gray
     E [shape="square"]
 	F->A [penwidth=3, color="blue"]
 	D->B [label="bar"]

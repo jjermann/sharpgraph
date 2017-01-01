@@ -14,6 +14,7 @@ namespace SharpGraph.GraphViewModel {
         }
 
         private ISubGraph SubGraphBehind { get; }
+        public string Id { get; protected set; }
         public string Label { get; protected set; }
         public bool IsCluster { get; protected set; }
 
@@ -25,6 +26,7 @@ namespace SharpGraph.GraphViewModel {
         private double X { get; set; }
         private double Y { get; set; }
         public string Margin { get; protected set; }
+        public string LabelMargin { get; protected set; }
 
         protected IEnumerable<string> Styles { get; set; }
         public string FillColor { get; protected set; }
@@ -35,10 +37,12 @@ namespace SharpGraph.GraphViewModel {
         public double FontSize { get; protected set; }
 
         private void UpdatePropertyValues() {
-            Label = SubGraphBehind.HasAttribute("label")
-                ? SubGraphBehind.GetAttribute("label")
-                : SubGraphBehind.Id;
-            IsCluster = Label.StartsWith("cluster");
+            Id = SubGraphBehind.Id;
+            IsCluster = Id.StartsWith("cluster");
+            Label = WpfHelper.ConvertIdToText(
+                SubGraphBehind.HasAttribute("label", true)
+                    ? SubGraphBehind.GetAttribute("label", true)
+                    : null);
 
             HasBoundingBox = SubGraphBehind.HasAttribute("bb");
             if (HasBoundingBox) {
@@ -69,6 +73,15 @@ namespace SharpGraph.GraphViewModel {
                 FontFamily = GetFontFamily();
                 FontColor = GetFontColor();
                 FontSize = GetFontSize();
+
+                if (Label != null) {
+                    var labelPos = WpfHelper.ConvertIdToText(SubGraphBehind.GetAttribute("lp"))
+                        .Split(',')
+                        .Select(p => p + "pt")
+                        .Select(WpfHelper.StringToPixel)
+                        .ToList();
+                    LabelMargin = $"{labelPos[0]},{labelPos[1]},0,0";
+                }
             }
         }
 

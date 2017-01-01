@@ -33,11 +33,20 @@ namespace SharpGraph.GraphViewModel {
         public string Pad { get; protected set; }
 
         private void UpdatePropertyValues() {
-            IsDirected = GraphBehind.IsDirected;
+            Id = GraphBehind.Id;
             Label = WpfHelper.ConvertIdToText(
                 GraphBehind.HasAttribute("label")
                     ? GraphBehind.GetAttribute("label")
-                    : GraphBehind.Id);
+                    : null);
+            if (Label != null) {
+                var labelPos = WpfHelper.ConvertIdToText(GraphBehind.GetAttribute("lp"))
+                    .Split(',')
+                    .Select(p => p + "pt")
+                    .Select(WpfHelper.StringToPixel)
+                    .ToList();
+                LabelMargin = $"{labelPos[0]},{labelPos[1]},0,0";
+            }
+            IsDirected = GraphBehind.IsDirected;
             FillColor = GetGraphFillColor();
             Pad = GetGraphPad();
         }

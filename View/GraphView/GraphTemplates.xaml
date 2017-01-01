@@ -49,16 +49,14 @@
     </Style>
     <ControlTemplate x:Key="NodeTemplate" TargetType="{x:Type ContentControl}">
         <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-            <ContentControl
-                x:Name="NodeShape"
-                Content="{Binding}"
-                Style="{StaticResource NodeShapeControl}" />
-            <TextBlock
-                Text="{Binding Label}"
-                FontSize="{Binding FontSize}"
-                Foreground="{Binding FontColor}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center" />
+            <ContentControl x:Name="NodeShape"
+                            Content="{Binding}"
+                            Style="{StaticResource NodeShapeControl}" />
+            <TextBlock Text="{Binding Label}"
+                       FontSize="{Binding FontSize}"
+                       Foreground="{Binding FontColor}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
         </Grid>
     </ControlTemplate>
     <Style x:Key="NodeStyle" TargetType="{x:Type ContentControl}">
@@ -80,17 +78,18 @@
                 Value="{Binding HasArrowHead, Converter={StaticResource BoolToVisibilityConverter}}" />
     </Style>
     <DataTemplate DataType="{x:Type viewmodels:WpfEdge}">
-        <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Path Data="{Binding Geometry}" Style="{StaticResource EdgeStyle}" />
-            <Path Data="{Binding ArrowHeadGeometry}" Style="{StaticResource ArrowHeadStyle}" />
-            <TextBlock
-                Text="{Binding Label}"
-                Margin="{Binding LabelMargin}"
-                graphView:Mover.MoveToMiddle="True"
-                FontSize="{Binding FontSize}"
-                Foreground="{Binding FontColor}"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top" />
+        <Grid>
+            <Path Data="{Binding Geometry}"
+                  Style="{StaticResource EdgeStyle}" />
+            <Path Data="{Binding ArrowHeadGeometry}"
+                  Style="{StaticResource ArrowHeadStyle}" />
+            <TextBlock Text="{Binding Label}"
+                       Margin="{Binding LabelMargin}"
+                       graphView:Mover.MoveToMiddle="True"
+                       FontSize="{Binding FontSize}"
+                       Foreground="{Binding FontColor}"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top" />
         </Grid>
     </DataTemplate>
 
@@ -112,8 +111,16 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate DataType="{x:Type viewmodels:WpfSubGraph}">
-                            <Grid Margin="{Binding Margin}" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                <Rectangle Style="{StaticResource SubGraphShapeStyle}" />
+                            <Grid>
+                                <Rectangle Margin="{Binding Margin}"
+                                           Style="{StaticResource SubGraphShapeStyle}" />
+                                <TextBlock Text="{Binding Label}"
+                                           Margin="{Binding LabelMargin}"
+                                           graphView:Mover.MoveToMiddle="True"
+                                           FontSize="{Binding FontSize}"
+                                           Foreground="{Binding FontColor}"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Top" />
                             </Grid>
                         </DataTemplate>
                     </Setter.Value>
@@ -127,13 +134,8 @@
 
     <DataTemplate DataType="{x:Type viewmodels:WpfGraph}">
         <Border BorderThickness="{Binding Pad}"
-                BorderBrush="{Binding FillColor}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-            <Grid
-                Background="{Binding FillColor}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
+                BorderBrush="{Binding FillColor}">
+            <Grid Background="{Binding FillColor}">
                 <ItemsControl ItemsSource="{Binding WpfSubGraphs}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -155,6 +157,13 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
+                <TextBlock Text="{Binding Label}"
+                           Margin="{Binding LabelMargin}"
+                           graphView:Mover.MoveToMiddle="True"
+                           FontSize="{Binding FontSize}"
+                           Foreground="{Binding FontColor}"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top" />
             </Grid>
         </Border>
     </DataTemplate>
