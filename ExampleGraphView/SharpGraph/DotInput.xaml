@@ -20,50 +20,46 @@
                 <MenuItem Header="_Save As..." Command="{Binding Path=SaveAsCommand, ElementName=DotInputName}" />
             </MenuItem>
         </Menu>
-        <StackPanel Orientation="Vertical">
-            <DockPanel VerticalAlignment="Top">
-                <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Vertical" Margin="10 10 10 0">
-                        <RadioButton
-                            GroupName="One"
-                            IsChecked="{Binding
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+            <StackPanel Orientation="Vertical">
+                <DockPanel VerticalAlignment="Top">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Vertical" Margin="10 10 10 0">
+                            <RadioButton
+                                GroupName="One"
+                                IsChecked="{Binding
                                 Path=GraphUpdateMode,
                                 Mode=TwoWay,
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource EnumToBoolConverter},
                                 ConverterParameter=ManualUpdate}"
-                            Content="Manual Update" />
-                        <RadioButton
-                            GroupName="One"
-                            IsChecked="{Binding
+                                Content="Manual Update" />
+                            <RadioButton
+                                GroupName="One"
+                                IsChecked="{Binding
                                 Path=GraphUpdateMode,
                                 Mode=TwoWay,
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource EnumToBoolConverter},
                                 ConverterParameter=ImmediateUpdate}"
-                            Content="Immediate Update" />
+                                Content="Immediate Update" />
+                        </StackPanel>
+                        <Button
+                            Command="{Binding OriginalDotToOriginalGraph}"
+                            Height="50"
+                            Margin="10 10 10 10"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Top"
+                            Content="Apply" />
                     </StackPanel>
-                    <Button
-                        Command="{Binding OriginalDotToOriginalGraph}"
-                        Height="50"
-                        Margin="10 10 10 10"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Top"
-                        Content="Apply" />
-                </StackPanel>
-                <ScrollViewer
-                    HorizontalScrollBarVisibility="Auto"
-                    VerticalScrollBarVisibility="Auto"
-                    Margin="0 10 10 10">
-                    <Border BorderThickness="1" BorderBrush="Black">
-                        <TextBlock Text="{Binding ParseFailureMessageOriginalDotContent}" Foreground="Red" />
+                    <Border Margin="0 10 10 10" BorderThickness="1" BorderBrush="Black">
+                        <TextBlock Padding="10" Text="{Binding ParseFailureMessageOriginalDotContent}" Foreground="Red" />
                     </Border>
-                </ScrollViewer>
-            </DockPanel>
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                </DockPanel>
                 <TextBox AcceptsReturn="True"
+                         Padding="10"
                          Text="{Binding OriginalDotContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            </ScrollViewer>
-        </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
     </DockPanel>
 </Window>
