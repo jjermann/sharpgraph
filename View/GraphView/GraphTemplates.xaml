@@ -68,13 +68,19 @@
                 Command="{Binding ToggleNodeSelectionCommand}" />
     </DataTemplate>
 
+    <Style x:Key="EdgeStyle" TargetType="{x:Type Shape}">
+        <Setter Property="Stroke" Value="{Binding StrokeColor}" />
+        <Setter Property="StrokeThickness" Value="{Binding StrokeThickness}" />
+    </Style>
+    <Style x:Key="ArrowHeadStyle" TargetType="{x:Type Shape}" BasedOn="{StaticResource EdgeStyle}">
+        <Setter Property="Fill" Value="{Binding StrokeColor}" />
+        <Setter Property="Visibility"
+                Value="{Binding HasArrowHead, Converter={StaticResource BoolToVisibilityConverter}}" />
+    </Style>
     <DataTemplate DataType="{x:Type viewmodels:WpfEdge}">
         <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Path Data="{Binding Geometry}" Stroke="Black" />
-            <Path Data="{Binding ArrowHeadGeometry}"
-                  Stroke="Black"
-                  Fill="Black"
-                  Visibility="{Binding HasArrowHead, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <Path Data="{Binding Geometry}" Style="{StaticResource EdgeStyle}" />
+            <Path Data="{Binding ArrowHeadGeometry}" Style="{StaticResource ArrowHeadStyle}" />
             <TextBlock
                 Name="foo"
                 Text="{Binding Label}"
@@ -132,14 +138,14 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
-                <ItemsControl ItemsSource="{Binding WpfEdges}">
+                <ItemsControl ItemsSource="{Binding WpfNodes}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Grid HorizontalAlignment="Left" VerticalAlignment="Top" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
-                <ItemsControl ItemsSource="{Binding WpfNodes}">
+                <ItemsControl ItemsSource="{Binding WpfEdges}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Grid HorizontalAlignment="Left" VerticalAlignment="Top" />

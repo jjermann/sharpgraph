@@ -14,7 +14,7 @@ digraph {
   subgraph cluster0 {
     graph [bgcolor="yellow", pencolor="green", penwidth=2]
     E [shape="square"]
-	F->A
+	F->A [penwidth=3, color="blue"]
 	D->B [label="bar"]
   }
 }

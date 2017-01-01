@@ -17,6 +17,8 @@ namespace SharpGraph.GraphViewModel {
         public string Geometry { get; protected set; }
         public bool HasArrowHead { get; protected set; }
         public string ArrowHeadGeometry { get; protected set; }
+        public string StrokeColor { get; protected set; }
+        public double StrokeThickness { get; protected set; }
 
         private void UpdatePropertyValues() {
             Label = WpfHelper.ConvertIdToText(
@@ -36,6 +38,25 @@ namespace SharpGraph.GraphViewModel {
             HasArrowHead = EdgeBehind.Root.IsDirected;
             ArrowHeadGeometry = WpfHelper.PosToArrowHeadGeometry(WpfHelper.ConvertIdToText(
                 EdgeBehind.GetAttribute("pos")));
+
+            StrokeColor = GetEdgeStrokeColor();
+            StrokeThickness = GetEdgeStrokeThickness();
+        }
+
+        private string GetEdgeStrokeColor() {
+            var color = WpfHelper.ConvertIdToText(
+                EdgeBehind.HasAttribute("color", true)
+                    ? EdgeBehind.GetAttribute("color", true)
+                    : null);
+            return color ?? "black";
+        }
+
+        private double GetEdgeStrokeThickness() {
+            var thicknessStr = WpfHelper.ConvertIdToText(
+                EdgeBehind.HasAttribute("penwidth", true)
+                    ? EdgeBehind.GetAttribute("penwidth", true) + "pt"
+                    : "1");
+            return WpfHelper.StringToPixel(thicknessStr);
         }
     }
 }
