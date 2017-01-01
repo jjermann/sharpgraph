@@ -9,7 +9,7 @@ digraph {
 	}
   }
   C [label="MyNodeC", shape="rect", fillcolor=orange, width=1, height=2]
-  D->B [label="MyEdgeLabel"]
+  D->B [label="MyEdgeLabel", fontcolor="blue", fontsize=16]
   D [label="MyNodeD", shape="circle"];
   subgraph cluster0 {
     graph [bgcolor="yellow", pencolor="green", penwidth=2]
