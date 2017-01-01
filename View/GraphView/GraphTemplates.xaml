@@ -10,6 +10,7 @@
         <Setter Property="Height" Value="{Binding Height}" />
         <Setter Property="Fill" Value="{Binding FillColor}" />
         <Setter Property="Stroke" Value="{Binding StrokeColor}" />
+        <Setter Property="StrokeThickness" Value="{Binding StrokeThickness}" />
         <Style.Triggers>
             <DataTrigger
                 Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}}"
@@ -81,6 +82,7 @@
         <Setter Property="Height" Value="{Binding Height}" />
         <Setter Property="Fill" Value="{Binding FillColor}" />
         <Setter Property="Stroke" Value="{Binding StrokeColor}" />
+        <Setter Property="StrokeThickness" Value="{Binding StrokeThickness}" />
     </Style>
     <Style x:Key="SubGraphShapeControl" TargetType="ContentControl">
         <Setter Property="ContentTemplate">
@@ -107,31 +109,36 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type viewmodels:WpfGraph}">
-        <Grid
-            Background="{Binding FillColor}"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-            <ItemsControl ItemsSource="{Binding WpfSubGraphs}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-            <ItemsControl ItemsSource="{Binding WpfEdges}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-            <ItemsControl ItemsSource="{Binding WpfNodes}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-        </Grid>
+        <Border BorderThickness="{Binding Pad}"
+                BorderBrush="{Binding FillColor}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+            <Grid
+                Background="{Binding FillColor}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <ItemsControl ItemsSource="{Binding WpfSubGraphs}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+                <ItemsControl ItemsSource="{Binding WpfEdges}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+                <ItemsControl ItemsSource="{Binding WpfNodes}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Grid>
+        </Border>
     </DataTemplate>
 </ResourceDictionary>

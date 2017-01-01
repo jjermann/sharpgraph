@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -7,6 +8,9 @@ using SharpGraph.GraphModel;
 using SharpGraph.GraphViewModel.Properties;
 
 namespace SharpGraph.GraphViewModel {
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class WpfNode : INotifyPropertyChanged {
         public WpfNode(WpfGraph root, INode nodeBehind, bool isSelected = false) {
             Root = root;
@@ -42,6 +46,7 @@ namespace SharpGraph.GraphViewModel {
         private IEnumerable<string> Styles { get; set; }
         public string FillColor { get; protected set; }
         public string StrokeColor { get; protected set; }
+        public double StrokeThickness { get; protected set; }
 
         //Properties that can be changed
         private bool _isSelected;
@@ -69,14 +74,20 @@ namespace SharpGraph.GraphViewModel {
                     ? NodeBehind.GetAttribute("shape", true)
                     : "ellipse");
 
-            CenterX = WpfHelper.StringToPixel(
-                NodeBehind.GetAttribute("pos").Trim('"').Split(',')[0] + "pt");
-            CenterY = WpfHelper.StringToPixel(
-                NodeBehind.GetAttribute("pos").Trim('"').Split(',')[1] + "pt");
-            Width = WpfHelper.StringToPixel(
-                NodeBehind.GetAttribute("width", true).Trim('"') + "in");
-            Height = WpfHelper.StringToPixel(
-                NodeBehind.GetAttribute("height", true).Trim('"') + "in");
+            //Dot extends the border in both directions but wpf only inwards
+            //so we compensate this by increasing the Width/Height by StrokeThickness.
+            StrokeThickness = GetNodeStrokeThickness();
+
+            CenterX = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+                                                  NodeBehind.GetAttribute("pos")).Split(',')[0] + "pt");
+            CenterY = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+                                                  NodeBehind.GetAttribute("pos")).Split(',')[1] + "pt");
+            Width = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+                                                NodeBehind.GetAttribute("width", true)) + "in")
+                    + StrokeThickness;
+            Height = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+                                                 NodeBehind.GetAttribute("height", true)) + "in")
+                     + StrokeThickness;
             X = CenterX - Width/2;
             Y = CenterY - Height/2;
             Margin = $"{X},{Y},0,0";
@@ -108,8 +119,16 @@ namespace SharpGraph.GraphViewModel {
             var color = WpfHelper.ConvertIdToText(
                 NodeBehind.HasAttribute("color", true)
                     ? NodeBehind.GetAttribute("color", true)
-                    : "black");
-            return color;
+                    : null);
+            return color ?? "black";
+        }
+
+        private double GetNodeStrokeThickness() {
+            var thicknessStr = WpfHelper.ConvertIdToText(
+                NodeBehind.HasAttribute("penwidth", true)
+                    ? NodeBehind.GetAttribute("penwidth", true) + "pt"
+                    : "1");
+            return WpfHelper.StringToPixel(thicknessStr);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using SharpGraph.GraphModel;
 
 namespace SharpGraph.GraphViewModel {
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class WpfSubGraph {
         public WpfSubGraph(ISubGraph subGraphBehind) {
             SubGraphBehind = subGraphBehind;
@@ -25,6 +29,7 @@ namespace SharpGraph.GraphViewModel {
         protected IEnumerable<string> Styles { get; set; }
         public string FillColor { get; protected set; }
         public string StrokeColor { get; protected set; }
+        public double StrokeThickness { get; protected set; }
 
         private void UpdatePropertyValues() {
             Label = SubGraphBehind.HasAttribute("label")
@@ -34,14 +39,20 @@ namespace SharpGraph.GraphViewModel {
 
             HasBoundingBox = SubGraphBehind.HasAttribute("bb");
             if (HasBoundingBox) {
-                UpperRightX = WpfHelper.StringToPixel(
-                    SubGraphBehind.GetAttribute("bb").Trim('"').Split(',')[2] + "pt");
-                UpperRightY = WpfHelper.StringToPixel(
-                    SubGraphBehind.GetAttribute("bb").Trim('"').Split(',')[3] + "pt");
-                X = WpfHelper.StringToPixel(
-                    SubGraphBehind.GetAttribute("bb").Trim('"').Split(',')[0] + "pt");
-                Y = WpfHelper.StringToPixel(
-                    SubGraphBehind.GetAttribute("bb").Trim('"').Split(',')[1] + "pt");
+                StrokeThickness = GetSubGraphStrokeThickness();
+
+                UpperRightX = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+                                                          SubGraphBehind.GetAttribute("bb")).Split(',')[2] + "pt") +
+                              StrokeThickness/2.0;
+                UpperRightY = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+                                                          SubGraphBehind.GetAttribute("bb")).Split(',')[3] + "pt") +
+                              StrokeThickness/2.0;
+                X = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+                                                SubGraphBehind.GetAttribute("bb")).Split(',')[0] + "pt") -
+                    StrokeThickness/2.0;
+                Y = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+                                                SubGraphBehind.GetAttribute("bb")).Split(',')[1] + "pt") -
+                    StrokeThickness/2.0;
                 Width = UpperRightX - X;
                 Height = UpperRightY - Y;
                 Margin = $"{X},{Y},0,0";
@@ -75,11 +86,23 @@ namespace SharpGraph.GraphViewModel {
         }
 
         private string GetSubGraphStrokeColor() {
+            var pencolor = WpfHelper.ConvertIdToText(
+                SubGraphBehind.HasAttribute("pencolor", true)
+                    ? SubGraphBehind.GetAttribute("pencolor", true)
+                    : null);
             var color = WpfHelper.ConvertIdToText(
                 SubGraphBehind.HasAttribute("color", true)
                     ? SubGraphBehind.GetAttribute("color", true)
-                    : "black");
-            return color;
+                    : null);
+            return pencolor ?? color ?? "black";
+        }
+
+        private double GetSubGraphStrokeThickness() {
+            var thicknessStr = WpfHelper.ConvertIdToText(
+                SubGraphBehind.HasAttribute("penwidth", true)
+                    ? SubGraphBehind.GetAttribute("penwidth", true) + "pt"
+                    : "1");
+            return WpfHelper.StringToPixel(thicknessStr);
         }
     }
 }

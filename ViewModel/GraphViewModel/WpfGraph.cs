@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using SharpGraph.GraphModel;
 
 namespace SharpGraph.GraphViewModel {
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class WpfGraph : WpfSubGraph {
         public WpfGraph(IGraph graphBehind, IList<string> selectedNodeIds = null) : base(graphBehind) {
             GraphBehind = graphBehind;
@@ -28,6 +30,7 @@ namespace SharpGraph.GraphViewModel {
 
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public bool IsDirected { get; protected set; }
+        public string Pad { get; protected set; }
 
         private void UpdatePropertyValues() {
             IsDirected = GraphBehind.IsDirected;
@@ -36,6 +39,7 @@ namespace SharpGraph.GraphViewModel {
                     ? GraphBehind.GetAttribute("label")
                     : GraphBehind.Id);
             FillColor = GetGraphFillColor();
+            Pad = GetGraphPad();
         }
 
         private string GetGraphFillColor() {
@@ -44,6 +48,14 @@ namespace SharpGraph.GraphViewModel {
                     ? GraphBehind.GetAttribute("bgcolor", true)
                     : null);
             return bgColor;
+        }
+
+        private string GetGraphPad() {
+            var padStr = WpfHelper.ConvertIdToText(
+                GraphBehind.HasAttribute("pad")
+                    ? GraphBehind.GetAttribute("pad")
+                    : "0.0555");
+            return string.Join(",", padStr.Split(',').Select(s => WpfHelper.StringToPixel(s + "in")));
         }
 
         public event EventHandler Changed;
