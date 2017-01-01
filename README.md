@@ -1,4 +1,4 @@
-// Copyright (C) 2016 by Jonas Jermann <jjermann2@gmail.com>
+// Copyright (C) 2017 by Jonas Jermann <jjermann2@gmail.com>
 
 Sharpgraph
 ==========
@@ -25,6 +25,10 @@ Prerequisites:
 
 Screenshots:
 ------------
+
+Screenshot from 01.01.2017:
+
+![sharpgraph 20151228](https://cloud.githubusercontent.com/assets/1377808/21582909/59e80cc6-d069-11e6-8c41-53943c27dcd1.png)
 
 Screenshot from 28.12.2016:
 
