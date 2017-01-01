@@ -30,6 +30,9 @@ namespace SharpGraph.GraphViewModel {
         public string FillColor { get; protected set; }
         public string StrokeColor { get; protected set; }
         public double StrokeThickness { get; protected set; }
+        public string FontColor { get; protected set; }
+        public string FontFamily { get; protected set; }
+        public double FontSize { get; protected set; }
 
         private void UpdatePropertyValues() {
             Label = SubGraphBehind.HasAttribute("label")
@@ -63,6 +66,9 @@ namespace SharpGraph.GraphViewModel {
                         : null);
                 FillColor = GetSubGraphFillColor();
                 StrokeColor = GetSubGraphStrokeColor();
+                FontFamily = GetFontFamily();
+                FontColor = GetFontColor();
+                FontSize = GetFontSize();
             }
         }
 
@@ -103,6 +109,33 @@ namespace SharpGraph.GraphViewModel {
                     ? SubGraphBehind.GetAttribute("penwidth", true) + "pt"
                     : "1");
             return WpfHelper.StringToPixel(thicknessStr);
+        }
+
+        private string GetFontFamily() {
+            //TODO
+            //var fontname = WpfHelper.ConvertIdToText(
+            //    SubGraphBehind.HasAttribute("fontname", true)
+            //        ? SubGraphBehind.GetAttribute("fontname", true)
+            //        : "Times-Roman");
+            return null;
+        }
+
+        private string GetFontColor() {
+            return WpfHelper.ConvertIdToText(
+                SubGraphBehind.HasAttribute("fontcolor", true)
+                    ? SubGraphBehind.GetAttribute("fontcolor", true)
+                    : "black");
+        }
+
+        private double GetFontSize() {
+            var sizeStr = WpfHelper.ConvertIdToText(
+                SubGraphBehind.HasAttribute("fontsize", true)
+                    ? SubGraphBehind.GetAttribute("fontsize", true)
+                    : null);
+            if (!string.IsNullOrEmpty(sizeStr)) {
+                return double.Parse(sizeStr);
+            }
+            return 14.0;
         }
     }
 }

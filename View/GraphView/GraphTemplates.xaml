@@ -55,6 +55,8 @@
                 Style="{StaticResource NodeShapeControl}" />
             <TextBlock
                 Text="{Binding Label}"
+                FontSize="{Binding FontSize}"
+                Foreground="{Binding FontColor}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center" />
         </Grid>
@@ -82,10 +84,11 @@
             <Path Data="{Binding Geometry}" Style="{StaticResource EdgeStyle}" />
             <Path Data="{Binding ArrowHeadGeometry}" Style="{StaticResource ArrowHeadStyle}" />
             <TextBlock
-                Name="foo"
                 Text="{Binding Label}"
                 Margin="{Binding LabelMargin}"
                 graphView:Mover.MoveToMiddle="True"
+                FontSize="{Binding FontSize}"
+                Foreground="{Binding FontColor}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top" />
         </Grid>

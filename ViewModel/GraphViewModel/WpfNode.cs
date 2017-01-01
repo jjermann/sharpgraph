@@ -47,6 +47,9 @@ namespace SharpGraph.GraphViewModel {
         public string FillColor { get; protected set; }
         public string StrokeColor { get; protected set; }
         public double StrokeThickness { get; protected set; }
+        public string FontColor { get; protected set; }
+        public string FontFamily { get; protected set; }
+        public double FontSize { get; protected set; }
 
         //Properties that can be changed
         private bool _isSelected;
@@ -98,6 +101,9 @@ namespace SharpGraph.GraphViewModel {
                     : null);
             FillColor = GetNodeFillColor();
             StrokeColor = GetNodeStrokeColor();
+            FontFamily = GetFontFamily();
+            FontColor = GetFontColor();
+            FontSize = GetFontSize();
         }
 
         private string GetNodeFillColor() {
@@ -129,6 +135,33 @@ namespace SharpGraph.GraphViewModel {
                     ? NodeBehind.GetAttribute("penwidth", true) + "pt"
                     : "1");
             return WpfHelper.StringToPixel(thicknessStr);
+        }
+
+        private string GetFontFamily() {
+            //TODO
+            //var fontname = WpfHelper.ConvertIdToText(
+            //    NodeBehind.HasAttribute("fontname", true)
+            //        ? NodeBehind.GetAttribute("fontname", true)
+            //        : "Times-Roman");
+            return null;
+        }
+
+        private string GetFontColor() {
+            return WpfHelper.ConvertIdToText(
+                NodeBehind.HasAttribute("fontcolor", true)
+                    ? NodeBehind.GetAttribute("fontcolor", true)
+                    : "black");
+        }
+
+        private double GetFontSize() {
+            var sizeStr = WpfHelper.ConvertIdToText(
+                NodeBehind.HasAttribute("fontsize", true)
+                    ? NodeBehind.GetAttribute("fontsize", true)
+                    : null);
+            if (!string.IsNullOrEmpty(sizeStr)) {
+                return double.Parse(sizeStr);
+            }
+            return 14.0;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
