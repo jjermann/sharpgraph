@@ -24,6 +24,7 @@ namespace ExampleGraphView {
         private ImageOutput ImageOutputWindow { get; set; }
         private DotInput DotInputWindow { get; set; }
 
+        private bool _showDotOutput;
         public bool ShowDotOutput {
             get { return _showDotOutput; }
             set {
@@ -43,6 +44,7 @@ namespace ExampleGraphView {
             }
         }
 
+        private bool _showImageOutput;
         public bool ShowImageOutput {
             get { return _showImageOutput; }
             set {
@@ -65,6 +67,7 @@ namespace ExampleGraphView {
             }
         }
 
+        private bool _showDotInput;
         public bool ShowDotInput {
             get { return _showDotInput; }
             set {
@@ -85,9 +88,6 @@ namespace ExampleGraphView {
         }
 
         private RelayCommand _openCommand;
-        private bool _showDotOutput;
-        private bool _showImageOutput;
-        private bool _showDotInput;
         public ICommand OpenCommand {
             get {
                 return _openCommand ?? (_openCommand = new RelayCommand(
@@ -101,6 +101,7 @@ namespace ExampleGraphView {
                        ));
             }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

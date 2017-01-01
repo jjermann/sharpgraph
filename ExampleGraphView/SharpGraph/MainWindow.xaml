@@ -48,11 +48,50 @@
                           IsChecked="{Binding Path=ShowImageOutput, ElementName=MainWindowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </MenuItem>
         </Menu>
+        <StatusBar DockPanel.Dock="Top">
+            <Slider
+                Orientation="Horizontal"
+                Width="200"
+                Name="ScaleSlider"
+                ToolTip="Determines the scale factor."
+                Value="1"
+                Minimum="0.1"
+                Maximum="4" />
+            <Button
+                Width="50"
+                Height="30"
+                Content="100%"
+                Margin="1">
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                    To="1"
+                                    Duration="00:00:00"
+                                    Storyboard.TargetName="ScaleSlider"
+                                    Storyboard.TargetProperty="Value" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+            </Button>
+            <Label Content="Factor:" />
+            <Label Content="{Binding ElementName=ScaleSlider,Path=Value}" />
+        </StatusBar>
         <StatusBar DockPanel.Dock="Bottom">
             <ContentControl Content="{Binding OriginalInputFile}" />
         </StatusBar>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <ContentControl Content="{Binding CurrentWpfGraph}" />
+            <ContentControl Name="GraphContent" Content="{Binding CurrentWpfGraph}">
+                <ContentControl.LayoutTransform>
+                    <ScaleTransform
+                        CenterX="0"
+                        CenterY="0"
+                        ScaleX="{Binding ElementName=ScaleSlider,Path=Value}"
+                        ScaleY="{Binding ElementName=ScaleSlider,Path=Value}" />
+                </ContentControl.LayoutTransform>
+            </ContentControl>
         </ScrollViewer>
     </DockPanel>
 </Window>
