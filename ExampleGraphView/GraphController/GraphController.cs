@@ -38,7 +38,7 @@ namespace ExampleGraphView {
 
         private void UpdateCurrentContent() {
             var nodeSelector = RestrictVisibility
-                ? GetNeighbourNodeSelector(SelectedNodeIds)
+                ? OriginalGraph.GetNodeSelector(SelectedNodeIds)
                 : null;
             CurrentDotContent = OriginalGraph.ToDot(nodeSelector: nodeSelector);
             if (UpdateCurrentImage) {
@@ -58,33 +58,6 @@ namespace ExampleGraphView {
             SelectedNodeIds = new ObservableCollection<string>(
                 CurrentWpfGraph.WpfNodes.Where(wn => wn.IsSelected).Select(wn => wn.Id));
             UpdateCurrentContent();
-        }
-
-        //TODO: improve performance?
-        //All selected nodes are visible.
-        //For directed graphs *in addition* also nodes connected to a selected node are visible.
-        //For undirected graphs *in addition* also nodes satisfying the following conditions are visible:
-        //  1. They have an incoming neighbour / edge.
-        //  2. All incoming neighbours are selected.
-        private Func<INode, bool> GetNeighbourNodeSelector(IEnumerable<string> selectedIds) {
-            if (selectedIds == null) {
-                return null;
-            }
-            var selectedIdList = selectedIds.ToList();
-            return node => {
-                if (selectedIdList.Contains(node.Id)) {
-                    return true;
-                }
-                if (node.Root.IsDirected) {
-                    var hasIncomingNode = node.IncomingNeighbours().Any();
-                    var areAllIncomingNodesSelected = !node.IncomingNeighbours()
-                        .Select(n => n.Id)
-                        .Except(selectedIdList)
-                        .Any();
-                    return areAllIncomingNodesSelected && hasIncomingNode;
-                }
-                return selectedIdList.Intersect(node.ConnectedNeighbours().Select(n => n.Id)).Any();
-            };
         }
 
         private void InitializeOriginalGraph(string filename) {

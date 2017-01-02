@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -11,5 +12,7 @@ namespace SharpGraph.GraphModel {
         IEnumerable<INode> IncomingNeighbours();
         IEnumerable<INode> OutgoingNeighbours();
         IEnumerable<INode> ConnectedNeighbours();
+        void VisitNeighbours(Func<INode, bool> stopCondition, Dictionary<INode, HashSet<INode>> visited);
+        HashSet<INode> RecursiveSelect(Func<INode, IEnumerable<INode>> selectionFunc);
     }
 }

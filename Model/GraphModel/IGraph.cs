@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SharpGraph.GraphModel {
     public interface IGraph : ISubGraph {
@@ -11,5 +12,10 @@ namespace SharpGraph.GraphModel {
         IEnumerable<INode> GetNodes();
         IEnumerable<IEdge> GetEdges();
         IEnumerable<ISubGraph> GetSubGraphs();
+
+        Func<INode, bool> GetNodeSelector(
+            IEnumerable<string> selectedIdList,
+            Func<INode, bool> stopCondition = null,
+            Func<INode, bool> acceptCondition = null);
     }
 }

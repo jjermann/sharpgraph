@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SharpGraph.GraphModel {
     public class Graph : SubGraph, IGraph {
@@ -75,6 +76,93 @@ namespace SharpGraph.GraphModel {
 
         public IEnumerable<ISubGraph> GetSubGraphs() {
             return SubGraphs.Values;
+        }
+
+        public Func<INode, bool> GetNodeSelector(
+            IEnumerable<string> selectedIdList,
+            Func<INode, bool> stopCondition = null,
+            Func<INode, bool> acceptCondition = null) {
+            if (stopCondition == null) {
+                stopCondition = node => true;
+            }
+            if (acceptCondition == null) {
+                acceptCondition = node => true;
+            }
+            var initialNodes = Nodes.Values.Where(n => selectedIdList.Contains(n.Id)).ToList();
+            var visited = VisitNodes(initialNodes, stopCondition);
+            var restricted = RestrictVisited(initialNodes, visited, stopCondition, acceptCondition);
+
+            return node => restricted.Contains(node);
+        }
+
+        private HashSet<INode> RestrictVisited(
+            List<INode> initialNodes, 
+            HashSet<INode> visited, 
+            Func<INode, bool> stopCondition, 
+            Func<INode, bool> acceptCondition) {
+
+            var restricted = new HashSet<INode>(visited);
+            var newStopNodes = new HashSet<INode>(visited.Where(stopCondition).Except(initialNodes));
+            var unacceptedNodes = new HashSet<INode>(newStopNodes.Where(n => !acceptCondition(n)));
+            Func<INode, IEnumerable<INode>> selectionFunc = node => node.OutgoingNeighbours()
+                .Except(initialNodes)
+                .Where(restricted.Contains);
+            var unwantedCollection = unacceptedNodes.Select(n => n.RecursiveSelect(selectionFunc));
+            foreach (var unwanted in unwantedCollection) {
+                restricted.ExceptWith(unwanted);
+            }
+
+            var keepGoing = true;
+            while (keepGoing) {
+                keepGoing = false;
+                var toRemove = new HashSet<INode>(restricted.Where(n => !stopCondition(n))
+                    .Except(initialNodes)
+                    .Where(n => !n.OutgoingNeighbours().Intersect(restricted).Any()));
+                if (toRemove.Any()) {
+                    restricted.ExceptWith(toRemove);
+                    keepGoing = true;
+                }
+            }
+
+            return restricted;
+        }
+
+        private HashSet<INode> VisitNodes(IEnumerable<INode> initial, Func<INode, bool> stopCondition) {
+            var visited = new Dictionary<INode, HashSet<INode>>();
+            var initialHashSet = new HashSet<INode>(initial);
+            foreach (var node in initialHashSet) {
+                visited[node] = new HashSet<INode>(node.IncomingNeighbours());
+            }
+            foreach (var node in initialHashSet) {
+                var outgoingNeighbours = new HashSet<INode>(
+                    node.OutgoingNeighbours()
+                    .Where(n => !visited.ContainsKey(n) || !visited[n].Contains(node)));
+                foreach (var neighbour in outgoingNeighbours) {
+                    if (!visited.ContainsKey(neighbour)) {
+                        visited[neighbour] = new HashSet<INode>();
+                    }
+                    if (!visited[neighbour].Contains(node)) {
+                        visited[neighbour].Add(node);
+                        neighbour.VisitNeighbours(stopCondition, visited);
+                    }
+                }
+            }
+            var keepGoing = true;
+            while (keepGoing) {
+                keepGoing = false;
+                var newVisitedNodes = visited.Keys.Except(initialHashSet).ToList();
+                foreach (var node in newVisitedNodes) {
+                    var incomingNeighbours = new HashSet<INode>(node.IncomingNeighbours());
+                    if (incomingNeighbours.Except(visited[node]).Any()) {
+                        visited.Remove(node);
+                        foreach (var n in visited.Values) {
+                            n.Remove(node);
+                        }
+                        keepGoing = true;
+                    }
+                }
+            }
+            return new HashSet<INode>(visited.Keys);
         }
 
         public override IGraph Root => this;
