@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -6,8 +7,10 @@ using System.Text.RegularExpressions;
 
 namespace SharpGraph.ExternalRunners {
     public class DotExeRunner<T> : IDotRunner<T> {
+        private const string DefaultDotExecutablePath = @"C:\Program Files (x86)\Graphviz2.38\bin";
+
         public DotExeRunner(string argument, Func<StreamReader, T> outputProcessor) {
-            DotExecutablePath = @"C:\Program Files (x86)\Graphviz2.38\bin";
+            DotExecutablePath = ConfigurationManager.AppSettings["GraphvizPath"] ?? DefaultDotExecutablePath;
             DotExecutable = "dot.exe";
             DotGraphLayoutArgument = argument;
             OutputProcessor = outputProcessor;

@@ -20,7 +20,8 @@ Prerequisites:
   Make sure the region settings have "." as the decimal separator.
 - http://www.graphviz.org/ (binary installation required for ExternalRunners)
 
-  Make sure to set DotExecutablePath correctly in ExternalRunners (TODO: move this to the configuration file).
+  Make sure to set GraphvizPath in the App.conf file(s).
+  Default: C:\Program Files (x86)\Graphviz2.38\bin
 - https://marketplace.visualstudio.com/items?itemName=SamHarwell.ANTLRLanguageSupport (recommended for DotParser, not needed)
 - http://www.antlr.org/ (Nuget package, used in DotParser, GraphParser)
 - https://diffplex.codeplex.com/ (Nuget package, used in ConsoleProgram)

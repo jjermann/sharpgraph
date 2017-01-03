@@ -3,7 +3,7 @@ using System.IO;
 
 namespace ExampleConsoleProgram {
     public static class ConsoleProgram {
-        private const string DefaultInputFile = @"Examples\example.dot";
+        private const string DefaultInputFile = @"example.dot";
 
         private static void Main(string[] args) {
             var file = args.Length > 0 ? new FileInfo(args[0]) : new FileInfo(DefaultInputFile);
