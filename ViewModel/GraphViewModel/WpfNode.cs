@@ -67,11 +67,7 @@ namespace SharpGraph.GraphViewModel {
 
         private void UpdatePropertyValues() {
             Id = NodeBehind.Id;
-            Label = WpfHelper.ConvertIdToText(
-                NodeBehind.HasAttribute("label")
-                    ? NodeBehind.GetAttribute("label")
-                    : NodeBehind.Id);
-
+            Label = WpfHelper.GetNodeLabel(NodeBehind);
             Shape = WpfHelper.ConvertIdToShape(
                 NodeBehind.HasAttribute("shape", true)
                     ? NodeBehind.GetAttribute("shape", true)

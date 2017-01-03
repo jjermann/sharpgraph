@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
+using SharpGraph.GraphModel;
 
 namespace SharpGraph.GraphViewModel {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
@@ -174,6 +175,13 @@ namespace SharpGraph.GraphViewModel {
             //    default:
             //        return null;
             //}
+        }
+
+        public static string GetNodeLabel(IBaseObject obj) {
+            return ConvertIdToText(
+                obj.HasAttribute("label")
+                    ? obj.GetAttribute("label")
+                    : obj.Id);
         }
 
         public class Point {

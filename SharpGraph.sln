@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExampleSimpleView", "Exampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleView", "ExampleSimpleView\SimpleView\SimpleView.csproj", "{F5CAC2B1-526B-4C73-B551-8C9DF3C5CC3D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturmagieView", "ExampleGraphView\NaturmagieView\NaturmagieView.csproj", "{D1474126-AE9B-41C9-B1B7-ECF9BDC0B536}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -133,6 +135,14 @@ Global
 		{F5CAC2B1-526B-4C73-B551-8C9DF3C5CC3D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F5CAC2B1-526B-4C73-B551-8C9DF3C5CC3D}.Release|x86.ActiveCfg = Release|Any CPU
 		{F5CAC2B1-526B-4C73-B551-8C9DF3C5CC3D}.Release|x86.Build.0 = Release|Any CPU
+		{D1474126-AE9B-41C9-B1B7-ECF9BDC0B536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1474126-AE9B-41C9-B1B7-ECF9BDC0B536}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1474126-AE9B-41C9-B1B7-ECF9BDC0B536}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D1474126-AE9B-41C9-B1B7-ECF9BDC0B536}.Debug|x86.Build.0 = Debug|Any CPU
+		{D1474126-AE9B-41C9-B1B7-ECF9BDC0B536}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1474126-AE9B-41C9-B1B7-ECF9BDC0B536}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1474126-AE9B-41C9-B1B7-ECF9BDC0B536}.Release|x86.ActiveCfg = Release|Any CPU
+		{D1474126-AE9B-41C9-B1B7-ECF9BDC0B536}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,5 +158,6 @@ Global
 		{CD010999-4519-412B-BC88-AFDC8BD14CF4} = {CFFB68EC-1962-4EB5-A979-9E8F2A737C52}
 		{8F29791B-9D6E-421B-9544-69CF3A88B232} = {2C09798D-B300-4062-A89B-7211BEBBC7F4}
 		{F5CAC2B1-526B-4C73-B551-8C9DF3C5CC3D} = {ACC94778-5F5C-4865-9F54-8C2493338D63}
+		{D1474126-AE9B-41C9-B1B7-ECF9BDC0B536} = {CFFB68EC-1962-4EB5-A979-9E8F2A737C52}
 	EndGlobalSection
 EndGlobal
