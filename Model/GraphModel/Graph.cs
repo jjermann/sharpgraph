@@ -96,11 +96,10 @@ namespace SharpGraph.GraphModel {
         }
 
         private HashSet<INode> RestrictVisited(
-            List<INode> initialNodes, 
-            HashSet<INode> visited, 
-            Func<INode, bool> stopCondition, 
+            List<INode> initialNodes,
+            HashSet<INode> visited,
+            Func<INode, bool> stopCondition,
             Func<INode, bool> acceptCondition) {
-
             var restricted = new HashSet<INode>(visited);
             var newStopNodes = new HashSet<INode>(visited.Where(stopCondition).Except(initialNodes));
             var unacceptedNodes = new HashSet<INode>(newStopNodes.Where(n => !acceptCondition(n)));
@@ -136,7 +135,7 @@ namespace SharpGraph.GraphModel {
             foreach (var node in initialHashSet) {
                 var outgoingNeighbours = new HashSet<INode>(
                     node.OutgoingNeighbours()
-                    .Where(n => !visited.ContainsKey(n) || !visited[n].Contains(node)));
+                        .Where(n => !visited.ContainsKey(n) || !visited[n].Contains(node)));
                 foreach (var neighbour in outgoingNeighbours) {
                     if (!visited.ContainsKey(neighbour)) {
                         visited[neighbour] = new HashSet<INode>();
