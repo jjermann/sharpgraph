@@ -16,10 +16,12 @@ I haven't decided on a specific license yet.
 Prerequisites:
 --------------
 - VisualStudio 2015 / .NET Framework 4.6.2 / Resharper 2016
+
+  Make sure the region settings have "." as the decimal separator.
 - http://www.graphviz.org/ (binary installation required for ExternalRunners)
 
-  Make sure to set DotExecutablePath correctly in ExternalRunners (TODO: move this to the configuration file)
-- https://marketplace.visualstudio.com/items?itemName=SamHarwell.ANTLRLanguageSupport (recommended for DotParser)
+  Make sure to set DotExecutablePath correctly in ExternalRunners (TODO: move this to the configuration file).
+- https://marketplace.visualstudio.com/items?itemName=SamHarwell.ANTLRLanguageSupport (recommended for DotParser, not needed)
 - http://www.antlr.org/ (Nuget package, used in DotParser, GraphParser)
 - https://diffplex.codeplex.com/ (Nuget package, used in ConsoleProgram)
 
