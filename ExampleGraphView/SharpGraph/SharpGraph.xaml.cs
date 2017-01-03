@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 
 namespace ExampleGraphView {
-    public partial class App {
-        private void Application_Startup(object sender, StartupEventArgs e) {
+    public partial class SharpGraph {
+        private void SharpGraph_Startup(object sender, StartupEventArgs e) {
             string initialFile = null;
             if (e.Args.Length > 0) {
                 initialFile = e.Args[0];

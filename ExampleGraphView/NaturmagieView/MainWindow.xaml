@@ -3,7 +3,6 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:viewmodels="clr-namespace:ExampleGraphView;assembly=GraphController"
-        Title="SharpGraph"
         SizeToContent="WidthAndHeight">
 
     <Window.DataContext>
@@ -17,37 +16,15 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Window.InputBindings>
-        <KeyBinding Modifiers="Control" Key="O" Command="{Binding Path=OpenCommand, ElementName=MainWindowName}" />
-    </Window.InputBindings>
 
     <DockPanel>
         <Menu DockPanel.Dock="Top" IsMainMenu="True">
-            <MenuItem Header="_File">
-                <MenuItem Header="_Open..." Command="{Binding Path=OpenCommand, ElementName=MainWindowName}" />
-                <MenuItem Header="_Save..." IsEnabled="False" />
-                <MenuItem Header="_Save As..." IsEnabled="False" />
-            </MenuItem>
             <MenuItem Header="_Edit">
                 <MenuItem Header="_Reduce visibility" IsCheckable="True"
                           IsChecked="{Binding RestrictVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Separator />
                 <MenuItem Header="_Select All" Command="{Binding SelectAllCommand}" />
                 <MenuItem Header="_Deselect All" Command="{Binding DeselectAllCommand}" />
-            </MenuItem>
-            <MenuItem Header="_View">
-                <MenuItem Header="_Graph Input Box"
-                          IsCheckable="True"
-                          IsChecked="{Binding Path=ShowDotInput, ElementName=MainWindowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <MenuItem Header="_Current Dot Content"
-                          IsCheckable="True"
-                          IsChecked="{Binding Path=ShowDotOutput, ElementName=MainWindowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <MenuItem Header="_Current Dot Layout Content"
-                          IsCheckable="True"
-                          IsChecked="{Binding Path=ShowDotLayoutOutput, ElementName=MainWindowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <MenuItem Header="_Rendered Image"
-                          IsCheckable="True"
-                          IsChecked="{Binding Path=ShowImageOutput, ElementName=MainWindowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Top">

@@ -15,7 +15,7 @@ using SharpGraph.GraphViewModel.Properties;
 namespace ExampleGraphView {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public sealed class GraphController : INotifyPropertyChanged {
+    public class GraphController : INotifyPropertyChanged {
         #region Private
 
         private IGraph _currentLayoutGraph;
@@ -36,9 +36,14 @@ namespace ExampleGraphView {
             }
         }
 
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        public Func<INode, bool> NodeVisitStopFunction { get; set; }
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        public Func<INode, bool> NodeVisitAcceptFunction { get; set; }
+
         private void UpdateCurrentContent() {
             var nodeSelector = RestrictVisibility
-                ? OriginalGraph.GetNodeSelector(SelectedNodeIds)
+                ? OriginalGraph.GetNodeSelector(SelectedNodeIds, NodeVisitStopFunction, NodeVisitAcceptFunction)
                 : null;
             CurrentDotContent = OriginalGraph.ToDot(nodeSelector: nodeSelector);
             if (UpdateCurrentImage) {
