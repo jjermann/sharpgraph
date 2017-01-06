@@ -4,18 +4,18 @@ using SharpGraph.GraphModel;
 
 namespace SharpGraph.GraphParser {
     [TestFixture]
-    public class DotOutputTests {
+    public static class DotOutputTests {
         [SetUp]
-        public void Init() {}
+        public static void Init() {}
 
-        private void CheckIdConsistencies(IGraph graph) {
+        private static void CheckIdConsistencies(IGraph graph) {
             Assert.IsFalse(graph.GetNodes().GroupBy(n => n.Id).Any(c => c.Count() > 1));
             Assert.IsFalse(graph.GetSubGraphs().GroupBy(s => s.Id).Any(c => c.Count() > 1));
             Assert.IsFalse(graph.GetEdges().GroupBy(e => e.Id).Any(c => c.Count() > 1));
         }
 
         [Test]
-        public void DigraphTypeTest() {
+        public static void DigraphTypeTest() {
             var input = TestHelper.ExampleDot.Replace("digraph {", "digraph {");
             var graph = GraphParser.GetGraph(input);
             Assert.IsTrue(graph.IsDirected);
@@ -28,7 +28,7 @@ namespace SharpGraph.GraphParser {
         }
 
         [Test]
-        public void DuplicateNodesTest() {
+        public static void DuplicateNodesTest() {
             var input = "A\nA";
             var graph = GraphParser.GetGraph($"digraph {{\n{input}\n}}");
             var output = graph.ToDot();
@@ -43,7 +43,7 @@ namespace SharpGraph.GraphParser {
         }
 
         [Test]
-        public void EmptyGraphTest() {
+        public static void EmptyGraphTest() {
             var input = "";
             var graph = GraphParser.GetGraph($"digraph {{\n{input}\n}}");
             Assert.IsTrue(!graph.GetNodes().Any());
@@ -59,7 +59,7 @@ namespace SharpGraph.GraphParser {
         }
 
         [Test]
-        public void GraphTypeTest() {
+        public static void GraphTypeTest() {
             var input = TestHelper.ExampleDot.Replace("digraph {", "graph MyId {");
             var graph = GraphParser.GetGraph(input);
             Assert.IsFalse(graph.IsDirected);
@@ -72,7 +72,7 @@ namespace SharpGraph.GraphParser {
         }
 
         [Test]
-        public void StrictTypeTest() {
+        public static void StrictTypeTest() {
             var input = TestHelper.ExampleDot.Replace("digraph {", "strict digraph MyId {");
             var graph = GraphParser.GetGraph(input);
             Assert.IsTrue(graph.IsDirected);

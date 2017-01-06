@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="GraphController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RelayCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Model\GraphModel\GraphModel.csproj">
@@ -52,6 +51,10 @@
     <ProjectReference Include="..\..\Model\GraphParser\GraphParser.csproj">
       <Project>{7c573114-44bf-4f8e-81bc-7b2becaa88d8}</Project>
       <Name>GraphParser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ViewModel\BaseViewModel\BaseViewModel.csproj">
+      <Project>{c4d8ee4d-2ab7-4843-8beb-94d1c1410d80}</Project>
+      <Name>BaseViewModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ViewModel\GraphViewModel\GraphViewModel.csproj">
       <Project>{648385fe-f294-4abc-a5af-a1e3cdd503f9}</Project>

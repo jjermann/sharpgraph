@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using Microsoft.Win32;
+using SharpGraph.BaseViewModel;
 
 namespace ExampleGraphView {
     public partial class DotOutput {

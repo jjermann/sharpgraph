@@ -22,9 +22,9 @@ namespace SharpGraph.GraphViewModel {
 
         protected IGraph GraphBehind { get; }
         protected IList<string> SelectedNodeIds { get; }
-        public IList<WpfNode> WpfNodes { get; protected set; }
-        public IList<WpfEdge> WpfEdges { get; protected set; }
-        public IList<WpfSubGraph> WpfSubGraphs { get; protected set; }
+        public IList<WpfNode> WpfNodes { get; }
+        public IList<WpfEdge> WpfEdges { get; }
+        public IList<WpfSubGraph> WpfSubGraphs { get; }
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public string DotContent { get; protected set; }
 

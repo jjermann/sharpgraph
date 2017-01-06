@@ -121,6 +121,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ViewModel\BaseViewModel\BaseViewModel.csproj">
+      <Project>{c4d8ee4d-2ab7-4843-8beb-94d1c1410d80}</Project>
+      <Name>BaseViewModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\View\GraphView\GraphView.csproj">
       <Project>{8f29791b-9d6e-421b-9544-69cf3a88b232}</Project>
       <Name>GraphView</Name>

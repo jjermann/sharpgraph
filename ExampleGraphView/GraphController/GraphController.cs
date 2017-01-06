@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
@@ -9,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using JetBrains.Annotations;
+using SharpGraph.BaseViewModel;
 using SharpGraph.GraphModel;
 using SharpGraph.GraphViewModel;
 
@@ -60,7 +60,7 @@ namespace ExampleGraphView {
         }
 
         private void CurrentWpfGraphChanged(object sender, EventArgs e) {
-            SelectedNodeIds = new ObservableCollection<string>(
+            SelectedNodeIds = new List<string>(
                 CurrentWpfGraph.WpfNodes.Where(wn => wn.IsSelected).Select(wn => wn.Id));
             UpdateCurrentContent();
         }
@@ -92,11 +92,11 @@ namespace ExampleGraphView {
                 var graph = SharpGraph.GraphParser.GraphParser.GetGraph(OriginalDotContent);
                 SharpGraph.GraphParser.GraphParser.CheckSyntax(OriginalDotContent);
                 OriginalGraph = graph;
-                ParseFailureMessageOriginalDotContent = "";
+                ParseFailureMessage = "";
             } catch (Exception e) {
-                ParseFailureMessageOriginalDotContent = e.Message;
+                ParseFailureMessage = e.Message;
             }
-            if (string.IsNullOrEmpty(ParseFailureMessageOriginalDotContent)) {
+            if (string.IsNullOrEmpty(ParseFailureMessage)) {
                 RestrictSelection();
                 UpdateCurrentContent();
             }
@@ -241,11 +241,11 @@ namespace ExampleGraphView {
             }
         }
 
-        private string _parseFailureMessageOriginalDotContent;
-        public string ParseFailureMessageOriginalDotContent {
-            get { return _parseFailureMessageOriginalDotContent; }
+        private string _parseFailureMessage;
+        public string ParseFailureMessage {
+            get { return _parseFailureMessage; }
             private set {
-                _parseFailureMessageOriginalDotContent = value;
+                _parseFailureMessage = value;
                 OnPropertyChanged();
             }
         }
@@ -308,7 +308,7 @@ namespace ExampleGraphView {
             }
         }
 
-        public IList<string> SelectedNodeIds { get; set; }
+        private IList<string> SelectedNodeIds { get; set; }
 
         #endregion PublicProperties
     }

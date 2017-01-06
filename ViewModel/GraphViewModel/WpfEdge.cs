@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using SharpGraph.GraphModel;
 
@@ -20,7 +21,7 @@ namespace SharpGraph.GraphViewModel {
         public string StrokeColor { get; protected set; }
         public double StrokeThickness { get; protected set; }
         public string FontColor { get; protected set; }
-        public string FontFamily { get; protected set; }
+        //public string FontFamily { get; protected set; }
         public double FontSize { get; protected set; }
 
         private void UpdatePropertyValues() {
@@ -44,7 +45,7 @@ namespace SharpGraph.GraphViewModel {
 
             StrokeColor = GetEdgeStrokeColor();
             StrokeThickness = GetEdgeStrokeThickness();
-            FontFamily = GetFontFamily();
+            //FontFamily = GetFontFamily();
             FontColor = GetFontColor();
             FontSize = GetFontSize();
         }
@@ -65,14 +66,13 @@ namespace SharpGraph.GraphViewModel {
             return WpfHelper.StringToPixel(thicknessStr);
         }
 
-        private string GetFontFamily() {
-            //TODO
-            //var fontname = WpfHelper.ConvertIdToText(
-            //    EdgeBehind.HasAttribute("fontname", true)
-            //        ? EdgeBehind.GetAttribute("fontname", true)
-            //        : "Times-Roman");
-            return null;
-        }
+        //private string GetFontFamily() {
+        //    var fontname = WpfHelper.ConvertIdToText(
+        //        EdgeBehind.HasAttribute("fontname", true)
+        //            ? EdgeBehind.GetAttribute("fontname", true)
+        //            : "Times-Roman");
+        //    return null;
+        //}
 
         private string GetFontColor() {
             return WpfHelper.ConvertIdToText(
@@ -87,7 +87,7 @@ namespace SharpGraph.GraphViewModel {
                     ? EdgeBehind.GetAttribute("fontsize", true)
                     : null);
             if (!string.IsNullOrEmpty(sizeStr)) {
-                return double.Parse(sizeStr);
+                return double.Parse(sizeStr, CultureInfo.InvariantCulture);
             }
             return 14.0;
         }

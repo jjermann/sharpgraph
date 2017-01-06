@@ -5,12 +5,12 @@ using NUnit.Framework;
 
 namespace SharpGraph.DotParser {
     [TestFixture]
-    public class DotParserTests {
+    public static class DotParserTests {
         [SetUp]
-        public void Init() {}
+        public static void Init() {}
 
         [Test]
-        public void GetParseTreeTest() {
+        public static void GetParseTreeTest() {
             var executingAssembly = Assembly.GetExecutingAssembly();
 
             Stream stream = null;

@@ -4,12 +4,12 @@ using NUnit.Framework;
 
 namespace SharpGraph.ExternalRunners {
     [TestFixture]
-    public class DotExeRunnerTests {
+    public static class DotExeRunnerTests {
         [SetUp]
-        public void Init() {}
+        public static void Init() {}
 
         [Test]
-        public void GetGraphLayoutTest() {
+        public static void GetGraphLayoutTest() {
             try {
                 new DotExeRunner<string>("-Tdot", reader => reader.ReadToEnd())
                     .GetOutput(TestHelper.ExampleDot);

@@ -126,9 +126,17 @@ namespace SharpGraph.GraphModel {
             return restricted;
         }
 
-        private HashSet<INode> VisitNodes(IEnumerable<INode> initial, Func<INode, bool> stopCondition) {
-            var visited = new Dictionary<INode, HashSet<INode>>();
+        private static HashSet<INode> VisitNodes(IEnumerable<INode> initial, Func<INode, bool> stopCondition) {
             var initialHashSet = new HashSet<INode>(initial);
+            var visited = GetVisitedFromStopCondition(initialHashSet, stopCondition);
+            ApplyIncomingCondition(visited, initialHashSet);
+            return new HashSet<INode>(visited.Keys);
+        }
+
+        private static Dictionary<INode, HashSet<INode>> GetVisitedFromStopCondition(
+            HashSet<INode> initialHashSet,
+            Func<INode, bool> stopCondition) {
+            var visited = new Dictionary<INode, HashSet<INode>>();
             foreach (var node in initialHashSet) {
                 visited[node] = new HashSet<INode>(node.IncomingNeighbours());
             }
@@ -146,6 +154,11 @@ namespace SharpGraph.GraphModel {
                     }
                 }
             }
+            return visited;
+        }
+
+        private static void ApplyIncomingCondition(Dictionary<INode, HashSet<INode>> visited,
+            HashSet<INode> initialHashSet) {
             var keepGoing = true;
             while (keepGoing) {
                 keepGoing = false;
@@ -161,7 +174,6 @@ namespace SharpGraph.GraphModel {
                     }
                 }
             }
-            return new HashSet<INode>(visited.Keys);
         }
 
         public override IGraph Root => this;

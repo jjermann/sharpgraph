@@ -115,7 +115,7 @@ namespace SharpGraph.GraphParser {
             CurrentSubGraph = CurrentSubGraph.Parent;
         }
 
-        private IAttributeDictionary GetGraphAttributes(DotGrammarParser.StmtContext[] stmtContext) {
+        private static IAttributeDictionary GetGraphAttributes(DotGrammarParser.StmtContext[] stmtContext) {
             var attributes = new AttributeDictionary();
             if (stmtContext == null) {
                 return attributes;
@@ -132,7 +132,7 @@ namespace SharpGraph.GraphParser {
             return attributes;
         }
 
-        private IAttributeDictionary GetNodeAttributes(DotGrammarParser.StmtContext[] stmtContext) {
+        private static IAttributeDictionary GetNodeAttributes(DotGrammarParser.StmtContext[] stmtContext) {
             var attributes = new AttributeDictionary();
             if (stmtContext == null) {
                 return attributes;
@@ -154,7 +154,7 @@ namespace SharpGraph.GraphParser {
             return attributes;
         }
 
-        private IAttributeDictionary GetAttributes(DotGrammarParser.A_listContext[] aListContexts) {
+        private static IAttributeDictionary GetAttributes(DotGrammarParser.A_listContext[] aListContexts) {
             var attrs = new AttributeDictionary();
             if (aListContexts == null) {
                 return attrs;

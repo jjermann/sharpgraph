@@ -19,32 +19,37 @@ namespace ExampleConsoleProgram {
             }
             var wasUnchanged = 0;
             foreach (var line in result.Lines) {
-                var changed = line.Type != ChangeType.Unchanged;
-
-                if (changed || (wasUnchanged < Margin)) {
-                    if (line.Type == ChangeType.Inserted) {
-                        sb.Append("+ ");
-                    } else if (line.Type == ChangeType.Deleted) {
-                        sb.Append("- ");
-                    } else if (line.Type == ChangeType.Modified) {
-                        sb.Append("* ");
-                    } else if (line.Type == ChangeType.Imaginary) {
-                        sb.Append("? ");
-                    } else if (line.Type == ChangeType.Unchanged) {
-                        sb.Append("  ");
-                    }
-                    sb.Append(line.Text + "\n");
-                } else if (wasUnchanged == Margin) {
-                    sb.Append("..." + "\n");
-                }
-                if (changed) {
-                    wasUnchanged = 0;
-                } else {
-                    wasUnchanged++;
-                }
+                wasUnchanged = ProcessLine(line, wasUnchanged, sb);
             }
 
             return sb.ToString();
+        }
+
+        private static int ProcessLine(DiffPiece line, int wasUnchanged, StringBuilder sb) {
+            var changed = line.Type != ChangeType.Unchanged;
+
+            if (changed || (wasUnchanged < Margin)) {
+                if (line.Type == ChangeType.Inserted) {
+                    sb.Append("+ ");
+                } else if (line.Type == ChangeType.Deleted) {
+                    sb.Append("- ");
+                } else if (line.Type == ChangeType.Modified) {
+                    sb.Append("* ");
+                } else if (line.Type == ChangeType.Imaginary) {
+                    sb.Append("? ");
+                } else if (line.Type == ChangeType.Unchanged) {
+                    sb.Append("  ");
+                }
+                sb.Append(line.Text + "\n");
+            } else if (wasUnchanged == Margin) {
+                sb.Append("..." + "\n");
+            }
+            if (changed) {
+                wasUnchanged = 0;
+            } else {
+                wasUnchanged++;
+            }
+            return wasUnchanged;
         }
     }
 }

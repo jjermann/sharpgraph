@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -12,13 +13,13 @@ namespace SharpGraph.GraphViewModel {
         public static double StringToPixel(string input) {
             var inches = Regex.Match(input, "^(?<num>.*)in$").Groups["num"].Value;
             if (!string.IsNullOrEmpty(inches)) {
-                return InchToPixel(double.Parse(inches));
+                return InchToPixel(double.Parse(inches, CultureInfo.InvariantCulture));
             }
             var points = Regex.Match(input, "^(?<num>.*)pt$").Groups["num"].Value;
             if (!string.IsNullOrEmpty(points)) {
-                return PtToPixel(double.Parse(points));
+                return PtToPixel(double.Parse(points, CultureInfo.InvariantCulture));
             }
-            return double.Parse(input);
+            return double.Parse(input, CultureInfo.InvariantCulture);
         }
 
         public static double InchToPixel(double inches) {

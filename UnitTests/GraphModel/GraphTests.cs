@@ -3,12 +3,12 @@ using NUnit.Framework;
 
 namespace SharpGraph.GraphModel {
     [TestFixture]
-    public class GraphTests {
+    public static class GraphTests {
         [SetUp]
-        public void Init() {}
+        public static void Init() {}
 
         [Test]
-        public void CreateEmptyGraphTest() {
+        public static void CreateEmptyGraphTest() {
             var graph = Graph.CreateGraph("MyGraph");
             Assert.IsTrue(!graph.GetNodes().Any());
             Assert.IsTrue(!graph.GetEdges().Any());

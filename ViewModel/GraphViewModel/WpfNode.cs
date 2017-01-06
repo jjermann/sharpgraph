@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using JetBrains.Annotations;
+using SharpGraph.BaseViewModel;
 using SharpGraph.GraphModel;
 
 namespace SharpGraph.GraphViewModel {
@@ -48,7 +50,7 @@ namespace SharpGraph.GraphViewModel {
         public string StrokeColor { get; protected set; }
         public double StrokeThickness { get; protected set; }
         public string FontColor { get; protected set; }
-        public string FontFamily { get; protected set; }
+        //public string FontFamily { get; protected set; }
         public double FontSize { get; protected set; }
 
         //Properties that can be changed
@@ -101,7 +103,7 @@ namespace SharpGraph.GraphViewModel {
                     : null);
             FillColor = GetNodeFillColor();
             StrokeColor = GetNodeStrokeColor();
-            FontFamily = GetFontFamily();
+            //FontFamily = GetFontFamily();
             FontColor = GetFontColor();
             FontSize = GetFontSize();
         }
@@ -137,14 +139,13 @@ namespace SharpGraph.GraphViewModel {
             return WpfHelper.StringToPixel(thicknessStr);
         }
 
-        private string GetFontFamily() {
-            //TODO
-            //var fontname = WpfHelper.ConvertIdToText(
-            //    NodeBehind.HasAttribute("fontname", true)
-            //        ? NodeBehind.GetAttribute("fontname", true)
-            //        : "Times-Roman");
-            return null;
-        }
+        //private string GetFontFamily() {
+        //    var fontname = WpfHelper.ConvertIdToText(
+        //        NodeBehind.HasAttribute("fontname", true)
+        //            ? NodeBehind.GetAttribute("fontname", true)
+        //            : "Times-Roman");
+        //    return null;
+        //}
 
         private string GetFontColor() {
             return WpfHelper.ConvertIdToText(
@@ -159,7 +160,7 @@ namespace SharpGraph.GraphViewModel {
                     ? NodeBehind.GetAttribute("fontsize", true)
                     : null);
             if (!string.IsNullOrEmpty(sizeStr)) {
-                return double.Parse(sizeStr);
+                return double.Parse(sizeStr, CultureInfo.InvariantCulture);
             }
             return 14.0;
         }
