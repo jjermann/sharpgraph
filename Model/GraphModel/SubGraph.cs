@@ -126,7 +126,10 @@ namespace SharpGraph.GraphModel {
             return subgraphs.Concat(subgraphs.SelectMany(g => g.GetSubGraphSubGraphs(true)));
         }
 
-        public virtual string ToDot(bool orderedByName, bool showRedundantNodes, bool bodyOnly = false,
+        public virtual string ToDot(
+            bool orderedByName,
+            bool showRedundantNodes,
+            bool bodyOnly = false,
             Func<INode, bool> nodeSelector = null) {
             const string newLine = "\n";
             var depth = SubGraphDepth;
@@ -173,19 +176,7 @@ namespace SharpGraph.GraphModel {
             }
 
             foreach (var node in nodes) {
-                var containedInSourceEdges =
-                    allEdges.Any(e => e.SourceNode.Equals(node) && (e.Parent == node.Parent));
-                var containedInEndEdges =
-                    allEdges.Any(e => e.EndNode.Equals(node) && (e.Parent == node.Parent));
-                var containedInEdges = containedInSourceEdges || containedInEndEdges;
-                var nodeAttributes = node.GetAttributes();
-                var hasAttribute = nodeAttributes.Count > 0;
-                var hasRedundantLabel = (nodeAttributes.Count == 1) &&
-                                        nodeAttributes.ContainsKey("label") &&
-                                        (nodeAttributes["label"] == node.Id);
-                if (showRedundantNodes
-                    || !containedInEdges
-                    || (hasAttribute && !hasRedundantLabel)) {
+                if (ShouldShowNode(node, allEdges, showRedundantNodes)) {
                     graphString += subIndent + node + newLine;
                 }
             }
@@ -197,6 +188,25 @@ namespace SharpGraph.GraphModel {
             graphString += indent + "}" + newLine;
 
             return graphString;
+        }
+
+        private bool ShouldShowNode(INode node, IList<IEdge> allEdges, bool showRedundantNodes) {
+            var containedInSourceEdges =
+                allEdges.Any(e => e.SourceNode.Equals(node) && (e.Parent == node.Parent));
+            var containedInEndEdges =
+                allEdges.Any(e => e.EndNode.Equals(node) && (e.Parent == node.Parent));
+            var containedInEdges = containedInSourceEdges || containedInEndEdges;
+            var nodeAttributes = node.GetAttributes();
+            var hasAttribute = nodeAttributes.Count > 0;
+            var hasRedundantLabel = (nodeAttributes.Count == 1) &&
+                                    nodeAttributes.ContainsKey("label") &&
+                                    (nodeAttributes["label"] == node.Id);
+            if (showRedundantNodes
+                || !containedInEdges
+                || (hasAttribute && !hasRedundantLabel)) {
+                return true;
+            }
+            return false;
         }
 
         public override string ToString() {
