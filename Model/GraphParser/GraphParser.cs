@@ -26,16 +26,25 @@ namespace SharpGraph.GraphParser {
         }
 
         public static IGraph GetGraph(string input) {
-            using (var stream = new MemoryStream()) {
-                using (var writer = new StreamWriter(stream)) {
-                    writer.Write(input);
-                    writer.Flush();
-                    stream.Position = 0;
-                    using (var reader = new StreamReader(stream)) {
-                        return GetGraph(reader);
-                    }
+            Stream stream = null;
+            try {
+                stream = StreamFromString(input);
+                using (var reader = new StreamReader(stream)) {
+                    stream = null;
+                    return GetGraph(reader);
                 }
+            } finally {
+                stream?.Dispose();
             }
+        }
+
+        private static Stream StreamFromString(string str) {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(str);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
         }
 
         public static IGraph GetGraph(FileInfo file) {

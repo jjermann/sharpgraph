@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace SharpGraph.GraphModel {
     [Serializable]
-    public sealed class AttributeDictionary : Dictionary<string, string>, IAttributeDictionary {
+    public class AttributeDictionary : Dictionary<string, string>, IAttributeDictionary {
+        public AttributeDictionary() {}
+        protected AttributeDictionary(SerializationInfo info, StreamingContext context) : base(info, context) {}
+
         public void SetAttributes(IAttributeDictionary dict) {
             if (dict == null) {
                 return;

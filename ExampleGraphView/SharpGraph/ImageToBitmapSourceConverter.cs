@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
@@ -22,7 +21,7 @@ namespace ExampleGraphView {
 
             //freeze bitmapSource and clear memory to avoid memory leaks
             bitmapSource.Freeze();
-            DeleteObject(bmpPt);
+            NativeMethods.DeleteObject(bmpPt);
 
             return bitmapSource;
         }
@@ -31,9 +30,5 @@ namespace ExampleGraphView {
             System.Globalization.CultureInfo culture) {
             throw new NotImplementedException();
         }
-
-        [DllImport("gdi32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool DeleteObject(IntPtr value);
     }
 }
