@@ -4,8 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using JetBrains.Annotations;
 using SharpGraph.GraphModel;
-using SharpGraph.GraphViewModel.Properties;
 
 namespace SharpGraph.GraphViewModel {
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]

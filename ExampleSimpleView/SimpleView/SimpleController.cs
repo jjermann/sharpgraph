@@ -3,8 +3,8 @@ using System.IO;
 using SharpGraph.GraphViewModel;
 
 namespace ExampleSimpleView {
-    public sealed class GraphController {
-        public GraphController() {
+    public sealed class SimpleController {
+        public SimpleController() {
             if (Environment.GetCommandLineArgs().Length <= 1) {
                 throw new ArgumentException("No filename argument given!");
             }

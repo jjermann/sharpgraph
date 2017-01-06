@@ -8,9 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using JetBrains.Annotations;
 using SharpGraph.GraphModel;
 using SharpGraph.GraphViewModel;
-using SharpGraph.GraphViewModel.Properties;
 
 namespace ExampleGraphView {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using ExampleGraphView.Properties;
+using JetBrains.Annotations;
 using Microsoft.Win32;
 
 namespace ExampleGraphView {

@@ -1,11 +1,11 @@
-﻿<Window x:Class="ExampleSimpleView.MainWindow"
+﻿<Window x:Class="ExampleSimpleView.SimpleWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:ExampleSimpleView"
         Title="SimpleView"
         SizeToContent="WidthAndHeight">
     <Window.DataContext>
-        <local:GraphController />
+        <local:SimpleController />
     </Window.DataContext>
     <Window.Resources>
         <ResourceDictionary>
