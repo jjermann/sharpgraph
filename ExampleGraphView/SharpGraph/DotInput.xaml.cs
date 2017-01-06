@@ -9,10 +9,10 @@ namespace ExampleGraphView {
             InitializeComponent();
         }
 
-        private RelayCommand _saveCommand;
+        private RelayCommand m_saveCommand;
         public ICommand SaveCommand {
             get {
-                return _saveCommand ?? (_saveCommand = new RelayCommand(
+                return m_saveCommand ?? (m_saveCommand = new RelayCommand(
                            param => {
                                var vm = (GraphController) DataContext;
                                var filename = vm.SavedOriginalDotFile
@@ -25,10 +25,10 @@ namespace ExampleGraphView {
             }
         }
 
-        private RelayCommand _saveAsCommand;
+        private RelayCommand m_saveAsCommand;
         public ICommand SaveAsCommand {
             get {
-                return _saveAsCommand ?? (_saveAsCommand = new RelayCommand(
+                return m_saveAsCommand ?? (m_saveAsCommand = new RelayCommand(
                            param => {
                                var vm = (GraphController) DataContext;
                                var filename = FileDialogHandler<SaveFileDialog>.OpenDialog(

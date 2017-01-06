@@ -143,7 +143,7 @@ namespace SharpGraph.GraphParser {
             return attributes;
         }
 
-        private IAttributeDictionary GetEdgeAttributes(DotGrammarParser.StmtContext[] stmtContext) {
+        private static IAttributeDictionary GetEdgeAttributes(DotGrammarParser.StmtContext[] stmtContext) {
             var attributes = new AttributeDictionary();
             if (stmtContext == null) {
                 return attributes;

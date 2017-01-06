@@ -4,20 +4,20 @@ using System.Windows.Input;
 
 namespace SharpGraph.BaseViewModel {
     public class RelayCommand : ICommand {
-        private readonly Predicate<object> _canExecute;
-        private readonly Action<object> _execute;
+        private readonly Predicate<object> m_canExecute;
+        private readonly Action<object> m_execute;
 
         public RelayCommand(Action<object> execute, Predicate<object> canExecute = null) {
             if (execute == null) {
                 throw new ArgumentNullException(nameof(execute));
             }
-            _execute = execute;
-            _canExecute = canExecute;
+            m_execute = execute;
+            m_canExecute = canExecute;
         }
 
         [DebuggerStepThrough]
         public bool CanExecute(object parameter) {
-            return _canExecute?.Invoke(parameter) ?? true;
+            return m_canExecute?.Invoke(parameter) ?? true;
         }
 
         public event EventHandler CanExecuteChanged {
@@ -26,7 +26,7 @@ namespace SharpGraph.BaseViewModel {
         }
 
         public void Execute(object parameter) {
-            _execute(parameter);
+            m_execute(parameter);
         }
     }
 }

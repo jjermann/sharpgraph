@@ -18,13 +18,13 @@ namespace SharpGraph.GraphViewModel {
             Root = root;
             NodeBehind = nodeBehind;
             UpdatePropertyValues();
-            _isSelected = isSelected;
+            m_isSelected = isSelected;
         }
 
-        private RelayCommand _toggleNodeSelectionCommand;
+        private RelayCommand m_toggleNodeSelectionCommand;
         public ICommand ToggleNodeSelectionCommand {
             get {
-                return _toggleNodeSelectionCommand ?? (_toggleNodeSelectionCommand = new RelayCommand(
+                return m_toggleNodeSelectionCommand ?? (m_toggleNodeSelectionCommand = new RelayCommand(
                            param => { IsSelected = !IsSelected; }
                        ));
             }
@@ -54,12 +54,12 @@ namespace SharpGraph.GraphViewModel {
         public double FontSize { get; protected set; }
 
         //Properties that can be changed
-        private bool _isSelected;
+        private bool m_isSelected;
         public bool IsSelected {
-            get { return _isSelected; }
+            get { return m_isSelected; }
             set {
-                var hasChanged = _isSelected != value;
-                _isSelected = value;
+                var hasChanged = m_isSelected != value;
+                m_isSelected = value;
                 OnPropertyChanged();
                 if (hasChanged) {
                     Root.RaiseChanged();

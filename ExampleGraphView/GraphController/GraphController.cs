@@ -18,20 +18,20 @@ namespace ExampleGraphView {
     public class GraphController : INotifyPropertyChanged {
         #region Private
 
-        private IGraph _currentLayoutGraph;
+        private IGraph m_currentLayoutGraph;
         private IGraph CurrentLayoutGraph {
-            get { return _currentLayoutGraph; }
+            get { return m_currentLayoutGraph; }
             set {
-                _currentLayoutGraph = value;
+                m_currentLayoutGraph = value;
                 OnPropertyChanged();
             }
         }
 
-        private IGraph _originalGraph;
+        private IGraph m_originalGraph;
         private IGraph OriginalGraph {
-            get { return _originalGraph; }
+            get { return m_originalGraph; }
             set {
-                _originalGraph = value;
+                m_originalGraph = value;
                 OnPropertyChanged();
             }
         }
@@ -120,10 +120,10 @@ namespace ExampleGraphView {
         #endregion OtherPublic
         #region PublicCommands
 
-        private RelayCommand _selectAllCommand;
+        private RelayCommand m_selectAllCommand;
         public ICommand SelectAllCommand {
             get {
-                return _selectAllCommand ?? (_selectAllCommand = new RelayCommand(
+                return m_selectAllCommand ?? (m_selectAllCommand = new RelayCommand(
                            param => {
                                SelectAll();
                                UpdateCurrentContent();
@@ -131,10 +131,10 @@ namespace ExampleGraphView {
             }
         }
 
-        private RelayCommand _deselectAllCommand;
+        private RelayCommand m_deselectAllCommand;
         public ICommand DeselectAllCommand {
             get {
-                return _deselectAllCommand ?? (_deselectAllCommand = new RelayCommand(
+                return m_deselectAllCommand ?? (m_deselectAllCommand = new RelayCommand(
                            param => {
                                DeselectAll();
                                UpdateCurrentContent();
@@ -142,18 +142,18 @@ namespace ExampleGraphView {
             }
         }
 
-        private RelayCommand _originalDotToOriginalGraph;
+        private RelayCommand m_originalDotToOriginalGraph;
         public ICommand OriginalDotToOriginalGraph {
             get {
-                return _originalDotToOriginalGraph ?? (_originalDotToOriginalGraph = new RelayCommand(
+                return m_originalDotToOriginalGraph ?? (m_originalDotToOriginalGraph = new RelayCommand(
                            param => UpdateOriginalGraphFromDotContent()));
             }
         }
 
-        private RelayCommand _openFileCommand;
+        private RelayCommand m_openFileCommand;
         public ICommand OpenFileCommand {
             get {
-                return _openFileCommand ?? (_openFileCommand = new RelayCommand(
+                return m_openFileCommand ?? (m_openFileCommand = new RelayCommand(
                            param => { OriginalInputFile = (string) param; },
                            param => !string.IsNullOrEmpty((string) param)
                        ));
@@ -161,10 +161,10 @@ namespace ExampleGraphView {
         }
 
         public string SavedDotFile { get; private set; }
-        private RelayCommand _saveDotFileCommand;
+        private RelayCommand m_saveDotFileCommand;
         public ICommand SaveDotFileCommand {
             get {
-                return _saveDotFileCommand ?? (_saveDotFileCommand = new RelayCommand(
+                return m_saveDotFileCommand ?? (m_saveDotFileCommand = new RelayCommand(
                            param => {
                                var filename = (string) param;
                                if (filename != null) {
@@ -177,10 +177,10 @@ namespace ExampleGraphView {
         }
 
         public string SavedOriginalDotFile { get; private set; }
-        private RelayCommand _saveOriginalDotFileCommand;
+        private RelayCommand m_saveOriginalDotFileCommand;
         public ICommand SaveOriginalDotFileCommand {
             get {
-                return _saveOriginalDotFileCommand ?? (_saveOriginalDotFileCommand = new RelayCommand(
+                return m_saveOriginalDotFileCommand ?? (m_saveOriginalDotFileCommand = new RelayCommand(
                            param => {
                                var filename = (string) param;
                                if (filename != null) {
@@ -193,10 +193,10 @@ namespace ExampleGraphView {
         }
 
         public string SavedImageFile { get; private set; }
-        private RelayCommand _saveImageFileCommand;
+        private RelayCommand m_saveImageFileCommand;
         public ICommand SaveImageFileCommand {
             get {
-                return _saveImageFileCommand ?? (_saveImageFileCommand = new RelayCommand(
+                return m_saveImageFileCommand ?? (m_saveImageFileCommand = new RelayCommand(
                            param => {
                                var filename = (string) param;
                                if (filename != null) {
@@ -211,69 +211,69 @@ namespace ExampleGraphView {
         #endregion PublicCommands
         #region PublicProperties
 
-        private bool _restrictVisibility;
+        private bool m_restrictVisibility;
         public bool RestrictVisibility {
-            get { return _restrictVisibility; }
+            get { return m_restrictVisibility; }
             set {
-                _restrictVisibility = value;
+                m_restrictVisibility = value;
                 OnPropertyChanged();
                 UpdateCurrentContent();
             }
         }
 
-        private UpdateMode _graphUpdateMode;
+        private UpdateMode m_graphUpdateMode;
         public UpdateMode GraphUpdateMode {
-            get { return _graphUpdateMode; }
+            get { return m_graphUpdateMode; }
             set {
-                _graphUpdateMode = value;
+                m_graphUpdateMode = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _updateCurrentImage;
+        private bool m_updateCurrentImage;
         public bool UpdateCurrentImage {
-            get { return _updateCurrentImage; }
+            get { return m_updateCurrentImage; }
             set {
-                _updateCurrentImage = value;
-                if (_updateCurrentImage) {
+                m_updateCurrentImage = value;
+                if (m_updateCurrentImage) {
                     UpdateCurrentContent();
                 }
             }
         }
 
-        private string _parseFailureMessage;
+        private string m_parseFailureMessage;
         public string ParseFailureMessage {
-            get { return _parseFailureMessage; }
+            get { return m_parseFailureMessage; }
             private set {
-                _parseFailureMessage = value;
+                m_parseFailureMessage = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _originalInputFile;
+        private string m_originalInputFile;
         public string OriginalInputFile {
-            get { return _originalInputFile; }
+            get { return m_originalInputFile; }
             set {
-                _originalInputFile = value;
-                InitializeOriginalGraph(_originalInputFile);
+                m_originalInputFile = value;
+                InitializeOriginalGraph(m_originalInputFile);
                 OnPropertyChanged();
             }
         }
 
-        private WpfGraph _currentWpfGraph;
+        private WpfGraph m_currentWpfGraph;
         public WpfGraph CurrentWpfGraph {
-            get { return _currentWpfGraph; }
+            get { return m_currentWpfGraph; }
             private set {
-                _currentWpfGraph = value;
+                m_currentWpfGraph = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _originalDotContent;
+        private string m_originalDotContent;
         public string OriginalDotContent {
-            get { return _originalDotContent; }
+            get { return m_originalDotContent; }
             set {
-                _originalDotContent = value;
+                m_originalDotContent = value;
                 OnPropertyChanged();
                 if (GraphUpdateMode == UpdateMode.ImmediateUpdate) {
                     UpdateOriginalGraphFromDotContent();
@@ -281,29 +281,29 @@ namespace ExampleGraphView {
             }
         }
 
-        private string _currentDotContent;
+        private string m_currentDotContent;
         public string CurrentDotContent {
-            get { return _currentDotContent; }
+            get { return m_currentDotContent; }
             private set {
-                _currentDotContent = value;
+                m_currentDotContent = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _currentDotLayoutContent;
+        private string m_currentDotLayoutContent;
         public string CurrentDotLayoutContent {
-            get { return _currentDotLayoutContent; }
+            get { return m_currentDotLayoutContent; }
             private set {
-                _currentDotLayoutContent = value;
+                m_currentDotLayoutContent = value;
                 OnPropertyChanged();
             }
         }
 
-        private Image _currentImage;
+        private Image m_currentImage;
         public Image CurrentImage {
-            get { return _currentImage; }
+            get { return m_currentImage; }
             private set {
-                _currentImage = value;
+                m_currentImage = value;
                 OnPropertyChanged();
             }
         }

@@ -27,12 +27,12 @@ namespace ExampleGraphView {
         private ImageOutput ImageOutputWindow { get; set; }
         private DotInput DotInputWindow { get; set; }
 
-        private bool _showDotOutput;
+        private bool m_showDotOutput;
         public bool ShowDotOutput {
-            get { return _showDotOutput; }
+            get { return m_showDotOutput; }
             set {
-                _showDotOutput = value;
-                if (_showDotOutput) {
+                m_showDotOutput = value;
+                if (m_showDotOutput) {
                     if (DotOutputWindow == null) {
                         DotOutputWindow = new DotOutput(DataContext);
                         DotOutputWindow.Show();
@@ -47,12 +47,12 @@ namespace ExampleGraphView {
             }
         }
 
-        private bool _showDotLayoutOutput;
+        private bool m_showDotLayoutOutput;
         public bool ShowDotLayoutOutput {
-            get { return _showDotLayoutOutput; }
+            get { return m_showDotLayoutOutput; }
             set {
-                _showDotLayoutOutput = value;
-                if (_showDotLayoutOutput) {
+                m_showDotLayoutOutput = value;
+                if (m_showDotLayoutOutput) {
                     if (DotLayoutOutputWindow == null) {
                         DotLayoutOutputWindow = new DotLayoutOutput(DataContext);
                         DotLayoutOutputWindow.Show();
@@ -67,13 +67,13 @@ namespace ExampleGraphView {
             }
         }
 
-        private bool _showImageOutput;
+        private bool m_showImageOutput;
         public bool ShowImageOutput {
-            get { return _showImageOutput; }
+            get { return m_showImageOutput; }
             set {
-                _showImageOutput = value;
+                m_showImageOutput = value;
                 var vm = (GraphController) DataContext;
-                if (_showImageOutput) {
+                if (m_showImageOutput) {
                     vm.UpdateCurrentImage = true;
                     if (ImageOutputWindow == null) {
                         ImageOutputWindow = new ImageOutput(DataContext);
@@ -90,12 +90,12 @@ namespace ExampleGraphView {
             }
         }
 
-        private bool _showDotInput;
+        private bool m_showDotInput;
         public bool ShowDotInput {
-            get { return _showDotInput; }
+            get { return m_showDotInput; }
             set {
-                _showDotInput = value;
-                if (_showDotInput) {
+                m_showDotInput = value;
+                if (m_showDotInput) {
                     if (DotInputWindow == null) {
                         DotInputWindow = new DotInput(DataContext);
                         DotInputWindow.Show();
@@ -110,10 +110,10 @@ namespace ExampleGraphView {
             }
         }
 
-        private RelayCommand _openCommand;
+        private RelayCommand m_openCommand;
         public ICommand OpenCommand {
             get {
-                return _openCommand ?? (_openCommand = new RelayCommand(
+                return m_openCommand ?? (m_openCommand = new RelayCommand(
                            param => {
                                var vm = (GraphController) DataContext;
                                var filename = FileDialogHandler<OpenFileDialog>.OpenDialog(vm.OriginalInputFile);
