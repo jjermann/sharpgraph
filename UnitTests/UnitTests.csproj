@@ -58,6 +58,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="..\SolutionItems\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="DotParser\DotParserTests.cs" />
     <Compile Include="ExternalRunners\DotExeRunnerTests.cs" />
     <Compile Include="GraphModel\GraphTests.cs" />

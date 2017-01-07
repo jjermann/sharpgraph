@@ -39,6 +39,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\SolutionItems\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="MoveToMiddleProperty.cs" />
     <Compile Include="BoolToVisibilityConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -40,6 +40,9 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\SolutionItems\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="GraphController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
