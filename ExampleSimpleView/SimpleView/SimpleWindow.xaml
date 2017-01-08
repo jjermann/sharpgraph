@@ -16,6 +16,6 @@
     </Window.Resources>
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-        <ContentControl Content="{Binding Graph}" />
+        <ContentControl Content="{Binding Path=Graph}" />
     </ScrollViewer>
 </Window>

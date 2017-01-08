@@ -2,12 +2,12 @@
         x:Name="MainWindowName"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:viewmodels="clr-namespace:ExampleGraphView;assembly=GraphController"
+        xmlns:graphController="clr-namespace:ExampleGraphView;assembly=GraphController"
         Title="SharpGraph"
         SizeToContent="WidthAndHeight">
 
     <Window.DataContext>
-        <viewmodels:GraphController />
+        <graphController:GraphController />
     </Window.DataContext>
 
     <Window.Resources>
@@ -30,10 +30,10 @@
             </MenuItem>
             <MenuItem Header="_Edit">
                 <MenuItem Header="_Reduce visibility" IsCheckable="True"
-                          IsChecked="{Binding RestrictVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                          IsChecked="{Binding Path=RestrictVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Separator />
-                <MenuItem Header="_Select All" Command="{Binding SelectAllCommand}" />
-                <MenuItem Header="_Deselect All" Command="{Binding DeselectAllCommand}" />
+                <MenuItem Header="_Select All" Command="{Binding Path=SelectAllCommand}" />
+                <MenuItem Header="_Deselect All" Command="{Binding Path=DeselectAllCommand}" />
             </MenuItem>
             <MenuItem Header="_View">
                 <MenuItem Header="_Graph Input Box"
@@ -82,10 +82,10 @@
             <Label Content="{Binding ElementName=ScaleSlider,Path=Value}" />
         </StatusBar>
         <StatusBar DockPanel.Dock="Bottom">
-            <ContentControl Content="{Binding OriginalInputFile}" />
+            <ContentControl Content="{Binding Path=OriginalInputFile}" />
         </StatusBar>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <ContentControl Content="{Binding CurrentWpfGraph}">
+            <ContentControl Content="{Binding Path=CurrentWpfGraph}">
                 <ContentControl.LayoutTransform>
                     <ScaleTransform
                         CenterX="0"

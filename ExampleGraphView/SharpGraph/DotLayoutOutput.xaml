@@ -2,12 +2,13 @@
         x:Name="DotLayoutOutputName"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:graphController="clr-namespace:ExampleGraphView;assembly=GraphController"
         Title="Current Dot Layout Content"
         SizeToContent="WidthAndHeight">
 
     <DockPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <ContentControl Content="{Binding CurrentDotLayoutContent}" />
+            <ContentControl Content="{Binding (graphController:GraphController.CurrentDotLayoutContent)}" />
         </ScrollViewer>
     </DockPanel>
 </Window>

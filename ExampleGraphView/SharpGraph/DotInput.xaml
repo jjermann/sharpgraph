@@ -2,11 +2,12 @@
         x:Name="DotInputName"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:exampleGraphView="clr-namespace:ExampleGraphView"
+        xmlns:local="clr-namespace:ExampleGraphView"
+        xmlns:graphController="clr-namespace:ExampleGraphView;assembly=GraphController"
         Title="Dot Input"
         SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <exampleGraphView:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+        <local:EnumToBoolConverter x:Key="EnumToBoolConverter" />
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Modifiers="Control" Key="S" Command="{Binding Path=SaveCommand, ElementName=DotInputName}" />
@@ -45,7 +46,7 @@
                                 Content="Immediate Update" />
                         </StackPanel>
                         <Button
-                            Command="{Binding OriginalDotToOriginalGraph}"
+                            Command="{Binding Path=(graphController:GraphController.OriginalDotToOriginalGraph)}"
                             Height="50"
                             Margin="10 10 10 10"
                             HorizontalAlignment="Stretch"
@@ -53,12 +54,14 @@
                             Content="Apply" />
                     </StackPanel>
                     <Border Margin="0 10 10 10" BorderThickness="1" BorderBrush="Black">
-                        <TextBlock Padding="10" Text="{Binding ParseFailureMessage}" Foreground="Red" />
+                        <TextBlock Padding="10"
+                                   Text="{Binding Path=(graphController:GraphController.ParseFailureMessage)}"
+                                   Foreground="Red" />
                     </Border>
                 </DockPanel>
                 <TextBox AcceptsReturn="True"
                          Padding="10"
-                         Text="{Binding OriginalDotContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding Path=(graphController:GraphController.OriginalDotContent), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
         </ScrollViewer>
     </DockPanel>

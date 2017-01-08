@@ -2,11 +2,12 @@
         x:Name="ImageOutputName"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:exampleGraphView="clr-namespace:ExampleGraphView"
+        xmlns:local="clr-namespace:ExampleGraphView"
+        xmlns:graphController="clr-namespace:ExampleGraphView;assembly=GraphController"
         Title="Rendered Image"
         SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <exampleGraphView:ImageToBitmapSourceConverter x:Key="ImageConverter" />
+        <local:ImageToBitmapSourceConverter x:Key="ImageConverter" />
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Modifiers="Control" Key="S" Command="{Binding Path=SaveCommand, ElementName=ImageOutputName}" />
@@ -53,7 +54,8 @@
             <Label Content="{Binding ElementName=ScaleSlider,Path=Value}" />
         </StatusBar>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <Image Source="{Binding CurrentImage, Converter={StaticResource ImageConverter}}">
+            <Image
+                Source="{Binding (graphController:GraphController.CurrentImage), Converter={StaticResource ImageConverter}}">
                 <Image.LayoutTransform>
                     <ScaleTransform
                         CenterX="0"
