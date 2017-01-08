@@ -8,9 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using JetBrains.Annotations;
-using SharpGraph.BaseViewModel;
-using SharpGraph.GraphModel;
-using SharpGraph.GraphViewModel;
+using SharpGraph;
 
 namespace ExampleGraphView {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
@@ -47,10 +45,10 @@ namespace ExampleGraphView {
                 : null;
             CurrentDotContent = OriginalGraph.ToDot(nodeSelector: nodeSelector);
             if (UpdateCurrentImage) {
-                CurrentImage = SharpGraph.GraphParser.GraphParser.GetGraphImage(CurrentDotContent);
+                CurrentImage = GraphParser.GetGraphImage(CurrentDotContent);
             }
-            CurrentDotLayoutContent = SharpGraph.GraphParser.GraphParser.GetGraphLayoutDot(CurrentDotContent);
-            CurrentLayoutGraph = SharpGraph.GraphParser.GraphParser.GetGraph(CurrentDotLayoutContent);
+            CurrentDotLayoutContent = GraphParser.GetGraphLayoutDot(CurrentDotContent);
+            CurrentLayoutGraph = GraphParser.GetGraph(CurrentDotLayoutContent);
 
             if (CurrentWpfGraph != null) {
                 CurrentWpfGraph.Changed -= CurrentWpfGraphChanged;
@@ -66,9 +64,9 @@ namespace ExampleGraphView {
         }
 
         private void InitializeOriginalGraph(string filename) {
-            OriginalGraph = SharpGraph.GraphParser.GraphParser.GetGraph(new FileInfo(filename));
+            OriginalGraph = GraphParser.GetGraph(new FileInfo(filename));
             OriginalDotContent = OriginalGraph.ToDot();
-            SharpGraph.GraphParser.GraphParser.CheckSyntax(OriginalDotContent);
+            GraphParser.CheckSyntax(OriginalDotContent);
             //TODO: Figure out a better start selection resp. parse it...
             DeselectAll();
             // This also updates the current context
@@ -87,10 +85,11 @@ namespace ExampleGraphView {
             SelectedNodeIds = new List<string>();
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void UpdateOriginalGraphFromDotContent() {
             try {
-                var graph = SharpGraph.GraphParser.GraphParser.GetGraph(OriginalDotContent);
-                SharpGraph.GraphParser.GraphParser.CheckSyntax(OriginalDotContent);
+                var graph = GraphParser.GetGraph(OriginalDotContent);
+                GraphParser.CheckSyntax(OriginalDotContent);
                 OriginalGraph = graph;
                 ParseFailureMessage = "";
             } catch (Exception e) {

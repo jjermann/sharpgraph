@@ -7,7 +7,7 @@
     <ProjectGuid>{DABB9243-5896-4B2F-96B5-D6973A77B53D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpGraph.GraphModel</RootNamespace>
+    <RootNamespace>SharpGraph</RootNamespace>
     <AssemblyName>GraphModel</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -38,6 +39,7 @@
     <Compile Include="AttributeDictionary.cs" />
     <Compile Include="BaseObject.cs" />
     <Compile Include="Edge.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="IAttributeDictionary.cs" />
     <Compile Include="IBaseObject.cs" />

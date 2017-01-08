@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace SharpGraph.GraphModel {
+namespace SharpGraph {
     [Serializable]
     public class AttributeDictionary : Dictionary<string, string>, IAttributeDictionary {
         public AttributeDictionary() {}

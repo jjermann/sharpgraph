@@ -7,10 +7,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using JetBrains.Annotations;
-using SharpGraph.BaseViewModel;
-using SharpGraph.GraphModel;
 
-namespace SharpGraph.GraphViewModel {
+namespace SharpGraph {
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global

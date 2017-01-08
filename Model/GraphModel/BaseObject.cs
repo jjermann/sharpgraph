@@ -1,6 +1,7 @@
 using System;
 
-namespace SharpGraph.GraphModel {
+namespace SharpGraph {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes")]
     public abstract class BaseObject : IBaseObject {
         protected BaseObject(ISubGraph parentGraph, string id) {
             Parent = parentGraph;
@@ -72,7 +73,7 @@ namespace SharpGraph.GraphModel {
 
         public virtual int CompareTo(IBaseObject other) {
             if (other == null) {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(other));
             }
             if (Parent != other.Parent) {
                 if (Parent == null) {

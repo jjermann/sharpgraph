@@ -1,7 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace SharpGraph.GraphModel {
+namespace SharpGraph {
     public static class ModelHelper {
         public const bool ShowRedundantNodes = false;
         public const bool OrderedByNames = false;

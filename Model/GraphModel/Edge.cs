@@ -1,19 +1,22 @@
 using System;
 
-namespace SharpGraph.GraphModel {
+namespace SharpGraph {
     public class Edge : BaseObject, IEdge {
-        public Edge(ISubGraph parentGraph, INode a, INode b)
-            : base(parentGraph, GetNodeIdFromParameters(parentGraph, a, b)) {
+        public Edge(ISubGraph parentGraph, INode sourceNode, INode endNode)
+            : base(parentGraph, GetNodeIdFromParameters(parentGraph, sourceNode, endNode)) {
+            if (parentGraph == null) throw new ArgumentNullException(nameof(parentGraph));
+            if (sourceNode == null) throw new ArgumentNullException(nameof(sourceNode));
+            if (endNode == null) throw new ArgumentNullException(nameof(endNode));
             IsDirected = parentGraph.Root.IsDirected;
             if (IsDirected) {
-                SourceNode = a;
-                EndNode = b;
-            } else if (a.CompareTo(b) > 0) {
-                SourceNode = b;
-                EndNode = a;
+                SourceNode = sourceNode;
+                EndNode = endNode;
+            } else if (sourceNode.CompareTo(endNode) > 0) {
+                SourceNode = endNode;
+                EndNode = sourceNode;
             } else {
-                SourceNode = a;
-                EndNode = b;
+                SourceNode = sourceNode;
+                EndNode = endNode;
             }
         }
 

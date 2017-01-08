@@ -2,9 +2,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
-using SharpGraph.GraphModel;
 
-namespace SharpGraph.GraphViewModel {
+namespace SharpGraph {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public class WpfEdge {

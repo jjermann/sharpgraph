@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleProgram", "ExampleConsoleProgram\ConsoleProgram\ConsoleProgram.csproj", "{8E96E596-95DC-4DBF-8872-2D4EBE0099D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotParser", "Model\DotParser\DotParser.csproj", "{82F53A86-0DC1-40E1-947B-029C3E87EFFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotParserHelper", "Model\DotParserHelper\DotParserHelper.csproj", "{82F53A86-0DC1-40E1-947B-029C3E87EFFF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalRunners", "Model\ExternalRunners\ExternalRunners.csproj", "{C1178425-0F15-4A1F-8C71-69618F2B6954}"
 EndProject

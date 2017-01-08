@@ -4,21 +4,29 @@ using NUnit.Framework;
 
 namespace SharpGraph {
     internal static class TestHelper {
-        static TestHelper() {
-            var executingAssembly = Assembly.GetExecutingAssembly();
-            Stream stream = null;
-            try {
-                stream = executingAssembly.GetManifestResourceStream(@"SharpGraph.TestExamples.example.dot");
-                Assert.IsTrue(stream != null);
-                using (var reader = new StreamReader(stream)) {
-                    stream = null;
-                    ExampleDot = reader.ReadToEnd();
+        private static string s_exampleDot;
+
+        public static string ExampleDot {
+            get {
+                if (s_exampleDot != null) {
+                    return s_exampleDot;
                 }
-            } finally {
-                stream?.Dispose();
+
+                var executingAssembly = Assembly.GetExecutingAssembly();
+                Stream stream = null;
+                try {
+                    stream =
+                        executingAssembly.GetManifestResourceStream(@"SharpGraph.TestExamples.example.dot");
+                    Assert.IsTrue(stream != null);
+                    using (var reader = new StreamReader(stream)) {
+                        stream = null;
+                        s_exampleDot = reader.ReadToEnd();
+                    }
+                } finally {
+                    stream?.Dispose();
+                }
+                return s_exampleDot;
             }
         }
-
-        public static string ExampleDot { get; }
     }
 }

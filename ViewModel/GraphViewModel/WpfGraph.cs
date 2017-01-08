@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using SharpGraph.GraphModel;
 
-namespace SharpGraph.GraphViewModel {
+namespace SharpGraph {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class WpfGraph : WpfSubGraph {
         public WpfGraph(IGraph graphBehind, IList<string> selectedNodeIds = null) : base(graphBehind) {

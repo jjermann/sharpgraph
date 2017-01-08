@@ -3,10 +3,12 @@ using Microsoft.Win32;
 
 namespace ExampleGraphView {
     public static class FileDialogHandler<T> where T : FileDialog, new() {
-        public static string OpenDialog(string defaultFilename = null) {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design",
+             "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
+        public static string OpenDialog(string defaultFileName = null) {
             var saveFileDialog = new T();
-            if (!string.IsNullOrEmpty(defaultFilename)) {
-                var file = new FileInfo(defaultFilename);
+            if (!string.IsNullOrEmpty(defaultFileName)) {
+                var file = new FileInfo(defaultFileName);
                 saveFileDialog.FileName = file.Name;
                 saveFileDialog.InitialDirectory = file.DirectoryName;
             }

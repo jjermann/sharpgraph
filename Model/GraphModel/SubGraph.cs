@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SharpGraph.GraphModel {
+namespace SharpGraph {
     public class SubGraph : BaseObject, ISubGraph {
         // ReSharper disable once MemberCanBeProtected.Global
         public SubGraph(ISubGraph parentGraph, string id) : base(parentGraph, id) {
@@ -126,6 +126,8 @@ namespace SharpGraph.GraphModel {
             return subgraphs.Concat(subgraphs.SelectMany(g => g.GetSubGraphSubGraphs(true)));
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")
+        ]
         public virtual string ToDot(
             bool orderedByName,
             bool showRedundantNodes,
@@ -190,7 +192,7 @@ namespace SharpGraph.GraphModel {
             return graphString;
         }
 
-        private bool ShouldShowNode(INode node, IList<IEdge> allEdges, bool showRedundantNodes) {
+        private static bool ShouldShowNode(INode node, IList<IEdge> allEdges, bool showRedundantNodes) {
             var containedInSourceEdges =
                 allEdges.Any(e => e.SourceNode.Equals(node) && (e.Parent == node.Parent));
             var containedInEndEdges =

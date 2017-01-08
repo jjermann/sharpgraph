@@ -3,12 +3,15 @@ using System.IO;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace SharpGraph.DotParser {
+// ReSharper disable once CheckNamespace
+
+namespace SharpGraph {
     [TestFixture]
-    public static class DotParserTests {
+    public static class DotParserHelperTests {
         [SetUp]
         public static void Init() {}
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         [Test]
         public static void GetParseTreeTest() {
             var executingAssembly = Assembly.GetExecutingAssembly();
@@ -20,7 +23,7 @@ namespace SharpGraph.DotParser {
                 using (var reader = new StreamReader(stream)) {
                     stream = null;
                     try {
-                        DotParser.GetParseTree(reader);
+                        DotParserHelper.GetParseTree(reader);
                     } catch (Exception e) {
                         Assert.Fail(e.Message);
                     }

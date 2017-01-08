@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace SharpGraph.GraphViewModel {
+namespace SharpGraph {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public static class WpfHelper {
         private const double DeviceIndependentPpi = 96.0;
@@ -177,7 +177,7 @@ namespace SharpGraph.GraphViewModel {
             //}
         }
 
-        public class Point {
+        internal class Point {
             public Point(double x, double y) {
                 X = x;
                 Y = y;
@@ -206,7 +206,7 @@ namespace SharpGraph.GraphViewModel {
             }
         }
 
-        public class ArrowHead {
+        internal class ArrowHead {
             private const double BaseWidth = 8.0;
             private const double Length = BaseWidth*2;
 
@@ -229,7 +229,7 @@ namespace SharpGraph.GraphViewModel {
             }
         }
 
-        public class PathGeometryData {
+        internal class PathGeometryData {
             public PathGeometryData(IEnumerable<PathFigureData> figureData) {
                 FigureData = figureData;
             }
@@ -241,7 +241,7 @@ namespace SharpGraph.GraphViewModel {
             }
         }
 
-        public class PathFigureData {
+        internal class PathFigureData {
             public Point StartPoint { get; set; }
             public Point MainPoint { get; set; }
             public IEnumerable<IEnumerable<Point>> CubicTriples { get; set; }
