@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using SharpGraph.GraphViewModel;
+using SharpGraph;
 
 namespace ExampleSimpleView {
     public sealed class SimpleController {
@@ -9,8 +9,8 @@ namespace ExampleSimpleView {
                 throw new ArgumentException("No filename argument given!");
             }
             var filename = Environment.GetCommandLineArgs()[1];
-            var graph = SharpGraph.GraphParser.GraphParser.GetGraph(new FileInfo(filename));
-            var layoutGraph = SharpGraph.GraphParser.GraphParser.GetGraphLayout(graph.ToDot());
+            var graph = GraphParser.GetGraph(new FileInfo(filename));
+            var layoutGraph = GraphParser.GetGraphLayout(graph.ToDot());
             Graph = new WpfGraph(layoutGraph);
         }
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SharpGraph.GraphModel {
+namespace SharpGraph {
     public interface IGraph : ISubGraph {
         bool IsStrict { get; }
         bool IsDirected { get; }

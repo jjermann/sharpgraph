@@ -2,12 +2,15 @@
 using System.Drawing;
 using NUnit.Framework;
 
-namespace SharpGraph.ExternalRunners {
+// ReSharper disable once CheckNamespace
+
+namespace SharpGraph {
     [TestFixture]
     public static class DotExeRunnerTests {
         [SetUp]
         public static void Init() {}
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         [Test]
         public static void GetGraphLayoutTest() {
             try {

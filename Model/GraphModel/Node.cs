@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SharpGraph.GraphModel {
+namespace SharpGraph {
     public class Node : BaseObject, INode {
         public Node(ISubGraph parentGraph, string id) : base(parentGraph, id) {}
 
@@ -55,6 +55,7 @@ namespace SharpGraph.GraphModel {
         }
 
         public HashSet<INode> RecursiveSelect(Func<INode, IEnumerable<INode>> selectionFunc) {
+            if (selectionFunc == null) throw new ArgumentNullException(nameof(selectionFunc));
             var selected = new HashSet<INode> {this};
             var affected = new HashSet<INode>(selectionFunc(this));
             foreach (var node in affected) {
@@ -63,7 +64,9 @@ namespace SharpGraph.GraphModel {
             return selected;
         }
 
-        public void VisitNeighbours(Func<INode, bool> stopCondition, Dictionary<INode, HashSet<INode>> visited) {
+        public void VisitNeighbours(Func<INode, bool> stopCondition, IDictionary<INode, HashSet<INode>> visited) {
+            if (stopCondition == null) throw new ArgumentNullException(nameof(stopCondition));
+            if (visited == null) throw new ArgumentNullException(nameof(visited));
             if (stopCondition(this)) {
                 return;
             }

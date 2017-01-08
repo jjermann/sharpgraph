@@ -4,10 +4,10 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using DotParser;
 
-namespace SharpGraph.DotParser {
+namespace SharpGraph {
     [CLSCompliant(false)]
-    public static class DotParser {
-        public static IParseTree GetParseTree(StreamReader reader, IDotGrammarListener listener = null) {
+    public static class DotParserHelper {
+        public static IParseTree GetParseTree(TextReader reader, IDotGrammarListener listener = null) {
             var input = new AntlrInputStream(reader);
             var lexer = new DotGrammarLexer(input);
             var tokens = new CommonTokenStream(lexer);

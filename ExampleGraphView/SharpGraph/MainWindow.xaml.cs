@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using JetBrains.Annotations;
 using Microsoft.Win32;
-using SharpGraph.BaseViewModel;
+using SharpGraph;
 
 namespace ExampleGraphView {
     public sealed partial class MainWindow : INotifyPropertyChanged {

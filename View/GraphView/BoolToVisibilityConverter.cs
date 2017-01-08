@@ -2,7 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Data;
 
-namespace SharpGraph.GraphView {
+namespace SharpGraph {
     [ValueConversion(typeof(bool), typeof(Visibility))]
     public class BoolToVisibilityConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter,

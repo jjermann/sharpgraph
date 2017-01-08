@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SharpGraph.GraphModel {
+namespace SharpGraph {
     public class Graph : SubGraph, IGraph {
         // ReSharper disable once MemberCanBePrivate.Global
         public Graph(string id, bool isDirected, bool isStrict = false) : base(null, id) {
@@ -21,6 +21,7 @@ namespace SharpGraph.GraphModel {
         public bool IsDirected { get; }
 
         public INode AddNode(INode node, bool checkParent = true) {
+            if (node == null) throw new ArgumentNullException(nameof(node));
             if (!Equals(node.Parent) && !SubGraphs.ContainsKey(node.Parent)) {
                 throw new ArgumentException(FormattableString.Invariant($"Parent of Node {node} not within Graph!"));
             }
@@ -37,6 +38,7 @@ namespace SharpGraph.GraphModel {
         }
 
         public IEdge AddEdge(IEdge edge) {
+            if (edge == null) throw new ArgumentNullException(nameof(edge));
             if (!Equals(edge.Parent) && !SubGraphs.ContainsKey(edge.Parent)) {
                 throw new ArgumentException(FormattableString.Invariant($"Parent of Edge {edge} not within Graph!"));
             }
@@ -56,6 +58,7 @@ namespace SharpGraph.GraphModel {
         }
 
         public ISubGraph AddSubGraph(ISubGraph subgraph) {
+            if (subgraph == null) throw new ArgumentNullException(nameof(subgraph));
             if (!Equals(subgraph.Parent) && !SubGraphs.ContainsKey(subgraph.Parent)) {
                 throw new ArgumentException(
                     FormattableString.Invariant($"Parent of SubGraph {subgraph.Id} not within Graph!"));
@@ -97,7 +100,7 @@ namespace SharpGraph.GraphModel {
             return node => restricted.Contains(node);
         }
 
-        private HashSet<INode> RestrictVisited(
+        private static HashSet<INode> RestrictVisited(
             List<INode> initialNodes,
             HashSet<INode> visited,
             Func<INode, bool> stopCondition,

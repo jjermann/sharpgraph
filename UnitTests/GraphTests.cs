@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using NUnit.Framework;
 
-namespace SharpGraph.GraphModel {
+// ReSharper disable once CheckNamespace
+
+namespace SharpGraph {
     [TestFixture]
     public static class GraphTests {
         [SetUp]

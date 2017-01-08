@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace SharpGraph.GraphModel {
+namespace SharpGraph {
     [SuppressMessage("ReSharper", "UnusedMethodReturnValue.Global")]
     [SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
     public interface ISubGraph : IBaseObject {

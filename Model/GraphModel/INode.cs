@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace SharpGraph.GraphModel {
+namespace SharpGraph {
     [SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public interface INode : IBaseObject {
@@ -12,7 +12,11 @@ namespace SharpGraph.GraphModel {
         IEnumerable<INode> IncomingNeighbours();
         IEnumerable<INode> OutgoingNeighbours();
         IEnumerable<INode> ConnectedNeighbours();
-        void VisitNeighbours(Func<INode, bool> stopCondition, Dictionary<INode, HashSet<INode>> visited);
+
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
+        void VisitNeighbours(Func<INode, bool> stopCondition, IDictionary<INode, HashSet<INode>> visited);
+
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         HashSet<INode> RecursiveSelect(Func<INode, IEnumerable<INode>> selectionFunc);
     }
 }

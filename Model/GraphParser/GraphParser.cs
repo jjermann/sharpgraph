@@ -2,10 +2,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
-using SharpGraph.ExternalRunners;
-using SharpGraph.GraphModel;
 
-namespace SharpGraph.GraphParser {
+namespace SharpGraph {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public static class GraphParser {
         public static readonly Func<string, string> LayoutGenerator =
@@ -20,8 +18,8 @@ namespace SharpGraph.GraphParser {
                 return true;
             }).GetOutput;
 
-        public static IGraph GetGraph(StreamReader reader) {
-            var tree = DotParser.DotParser.GetParseTree(reader);
+        public static IGraph GetGraph(TextReader reader) {
+            var tree = DotParserHelper.GetParseTree(reader);
             return new GraphVisitor().Visit(tree);
         }
 
@@ -38,6 +36,7 @@ namespace SharpGraph.GraphParser {
             }
         }
 
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         private static Stream StreamFromString(string str) {
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);
@@ -48,6 +47,7 @@ namespace SharpGraph.GraphParser {
         }
 
         public static IGraph GetGraph(FileInfo file) {
+            if (file == null) throw new ArgumentNullException(nameof(file));
             using (var reader = file.OpenText()) {
                 return GetGraph(reader);
             }

@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace SharpGraph.ExternalRunners {
+namespace SharpGraph {
     public class DotExeRunner<T> : IDotRunner<T> {
         private const string DefaultDotExecutablePath = @"C:\Program Files (x86)\Graphviz2.38\bin";
 
@@ -22,7 +22,9 @@ namespace SharpGraph.ExternalRunners {
         private string DotGraphLayoutArgument { get; }
         private Func<StreamReader, T> OutputProcessor { get; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public T GetOutput(string input) {
+            var output = default(T);
             var process = new Process {
                 StartInfo = new ProcessStartInfo {
                     CreateNoWindow = true,
@@ -39,7 +41,6 @@ namespace SharpGraph.ExternalRunners {
             process.StandardInput.Write(input);
             process.StandardInput.Close();
 
-            var output = default(T);
             string outputExceptionMessage = null;
             try {
                 output = OutputProcessor(process.StandardOutput);
@@ -49,10 +50,12 @@ namespace SharpGraph.ExternalRunners {
 
             var errorOutput = process.StandardError.ReadToEnd();
             process.WaitForExit();
+            var exitCode = process.ExitCode;
+            process.Dispose();
 
-            if ((process.ExitCode > 0) || (outputExceptionMessage != null)) {
+            if ((exitCode > 0) || (outputExceptionMessage != null)) {
                 string exceptionMessage;
-                if (process.ExitCode > 0) {
+                if (exitCode > 0) {
                     exceptionMessage = errorOutput.Replace("Error: <stdin>: ", "") + "\n";
                     exceptionMessage += GetImprovedExceptionInformation(errorOutput, input);
                 } else {
@@ -64,7 +67,7 @@ namespace SharpGraph.ExternalRunners {
             return output;
         }
 
-        private string GetImprovedExceptionInformation(string msg, string source, int margin = 3) {
+        private static string GetImprovedExceptionInformation(string msg, string source, int margin = 3) {
             var lineMatcher = new Regex(".* in line (?<line>[1-9][0-9]*) .*");
             var lineStr = lineMatcher.Match(msg).Groups["line"]?.Value;
             if (!string.IsNullOrEmpty(lineStr)) {
@@ -74,7 +77,7 @@ namespace SharpGraph.ExternalRunners {
             return "";
         }
 
-        private string GetLineContent(string input, int line, int margin = 3) {
+        private static string GetLineContent(string input, int line, int margin = 3) {
             return input.Replace("\r", "")
                 .Split('\n')
                 .Select((v, i) => new {v, i})

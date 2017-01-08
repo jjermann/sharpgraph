@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using DotParser;
-using SharpGraph.GraphModel;
 
-namespace SharpGraph.GraphParser {
+namespace SharpGraph {
     [CLSCompliant(false)]
     public class GraphVisitor : DotGrammarBaseVisitor<IGraph> {
         private IGraph ParsedGraph { get; set; }

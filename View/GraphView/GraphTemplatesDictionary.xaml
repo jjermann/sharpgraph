@@ -1,10 +1,10 @@
-﻿<ResourceDictionary x:Class="SharpGraph.GraphView.GraphTemplates"
+﻿<ResourceDictionary x:Class="SharpGraph.GraphTemplatesDictionary"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:viewmodels="clr-namespace:SharpGraph.GraphViewModel;assembly=GraphViewModel"
-                    xmlns:local="clr-namespace:SharpGraph.GraphView">
-    <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-    <local:CenterConverter x:Key="CenterConverter" />
+                    xmlns:sharpGraph="clr-namespace:SharpGraph"
+                    xmlns:viewmodels="clr-namespace:SharpGraph;assembly=GraphViewModel">
+    <sharpGraph:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    <sharpGraph:CenterConverter x:Key="CenterConverter" />
 
     <Style x:Key="NodeShapeStyle" TargetType="{x:Type Shape}">
         <Setter Property="Width" Value="{Binding Path=(viewmodels:WpfNode.Width)}" />
@@ -87,7 +87,7 @@
                   Style="{StaticResource ArrowHeadStyle}" />
             <TextBlock Text="{Binding Path=Label}"
                        Margin="{Binding Path=LabelMargin}"
-                       local:Mover.MoveToMiddle="True"
+                       sharpGraph:Mover.MoveToMiddle="True"
                        FontSize="{Binding Path=FontSize}"
                        Foreground="{Binding Path=FontColor}"
                        HorizontalAlignment="Left"
@@ -119,7 +119,7 @@
                                            Style="{StaticResource SubGraphShapeStyle}" />
                                 <TextBlock Text="{Binding Path=Label}"
                                            Margin="{Binding Path=LabelMargin}"
-                                           local:Mover.MoveToMiddle="True"
+                                           sharpGraph:Mover.MoveToMiddle="True"
                                            FontSize="{Binding Path=FontSize}"
                                            Foreground="{Binding Path=FontColor}"
                                            HorizontalAlignment="Left"
@@ -166,7 +166,7 @@
                 </ItemsControl>
                 <TextBlock Text="{Binding Path=Label}"
                            Margin="{Binding Path=LabelMargin}"
-                           local:Mover.MoveToMiddle="True"
+                           sharpGraph:Mover.MoveToMiddle="True"
                            FontSize="{Binding Path=FontSize}"
                            Foreground="{Binding Path=FontColor}"
                            HorizontalAlignment="Left"
