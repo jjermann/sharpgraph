@@ -44,6 +44,7 @@ Other Prerequisites, Licenses, Links:
   License: New BSD License, see http://graphviz4net.codeplex.com/license
 
 - Other similar projects (not used/needed):
+
   http://graphsharp.codeplex.com/
   
   https://code.google.com/archive/p/graphviznet/
