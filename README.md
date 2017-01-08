@@ -21,8 +21,6 @@ Other Prerequisites, Licenses, Links:
 -------------------------------------
 - VisualStudio 2015 / .NET Framework 4.6.2 / Resharper 2016
 
-  Make sure the region settings have "." as the decimal separator.
-
 - http://www.graphviz.org/ (binary installation required for ExternalRunners)
   License: Eclipse Public License V1.0, see http://www.graphviz.org/License.php
 

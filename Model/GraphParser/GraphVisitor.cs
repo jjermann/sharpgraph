@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using DotParser;
 using SharpGraph.GraphModel;
@@ -93,7 +94,8 @@ namespace SharpGraph.GraphParser {
                 return nodeList;
             }
             var id = context.id() == null
-                ? string.Format(ModelHelper.NewSubGraphFormat, ParsedGraph.GetSubGraphs().Count() + 1)
+                ? string.Format(CultureInfo.InvariantCulture, ModelHelper.NewSubGraphFormat,
+                    ParsedGraph.GetSubGraphs().Count() + 1)
                 : context.id().GetText();
             var graphAttrs = GetGraphAttributes(context.stmt_list().stmt());
             var nodeAttrs = GetNodeAttributes(context.stmt_list().stmt());

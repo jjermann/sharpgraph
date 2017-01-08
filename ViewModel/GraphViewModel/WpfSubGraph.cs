@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace SharpGraph.GraphViewModel {
 
         private void UpdatePropertyValues() {
             Id = SubGraphBehind.Id;
-            IsCluster = Id.StartsWith("cluster");
+            IsCluster = Id.StartsWith("cluster", StringComparison.OrdinalIgnoreCase);
             Label = WpfHelper.ConvertIdToText(
                 SubGraphBehind.HasAttribute("label", true)
                     ? SubGraphBehind.GetAttribute("label", true)
@@ -63,7 +64,7 @@ namespace SharpGraph.GraphViewModel {
                     StrokeThickness/2.0;
                 Width = UpperRightX - X;
                 Height = UpperRightY - Y;
-                Margin = $"{X},{Y},0,0";
+                Margin = FormattableString.Invariant($"{X},{Y},0,0");
 
                 Styles = WpfHelper.ConvertIdToStyles(
                     SubGraphBehind.HasAttribute("style", true)
@@ -81,7 +82,7 @@ namespace SharpGraph.GraphViewModel {
                         .Select(p => p + "pt")
                         .Select(WpfHelper.StringToPixel)
                         .ToList();
-                    LabelMargin = $"{labelPos[0]},{labelPos[1]},0,0";
+                    LabelMargin = FormattableString.Invariant($"{labelPos[0]},{labelPos[1]},0,0");
                 }
             }
         }

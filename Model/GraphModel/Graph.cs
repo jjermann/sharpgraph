@@ -22,15 +22,15 @@ namespace SharpGraph.GraphModel {
 
         public INode AddNode(INode node, bool checkParent = true) {
             if (!Equals(node.Parent) && !SubGraphs.ContainsKey(node.Parent)) {
-                throw new ArgumentException($"Parent of Node {node} not within Graph!");
+                throw new ArgumentException(FormattableString.Invariant($"Parent of Node {node} not within Graph!"));
             }
             if (!Nodes.ContainsKey(node)) {
                 Nodes[node] = node;
             }
             var addedNode = Nodes[node];
             if (checkParent && (addedNode.Parent != node.Parent)) {
-                throw new ArgumentException(
-                    $"Mismatching node Parent ({addedNode.Parent.Id} vs {node.Parent.Id}) for node {node}!");
+                throw new ArgumentException(FormattableString.Invariant(
+                    $"Mismatching node Parent ({addedNode.Parent.Id} vs {node.Parent.Id}) for node {node}!"));
             }
             addedNode.SetAttributes(node.GetAttributes());
             return addedNode;
@@ -38,13 +38,14 @@ namespace SharpGraph.GraphModel {
 
         public IEdge AddEdge(IEdge edge) {
             if (!Equals(edge.Parent) && !SubGraphs.ContainsKey(edge.Parent)) {
-                throw new ArgumentException($"Parent of Edge {edge} not within Graph!");
+                throw new ArgumentException(FormattableString.Invariant($"Parent of Edge {edge} not within Graph!"));
             }
             if ((edge.SourceNode == null) || !Nodes.ContainsKey(edge.SourceNode)) {
-                throw new ArgumentException($"SourceNode {edge.SourceNode} not within Graph!");
+                throw new ArgumentException(
+                    FormattableString.Invariant($"SourceNode {edge.SourceNode} not within Graph!"));
             }
             if ((edge.EndNode == null) || !Nodes.ContainsKey(edge.EndNode)) {
-                throw new ArgumentException($"EndNode {edge.EndNode} not within Graph!");
+                throw new ArgumentException(FormattableString.Invariant($"EndNode {edge.EndNode} not within Graph!"));
             }
             if (!Edges.ContainsKey(edge)) {
                 Edges[edge] = edge;
@@ -56,7 +57,8 @@ namespace SharpGraph.GraphModel {
 
         public ISubGraph AddSubGraph(ISubGraph subgraph) {
             if (!Equals(subgraph.Parent) && !SubGraphs.ContainsKey(subgraph.Parent)) {
-                throw new ArgumentException($"Parent of SubGraph {subgraph.Id} not within Graph!");
+                throw new ArgumentException(
+                    FormattableString.Invariant($"Parent of SubGraph {subgraph.Id} not within Graph!"));
             }
             if (!SubGraphs.ContainsKey(subgraph)) {
                 SubGraphs[subgraph] = subgraph;
@@ -183,7 +185,7 @@ namespace SharpGraph.GraphModel {
             var strict = IsStrict ? ModelHelper.StrictGraphName + " " : "";
             var graphType = IsDirected ? ModelHelper.DirectedGraphName : ModelHelper.UndirectedGraphName;
             var graphId = " " + Id;
-            var graphString = $"{strict}{graphType}{graphId} " +
+            var graphString = FormattableString.Invariant($"{strict}{graphType}{graphId} ") +
                               base.ToDot(orderedByName, showRedundantNodes, true, nodeSelector);
             return graphString;
         }

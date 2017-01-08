@@ -27,7 +27,7 @@ namespace SharpGraph.GraphModel {
             string last;
             var idType = GetIdType(reduced);
             if (idType == IdType.Invalid) {
-                throw new ArgumentException($"Id {id} was invalid!");
+                throw new ArgumentException(FormattableString.Invariant($"Id {id} was invalid!"));
             }
             do {
                 last = reduced;

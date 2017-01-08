@@ -10,7 +10,7 @@ namespace ExampleGraphView {
             }
             var checkValue = value.ToString();
             var targetValue = parameter.ToString();
-            return checkValue.Equals(targetValue, StringComparison.InvariantCultureIgnoreCase);
+            return checkValue.Equals(targetValue, StringComparison.OrdinalIgnoreCase);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter,

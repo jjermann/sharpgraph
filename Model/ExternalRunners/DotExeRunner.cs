@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -67,7 +68,7 @@ namespace SharpGraph.ExternalRunners {
             var lineMatcher = new Regex(".* in line (?<line>[1-9][0-9]*) .*");
             var lineStr = lineMatcher.Match(msg).Groups["line"]?.Value;
             if (!string.IsNullOrEmpty(lineStr)) {
-                var line = int.Parse(lineStr);
+                var line = int.Parse(lineStr, CultureInfo.InvariantCulture);
                 return GetLineContent(source, line, margin) + "\n";
             }
             return "";

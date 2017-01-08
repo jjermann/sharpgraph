@@ -27,8 +27,8 @@ namespace SharpGraph.GraphModel {
                 output += "[ ";
                 var firstPart = "";
                 foreach (var attr in this) {
-                    var valuePart = attr.Value != null ? $" = {attr.Value}" : "";
-                    output += $"{firstPart}{attr.Key}{valuePart}";
+                    var valuePart = attr.Value != null ? FormattableString.Invariant($" = {attr.Value}") : "";
+                    output += FormattableString.Invariant($"{firstPart}{attr.Key}{valuePart}");
                     firstPart = ", ";
                 }
                 output += " ]";

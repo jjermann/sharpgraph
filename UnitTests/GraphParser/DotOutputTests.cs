@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using NUnit.Framework;
 using SharpGraph.GraphModel;
 
@@ -24,19 +25,19 @@ namespace SharpGraph.GraphParser {
             CheckIdConsistencies(graph);
             Assert.IsTrue(graph.GetEdges().GroupBy(e => new {e.SourceNode, e.EndNode}).Any(c => c.Count() > 1));
             var output = graph.ToDot();
-            Assert.IsTrue(output.StartsWith("digraph GraphId {"));
+            Assert.IsTrue(output.StartsWith("digraph GraphId {", StringComparison.OrdinalIgnoreCase));
         }
 
         [Test]
         public static void DuplicateNodesTest() {
             var input = "A\nA";
-            var graph = GraphParser.GetGraph($"digraph {{\n{input}\n}}");
+            var graph = GraphParser.GetGraph(FormattableString.Invariant($"digraph {{\n{input}\n}}"));
             var output = graph.ToDot();
             var expectedOutput = "digraph GraphId {\n  A\n}\n";
             Assert.AreEqual(expectedOutput, output);
 
             input = "A->B\nA";
-            graph = GraphParser.GetGraph($"digraph {{\n{input}\n}}");
+            graph = GraphParser.GetGraph(FormattableString.Invariant($"digraph {{\n{input}\n}}"));
             output = graph.ToDot();
             expectedOutput = "digraph GraphId {\n  A -> B\n}\n";
             Assert.AreEqual(expectedOutput, output);
@@ -45,7 +46,7 @@ namespace SharpGraph.GraphParser {
         [Test]
         public static void EmptyGraphTest() {
             var input = "";
-            var graph = GraphParser.GetGraph($"digraph {{\n{input}\n}}");
+            var graph = GraphParser.GetGraph(FormattableString.Invariant($"digraph {{\n{input}\n}}"));
             Assert.IsTrue(!graph.GetNodes().Any());
             Assert.IsTrue(!graph.GetEdges().Any());
             Assert.IsTrue(!graph.GetSubGraphs().Any());
@@ -68,7 +69,7 @@ namespace SharpGraph.GraphParser {
             CheckIdConsistencies(graph);
             Assert.IsTrue(graph.GetEdges().GroupBy(e => new {e.SourceNode, e.EndNode}).Any(c => c.Count() > 1));
             var output = graph.ToDot();
-            Assert.IsTrue(output.StartsWith("graph MyId {"));
+            Assert.IsTrue(output.StartsWith("graph MyId {", StringComparison.OrdinalIgnoreCase));
         }
 
         [Test]
@@ -82,7 +83,7 @@ namespace SharpGraph.GraphParser {
             Assert.IsFalse(graph.GetEdges().GroupBy(e => new {e.SourceNode, e.EndNode}).Any(c => c.Count() > 1));
             Assert.IsTrue(graph.GetEdges().All(e => e.Id == "node" + e.SourceNode.Id + e.EndNode.Id));
             var output = graph.ToDot();
-            Assert.IsTrue(output.StartsWith("strict digraph MyId {"));
+            Assert.IsTrue(output.StartsWith("strict digraph MyId {", StringComparison.OrdinalIgnoreCase));
         }
     }
 }

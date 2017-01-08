@@ -8,7 +8,7 @@ namespace ExampleConsoleProgram {
         private static void Main(string[] args) {
             var file = args.Length > 0 ? new FileInfo(args[0]) : new FileInfo(DefaultInputFile);
             if (!file.Exists) {
-                throw new FileNotFoundException($"File {file.FullName} not found!");
+                throw new FileNotFoundException(FormattableString.Invariant($"File {file.FullName} not found!"));
             }
 
             var graph = SharpGraph.GraphParser.GraphParser.GetGraph(file);

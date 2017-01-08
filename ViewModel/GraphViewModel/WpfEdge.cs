@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using SharpGraph.GraphModel;
@@ -35,7 +36,7 @@ namespace SharpGraph.GraphViewModel {
                     .Select(p => p + "pt")
                     .Select(WpfHelper.StringToPixel)
                     .ToList();
-                LabelMargin = $"{labelPos[0]},{labelPos[1]},0,0";
+                LabelMargin = FormattableString.Invariant($"{labelPos[0]},{labelPos[1]},0,0");
             }
             Geometry = WpfHelper.PosToGeometry(WpfHelper.ConvertIdToText(
                 EdgeBehind.GetAttribute("pos")));

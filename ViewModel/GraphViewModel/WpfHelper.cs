@@ -81,18 +81,18 @@ namespace SharpGraph.GraphViewModel {
 
         private static PathFigureData ParsePathFigureData(string spline) {
             const string num = @"[-]?([\.[0-9]+]|[0-9]+(\.[0-9]*)?)";
-            var pointStr = $"({num},{num})";
+            var pointStr = FormattableString.Invariant($"({num},{num})");
             var splineExp = new Regex(
                 "^"
-                + $"(e,(?<endPoint>{pointStr}) )?"
-                + $"(s,(?<startPoint>{pointStr}) )?"
-                + $"(?<mainPoint>{pointStr})"
-                + $"( (?<cubicTriple>{pointStr} {pointStr} {pointStr}))*"
+                + FormattableString.Invariant($"(e,(?<endPoint>{pointStr}) )?")
+                + FormattableString.Invariant($"(s,(?<startPoint>{pointStr}) )?")
+                + FormattableString.Invariant($"(?<mainPoint>{pointStr})")
+                + FormattableString.Invariant($"( (?<cubicTriple>{pointStr} {pointStr} {pointStr}))*")
                 + "$");
 
             var match = splineExp.Match(spline);
             if (!match.Success) {
-                throw new ArgumentException($"Unable to interpret as a spline: {spline}");
+                throw new ArgumentException(FormattableString.Invariant($"Unable to interpret as a spline: {spline}"));
             }
 
             var startPointStr = match.Groups["startPoint"].Value;
@@ -129,7 +129,7 @@ namespace SharpGraph.GraphViewModel {
         }
 
         public static string ConvertIdToShape(string id) {
-            var shape = ConvertIdToText(id).ToLower();
+            var shape = ConvertIdToText(id).ToLowerInvariant();
             switch (shape) {
                 case "box":
                 case "rect":
@@ -145,7 +145,7 @@ namespace SharpGraph.GraphViewModel {
             if (id == null) {
                 return new List<string>();
             }
-            return ConvertIdToText(id).ToLower()
+            return ConvertIdToText(id).ToLowerInvariant()
                 .Split(';')
                 .Select(s => s.Trim());
 
@@ -187,7 +187,7 @@ namespace SharpGraph.GraphViewModel {
             public double Y { get; }
 
             public override string ToString() {
-                return $"{X},{Y}";
+                return FormattableString.Invariant($"{X},{Y}");
             }
 
             public Point Rotate(double angle, Point center = null) {
@@ -250,17 +250,17 @@ namespace SharpGraph.GraphViewModel {
                 get {
                     var pathFigureGeometry = new List<string>();
                     if (StartPoint == null) {
-                        pathFigureGeometry.Add($"M {MainPoint}");
+                        pathFigureGeometry.Add(FormattableString.Invariant($"M {MainPoint}"));
                     } else {
-                        pathFigureGeometry.Add($"M {StartPoint}");
-                        pathFigureGeometry.Add($"L {MainPoint}");
+                        pathFigureGeometry.Add(FormattableString.Invariant($"M {StartPoint}"));
+                        pathFigureGeometry.Add(FormattableString.Invariant($"L {MainPoint}"));
                     }
                     foreach (var cubicTriple in CubicTriples) {
                         var bezierSegment = "C " + string.Join(" ", cubicTriple);
                         pathFigureGeometry.Add(bezierSegment);
                     }
                     if (EndPoint != null) {
-                        pathFigureGeometry.Add($"L {EndPoint}");
+                        pathFigureGeometry.Add(FormattableString.Invariant($"L {EndPoint}"));
                     }
                     return string.Join(" ", pathFigureGeometry);
                 }

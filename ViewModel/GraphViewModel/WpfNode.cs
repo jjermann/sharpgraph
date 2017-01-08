@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -95,7 +96,7 @@ namespace SharpGraph.GraphViewModel {
                      + StrokeThickness;
             X = CenterX - Width/2;
             Y = CenterY - Height/2;
-            Margin = $"{X},{Y},0,0";
+            Margin = FormattableString.Invariant($"{X},{Y},0,0");
 
             Styles = WpfHelper.ConvertIdToStyles(
                 NodeBehind.HasAttribute("style", true)

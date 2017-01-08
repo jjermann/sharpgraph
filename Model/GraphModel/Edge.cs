@@ -62,7 +62,7 @@ namespace SharpGraph.GraphModel {
         }
 
         public override string ToString() {
-            var output = $"{SourceNode.Id} {Connector} {EndNode.Id}";
+            var output = FormattableString.Invariant($"{SourceNode.Id} {Connector} {EndNode.Id}");
             if (Attributes.Count > 0) {
                 output += " " + Attributes;
             }

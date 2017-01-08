@@ -44,7 +44,7 @@ namespace SharpGraph.GraphViewModel {
                     .Select(p => p + "pt")
                     .Select(WpfHelper.StringToPixel)
                     .ToList();
-                LabelMargin = $"{labelPos[0]},{labelPos[1]},0,0";
+                LabelMargin = FormattableString.Invariant($"{labelPos[0]},{labelPos[1]},0,0");
             }
             IsDirected = GraphBehind.IsDirected;
             FillColor = GetGraphFillColor();
