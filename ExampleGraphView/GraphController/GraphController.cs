@@ -34,11 +34,6 @@ namespace ExampleGraphView {
             }
         }
 
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
-        public Func<INode, bool> NodeVisitStopFunction { get; set; }
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
-        public Func<INode, bool> NodeVisitAcceptFunction { get; set; }
-
         private void UpdateCurrentContent() {
             var nodeSelector = RestrictVisibility
                 ? OriginalGraph.GetNodeSelector(SelectedNodeIds, NodeVisitStopFunction, NodeVisitAcceptFunction)
@@ -108,6 +103,14 @@ namespace ExampleGraphView {
 
         #endregion Private
         #region OtherPublic
+
+        //TODO: Make this a command, only update the graph once at the end
+        public void SelectNodesById(IList<string> idList) {
+            var nodesToSelect = CurrentWpfGraph.WpfNodes.Where(n => idList.Contains(n.Id));
+            foreach (var wpfNode in nodesToSelect) {
+                wpfNode.IsSelected = true;
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -209,6 +212,11 @@ namespace ExampleGraphView {
 
         #endregion PublicCommands
         #region PublicProperties
+
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        public Func<INode, bool> NodeVisitStopFunction { get; set; }
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        public Func<INode, bool> NodeVisitAcceptFunction { get; set; }
 
         private bool m_restrictVisibility;
         public bool RestrictVisibility {

@@ -17,7 +17,7 @@
             </MenuItem>
         </Menu>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <TextBox Text="{Binding CurrentDotContent, Mode=OneWay}" IsReadOnly="True"/>
+            <TextBox Text="{Binding CurrentDotContent, Mode=OneWay}" IsReadOnly="True" />
         </ScrollViewer>
     </DockPanel>
 </Window>

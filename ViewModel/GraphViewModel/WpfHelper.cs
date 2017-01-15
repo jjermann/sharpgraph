@@ -86,7 +86,8 @@ namespace SharpGraph {
             var start = FormattableString.Invariant($"(s,(?<startPoint>{point}) )?");
             var main = FormattableString.Invariant($"(?<mainPoint>{point})");
             var triple = FormattableString.Invariant($"(?<cubicTriple>{point} {point} {point})");
-            var splineExp = new Regex(FormattableString.Invariant($"^(?:{start}{end}|{end}{start})?{main}(?: {triple})*$"));
+            var splineExp = new Regex(FormattableString.Invariant(
+                $"^(?:{start}{end}|{end}{start})?{main}(?: {triple})*$"));
 
             var match = splineExp.Match(spline);
             if (!match.Success) {
