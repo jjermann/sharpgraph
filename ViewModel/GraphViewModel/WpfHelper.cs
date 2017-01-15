@@ -98,8 +98,10 @@ namespace SharpGraph {
             var startPointStr = match.Groups["startPoint"].Value;
             var mainPointStr = match.Groups["mainPoint"].Value;
             var cubicTriplesStr = match.Groups["cubicTriple"].Captures
-                .OfType<Group>()
-                .Select(g => g.Value).ToList();
+                .Cast<object>()
+                .Select(o => o.ToString())
+                .Where(s => !string.IsNullOrEmpty(s))
+                .ToList();
             var endPointStr = match.Groups["endPoint"].Value;
 
             var startPoint = string.IsNullOrEmpty(startPointStr) ? null : ConvertStringToPoint(startPointStr);
