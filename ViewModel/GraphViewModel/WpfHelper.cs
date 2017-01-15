@@ -80,13 +80,13 @@ namespace SharpGraph {
         }
 
         private static PathFigureData ParsePathFigureData(string spline) {
-            const string num = @"[-]?([\.[0-9]+]|[0-9]+(\.[0-9]*)?)";
-            var point = FormattableString.Invariant($"({num},{num})");
+            const string num = @"[-]?(?:[\.[0-9]+]|[0-9]+(?:\.[0-9]*)?)";
+            var point = FormattableString.Invariant($"(?:{num},{num})");
             var end = FormattableString.Invariant($"(e,(?<endPoint>{point}) )?");
             var start = FormattableString.Invariant($"(s,(?<startPoint>{point}) )?");
             var main = FormattableString.Invariant($"(?<mainPoint>{point})");
             var triple = FormattableString.Invariant($"(?<cubicTriple>{point} {point} {point})");
-            var splineExp = new Regex(FormattableString.Invariant($"^({start}{end}|{end}{start})?{main}( {triple})*$"));
+            var splineExp = new Regex(FormattableString.Invariant($"^(?:{start}{end}|{end}{start})?{main}(?: {triple})*$"));
 
             var match = splineExp.Match(spline);
             if (!match.Success) {
