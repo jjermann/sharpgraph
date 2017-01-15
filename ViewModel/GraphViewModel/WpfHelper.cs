@@ -39,6 +39,20 @@ namespace SharpGraph {
             return PosToArrowHead(pos).ToString();
         }
 
+        public static string PosToArrowTailGeometry(string pos) {
+            return PosToArrowTail(pos).ToString();
+        }
+
+        public static bool HasArrowHead(string pos) {
+            var data = ParsePathGeometryData(pos).FigureData;
+            return data.Last().EndPoint != null;
+        }
+
+        public static bool HasArrowTail(string pos) {
+            var data = ParsePathGeometryData(pos).FigureData;
+            return data.First().StartPoint != null;
+        }
+
         private static ArrowHead PosToArrowHead(string pos) {
             var lastPathFigureData = ParsePathGeometryData(pos).FigureData.Last();
             var cubics = lastPathFigureData.CubicTriples.ToList();
@@ -63,6 +77,24 @@ namespace SharpGraph {
                     head = lastPathFigureData.MainPoint;
                     source = lastPathFigureData.StartPoint;
                 }
+            }
+
+            return new ArrowHead(head, source);
+        }
+
+        private static ArrowHead PosToArrowTail(string pos) {
+            var firstPathFigureData = ParsePathGeometryData(pos).FigureData.First();
+            var cubics = firstPathFigureData.CubicTriples.ToList();
+            Point head, source;
+            if (firstPathFigureData.StartPoint != null) {
+                head = firstPathFigureData.StartPoint;
+                source = firstPathFigureData.MainPoint;
+            } else if (cubics.Any()) {
+                var firstCubic = cubics.First().ToList();
+                head = firstPathFigureData.MainPoint;
+                source = firstCubic[0];
+            } else {
+                throw new NotImplementedException();
             }
 
             return new ArrowHead(head, source);

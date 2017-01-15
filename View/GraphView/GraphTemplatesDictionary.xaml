@@ -78,6 +78,11 @@
         <Setter Property="Visibility"
                 Value="{Binding Path=(viewmodels:WpfEdge.HasArrowHead), Converter={StaticResource BoolToVisibilityConverter}}" />
     </Style>
+    <Style x:Key="ArrowTailStyle" TargetType="{x:Type Shape}" BasedOn="{StaticResource EdgeStyle}">
+        <Setter Property="Fill" Value="{Binding Path=(viewmodels:WpfEdge.StrokeColor)}" />
+        <Setter Property="Visibility"
+                Value="{Binding Path=(viewmodels:WpfEdge.HasArrowTail), Converter={StaticResource BoolToVisibilityConverter}}" />
+    </Style>
     <DataTemplate DataType="{x:Type viewmodels:WpfEdge}">
         <Grid HorizontalAlignment="Left"
               VerticalAlignment="Top">
@@ -85,6 +90,8 @@
                   Style="{StaticResource EdgeStyle}" />
             <Path Data="{Binding Path=ArrowHeadGeometry}"
                   Style="{StaticResource ArrowHeadStyle}" />
+            <Path Data="{Binding Path=ArrowTailGeometry}"
+                  Style="{StaticResource ArrowTailStyle}" />
             <TextBlock Text="{Binding Path=Label}"
                        Margin="{Binding Path=LabelMargin}"
                        sharpGraph:Mover.MoveToMiddle="True"

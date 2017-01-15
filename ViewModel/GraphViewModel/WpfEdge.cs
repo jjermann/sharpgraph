@@ -17,7 +17,9 @@ namespace SharpGraph {
         public string LabelMargin { get; protected set; }
         public string Geometry { get; protected set; }
         public bool HasArrowHead { get; protected set; }
+        public bool HasArrowTail { get; protected set; }
         public string ArrowHeadGeometry { get; protected set; }
+        public string ArrowTailGeometry { get; protected set; }
         public string StrokeColor { get; protected set; }
         public double StrokeThickness { get; protected set; }
         public string FontColor { get; protected set; }
@@ -37,11 +39,12 @@ namespace SharpGraph {
                     .ToList();
                 LabelMargin = FormattableString.Invariant($"{labelPos[0]},{labelPos[1]},0,0");
             }
-            Geometry = WpfHelper.PosToGeometry(WpfHelper.ConvertIdToText(
-                EdgeBehind.GetAttribute("pos")));
-            HasArrowHead = EdgeBehind.Root.IsDirected;
-            ArrowHeadGeometry = WpfHelper.PosToArrowHeadGeometry(WpfHelper.ConvertIdToText(
-                EdgeBehind.GetAttribute("pos")));
+            var pos = WpfHelper.ConvertIdToText(EdgeBehind.GetAttribute("pos"));
+            Geometry = WpfHelper.PosToGeometry(pos);
+            HasArrowHead = WpfHelper.HasArrowHead(pos);
+            HasArrowTail = WpfHelper.HasArrowTail(pos);
+            ArrowHeadGeometry = WpfHelper.PosToArrowHeadGeometry(pos);
+            ArrowTailGeometry = WpfHelper.PosToArrowTailGeometry(pos);
 
             StrokeColor = GetEdgeStrokeColor();
             StrokeThickness = GetEdgeStrokeThickness();
