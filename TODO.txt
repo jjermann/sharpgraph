@@ -5,10 +5,6 @@ Bugs:
     In particular path geometries need to be handled!
   o The important part is to keep the View (e.g. ActualHeight) separated from the Viewmodel!
   o Maybe LayoutTransform? But what about Labels? We don't want to transform those...
-- Proper edge support:
-  Currently we use cubic bezier segments but dot seems to use (global) cubic splines.
-  We could maybe use http://numerics.mathdotnet.com/ for this...
-  This is kind of important because incorrect paths might interfere with node positions.
 - Fix the different results from dot output
   i.e. implement/imitate the sometimes strange dot behavior
 - Fix the content of various objects (ids):
@@ -17,6 +13,7 @@ Bugs:
   o Trim surrounding parenthesis
   o => A proper solution would be to introduce a new class for this that handles all of it
 - Maybe: More configuration/preferences
+- We still depend on the region: For example the padding doesn't work properly with "," decimal separator!
 
 Possible design Improvements / refactorings:
 - Cleanup the initial WPF implementation

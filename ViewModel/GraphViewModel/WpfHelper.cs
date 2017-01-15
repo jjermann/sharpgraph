@@ -82,15 +82,30 @@ namespace SharpGraph {
         private static PathFigureData ParsePathFigureData(string spline) {
             const string num = @"[-]?([\.[0-9]+]|[0-9]+(\.[0-9]*)?)";
             var pointStr = FormattableString.Invariant($"({num},{num})");
-            var splineExp = new Regex(
+            //"?:(?: e,(?< endPoint >{ pointStr}) )(?: s,(?< startPoint >{ pointStr}) )| (?: s,(?< startPoint >{ pointStr}) )(e,(?< endPoint >{ pointStr}) ))"
+            var startPointExp = FormattableString.Invariant($"(s,(?<startPoint>{pointStr}) )?");
+            var endPointExp = FormattableString.Invariant($"(e,(?<endPoint>{pointStr}) )?");
+            var mainPointExp = FormattableString.Invariant($"(?<mainPoint>{pointStr})");
+            var cubicTripleExp = FormattableString.Invariant($"( (?<cubicTriple>{pointStr} {pointStr} {pointStr}))*");
+            var splineExp1 = new Regex(
                 "^"
-                + FormattableString.Invariant($"(e,(?<endPoint>{pointStr}) )?")
-                + FormattableString.Invariant($"(s,(?<startPoint>{pointStr}) )?")
-                + FormattableString.Invariant($"(?<mainPoint>{pointStr})")
-                + FormattableString.Invariant($"( (?<cubicTriple>{pointStr} {pointStr} {pointStr}))*")
+                + startPointExp
+                + endPointExp
+                + mainPointExp
+                + cubicTripleExp
+                + "$");
+            var splineExp2 = new Regex(
+                "^"
+                + endPointExp
+                + startPointExp
+                + mainPointExp
+                + cubicTripleExp
                 + "$");
 
-            var match = splineExp.Match(spline);
+            var match = splineExp1.Match(spline);
+            if (!match.Success) {
+                match = splineExp2.Match(spline);
+            }
             if (!match.Success) {
                 throw new ArgumentException(FormattableString.Invariant($"Unable to interpret as a spline: {spline}"));
             }
