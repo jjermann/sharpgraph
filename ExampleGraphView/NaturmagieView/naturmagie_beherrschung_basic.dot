@@ -1,0 +1,33 @@
+digraph Naturmagie {
+  "Beherrschung der Naturmagie" [ shape = doubleoctagon, fontsize = 24, style = filled ]
+
+  "Beherrschung der Naturmagie" -> KG [ style = bold ]
+  "Beherrschung der Naturmagie" -> KK [ style = bold ]
+  "Beherrschung der Naturmagie" -> KO [ style = bold ]
+  "Beherrschung der Naturmagie" -> KR [ style = bold ]
+  "Beherrschung der Naturmagie" -> KW [ style = bold ]
+
+  KK -> KK1 -> "3/4"
+  KK [ shape = box, label = Kosten, fontsize = 20, style = filled ]
+  KK1 [ label = "", width = 0.3, height = 0.3 ]
+  "3/4" [ label = "3/4 Kosten" ]
+
+  KG -> KG1 -> KG2 -> GI
+  KG [ shape = box, label = Geschwindigkeit, fontsize = 20, style = filled ]
+  KG1 [ label = "", width = 0.3, height = 0.3 ]
+  KG2 [ label = "", width = 0.3, height = 0.3 ]
+  GI [ label = "mittelfristig\n(GI)" ]
+
+  KO -> KO1 -> KI
+  KO [ shape = box, label = Kontrolle, fontsize = 20, style = filled ]
+  KO1 [ label = "", width = 0.3, height = 0.3 ]
+  KI [ label = "normale Kontrolle\n(KI)" ]
+
+  KR [ shape = box, label = Reichweite, fontsize = 20, style = filled ]
+
+  KW -> KW1 -> KW2 -> WI
+  KW [ shape = box, label = Wissen, fontsize = 20, style = filled ]
+  KW1 [ label = "", width = 0.3, height = 0.3 ]
+  KW2 [ label = "", width = 0.3, height = 0.3 ]
+  WI [ label = "Basiswissen\n(WI)" ]
+}
