@@ -2,7 +2,8 @@ using System;
 
 namespace SharpGraph {
     public class Edge : BaseObject, IEdge {
-        public Edge(ISubGraph parentGraph, INode sourceNode, INode endNode)
+        public Edge(ISubGraph parentGraph, INode sourceNode, INode endNode, IPort sourcePort = null,
+            IPort endPort = null)
             : base(parentGraph, GetNodeIdFromParameters(parentGraph, sourceNode, endNode)) {
             if (parentGraph == null) throw new ArgumentNullException(nameof(parentGraph));
             if (sourceNode == null) throw new ArgumentNullException(nameof(sourceNode));
@@ -11,12 +12,18 @@ namespace SharpGraph {
             if (IsDirected) {
                 SourceNode = sourceNode;
                 EndNode = endNode;
+                SourcePort = sourcePort;
+                EndPort = endPort;
             } else if (sourceNode.CompareTo(endNode) > 0) {
                 SourceNode = endNode;
                 EndNode = sourceNode;
+                SourcePort = sourcePort;
+                EndPort = endPort;
             } else {
                 SourceNode = sourceNode;
                 EndNode = endNode;
+                SourcePort = sourcePort;
+                EndPort = endPort;
             }
         }
 
@@ -29,6 +36,8 @@ namespace SharpGraph {
 
         public INode EndNode { get; }
         public INode SourceNode { get; }
+        public IPort SourcePort { get; }
+        public IPort EndPort { get; }
 
         public override bool HasAttribute(string attr, bool recursive = false) {
             var hasLocalAttr = Attributes.ContainsKey(attr);
@@ -65,7 +74,14 @@ namespace SharpGraph {
         }
 
         public override string ToString() {
-            var output = FormattableString.Invariant($"{SourceNode.Id} {Connector} {EndNode.Id}");
+            var sourcePortStr = SourcePort == null
+                ? ""
+                : FormattableString.Invariant($":{SourcePort}");
+            var endPortStr = EndPort == null
+                ? ""
+                : FormattableString.Invariant($":{EndPort}");
+            var output =
+                FormattableString.Invariant($"{SourceNode.Id}{sourcePortStr} {Connector} {EndNode.Id}{endPortStr}");
             if (Attributes.Count > 0) {
                 output += " " + Attributes;
             }

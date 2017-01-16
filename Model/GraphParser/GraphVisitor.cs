@@ -34,19 +34,43 @@ namespace SharpGraph {
             return ParsedGraph;
         }
 
-        private IList<INode> HandleNode(DotGrammarParser.Node_stmtContext context) {
-            var nodeList = new List<INode>();
+        private IList<NodePort> HandleNode(DotGrammarParser.Node_stmtContext context) {
+            var nodeList = new List<NodePort>();
             if (context == null) {
                 return nodeList;
             }
             var id = context.node_id().id().GetText();
+            var portContext = context.node_id().port();
+            var port = HandlePort(portContext);
             var attrs = GetAttributes(context.attr_list()?.a_list());
-            nodeList.Add(CurrentSubGraph.CreateNode(id, attrs, false));
+            nodeList.Add(new NodePort(CurrentSubGraph.CreateNode(id, attrs, false), port));
             return nodeList;
         }
 
-        private IList<INode> HandleEdgeLine(DotGrammarParser.Edge_stmtContext context) {
-            var nodeList = new List<INode>();
+        private static IPort HandlePort(DotGrammarParser.PortContext context) {
+            if (context == null) {
+                return null;
+            }
+            Compass compass;
+            var name = context.id()[0].GetText();
+            if (context.id().Length == 1) {
+                if (name.ToUpperInvariant() == "_") {
+                    return new Port();
+                }
+                if (Enum.TryParse(name.ToUpperInvariant(), out compass)) {
+                    return new Port(compass);
+                }
+                return new Port(Compass.Default, name);
+            }
+            var compassStr = context.id()[1].GetText();
+            if (!Enum.TryParse(compassStr.ToUpperInvariant(), out compass)) {
+                throw new NotImplementedException();
+            }
+            return new Port(compass, name);
+        }
+
+        private IList<NodePort> HandleEdgeLine(DotGrammarParser.Edge_stmtContext context) {
+            var nodeList = new List<NodePort>();
             if (context == null) {
                 return nodeList;
             }
@@ -65,30 +89,39 @@ namespace SharpGraph {
 
         private void HandleEdge(DotGrammarParser.Edge_objContext startContext,
             DotGrammarParser.Edge_objContext endContext, IAttributeDictionary attrs) {
-            IList<INode> sourceNodes, endNodes;
+            IList<NodePort> sourceNodePorts, endNodePorts;
             if (startContext.node_id() != null) {
                 var id = startContext.node_id().id().GetText();
-                sourceNodes = new List<INode> {CurrentSubGraph.CreateNode(id, checkParent: false)};
+                var portContext = startContext.node_id().port();
+                var port = HandlePort(portContext);
+                sourceNodePorts = new List<NodePort> {
+                    new NodePort(CurrentSubGraph.CreateNode(id, checkParent: false), port)
+                };
             } else {
-                sourceNodes = HandleSubgraph(startContext.subgraph()).ToList();
+                sourceNodePorts = HandleSubgraph(startContext.subgraph()).ToList();
                 HandleExitSubgraph(startContext.subgraph());
             }
             if (endContext.node_id() != null) {
                 var id = endContext.node_id().id().GetText();
-                endNodes = new List<INode> {CurrentSubGraph.CreateNode(id, checkParent: false)};
+                var portContext = endContext.node_id().port();
+                var port = HandlePort(portContext);
+                endNodePorts = new List<NodePort> {
+                    new NodePort(CurrentSubGraph.CreateNode(id, checkParent: false), port)
+                };
             } else {
-                endNodes = HandleSubgraph(endContext.subgraph()).ToList();
+                endNodePorts = HandleSubgraph(endContext.subgraph()).ToList();
                 HandleExitSubgraph(endContext.subgraph());
             }
-            foreach (var sourceNode in sourceNodes) {
-                foreach (var endNode in endNodes) {
-                    CurrentSubGraph.CreateEdge(sourceNode, endNode, attrs);
+            foreach (var sourceNodePort in sourceNodePorts) {
+                foreach (var endNodePort in endNodePorts) {
+                    CurrentSubGraph.CreateEdge(sourceNodePort.Node, endNodePort.Node, attrs, sourceNodePort.Port,
+                        endNodePort.Port);
                 }
             }
         }
 
-        private IList<INode> HandleSubgraph(DotGrammarParser.SubgraphContext context) {
-            var nodeList = new List<INode>();
+        private IList<NodePort> HandleSubgraph(DotGrammarParser.SubgraphContext context) {
+            var nodeList = new List<NodePort>();
             if (context == null) {
                 return nodeList;
             }
@@ -173,6 +206,12 @@ namespace SharpGraph {
             }
 
             return attrs;
+        }
+
+        private class NodePort : Tuple<INode, IPort> {
+            public NodePort(INode node, IPort port) : base(node, port) {}
+            public INode Node => Item1;
+            public IPort Port => Item2;
         }
     }
 }

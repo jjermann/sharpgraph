@@ -14,7 +14,9 @@ namespace SharpGraph {
         IEdge CreateEdge(
             INode sourceNode,
             INode endNode,
-            IAttributeDictionary attrs = null);
+            IAttributeDictionary attrs = null,
+            IPort sourcePort = null,
+            IPort endPort = null);
 
         ISubGraph CreateSubGraph(
             string id,

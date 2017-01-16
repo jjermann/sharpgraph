@@ -82,8 +82,10 @@ namespace SharpGraph {
         public IEdge CreateEdge(
             INode sourceNode,
             INode endNode,
-            IAttributeDictionary attrs = null) {
-            var edge = new Edge(this, sourceNode, endNode);
+            IAttributeDictionary attrs = null,
+            IPort sourcePort = null,
+            IPort endPort = null) {
+            var edge = new Edge(this, sourceNode, endNode, sourcePort, endPort);
             var addedEdge = Root.AddEdge(edge);
             addedEdge.SetAttributes(attrs);
             return addedEdge;

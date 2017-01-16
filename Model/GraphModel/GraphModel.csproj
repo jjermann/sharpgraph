@@ -38,11 +38,14 @@
     </Compile>
     <Compile Include="AttributeDictionary.cs" />
     <Compile Include="BaseObject.cs" />
+    <Compile Include="Compass.cs" />
+    <Compile Include="Port.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="IAttributeDictionary.cs" />
     <Compile Include="IBaseObject.cs" />
+    <Compile Include="IPort.cs" />
     <Compile Include="IEdge.cs" />
     <Compile Include="IGraph.cs" />
     <Compile Include="INode.cs" />

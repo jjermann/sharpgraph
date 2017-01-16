@@ -19,7 +19,7 @@ digraph {
 	fontsize=14
 	fontcolor=gray
     E [shape="square"]
-	F->A [penwidth=3, color="blue", dir=both]
+	F:n->A [penwidth=3, color="blue", dir=both]
 	D->B [label="bar"]
   }
 }
