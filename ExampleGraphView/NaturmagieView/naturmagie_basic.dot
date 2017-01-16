@@ -1,28 +1,34 @@
 digraph Naturmagie {
   Naturmagie [ shape = doubleoctagon, fontsize = 24, style = filled ]
-  Naturmagie -> W [ style = bold ]
-  Naturmagie -> S [ style = bold ]
-  Naturmagie -> B [ style = bold ]
 
+  Naturmagie -> W [ style = bold ]
   W [ shape = box, label = Wahrnehmen, fontsize = 20, style = filled ]
+  Naturmagie -> S [ style = bold ]
   S [ shape = box, label = Symbiose, fontsize = 20, style = filled ]
+  Naturmagie -> B [ style = bold ]
   B [ shape = box, label = Beeinflussen, fontsize = 20, style = filled ]
 
   W -> W1 -> Naturblick
-  W -> W2 -> "differenzierte\nWahrnehmung"
-  W -> W3 -> Meditation
   W1 [ label = "", width = 0.3, height = 0.3 ]
+  W -> W2 -> "differenzierte\nWahrnehmung"
   W2 [ label = "", width = 0.3, height = 0.3 ]
+  W -> W3 -> Meditation
   W3 [ label = "", width = 0.3, height = 0.3 ]
 
   B -> B11 -> B12
   B11 [ label = "", width = 0.3, height = 0.3 ]
   B12 [ label = "Elemente\nV: KI" ]
+  B -> Licht1 -> "Licht\nV: WI"
+  Licht1 [label="",width=0.3,height=0.3]
+  B -> Dunkelheit1 -> "Dunkelheit\nV: WI"
+  Dunkelheit1 [label="",width=0.3,height=0.3]
 
   S -> S1 -> Waldläufer
-  S -> S2 -> Regeneration
-  S -> S3 -> Ritual
   S1 [ label = "", width = 0.3, height = 0.3 ]
+  S -> S2 -> Regeneration
   S2 [ label = "", width = 0.3, height = 0.3 ]
+  S -> S3 -> Ritual
   S3 [ label = "", width = 0.3, height = 0.3 ]
+  S -> S4 -> "Verbindung\nV: WI"
+  S4 [ label = "", width = 0.3, height = 0.3 ]
 }
