@@ -9,9 +9,8 @@ using System.Windows.Input;
 using JetBrains.Annotations;
 
 namespace SharpGraph {
-    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
+    [SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
     public class WpfNode : INotifyPropertyChanged {
         public WpfNode(WpfGraph root, INode nodeBehind, bool isSelected = false) {
             Root = root;
@@ -68,12 +67,12 @@ namespace SharpGraph {
 
         private void UpdatePropertyValues() {
             Id = NodeBehind.Id;
-            Label = WpfHelper.ConvertIdToText(
+            Label = WpfHelper.IdToText(
                 NodeBehind.HasAttribute("label")
                     ? NodeBehind.GetAttribute("label")
                     : NodeBehind.Id);
 
-            Shape = WpfHelper.ConvertIdToShape(
+            Shape = WpfHelper.IdToShape(
                 NodeBehind.HasAttribute("shape", true)
                     ? NodeBehind.GetAttribute("shape", true)
                     : "ellipse");
@@ -82,21 +81,21 @@ namespace SharpGraph {
             //so we compensate this by increasing the Width/Height by StrokeThickness.
             StrokeThickness = GetNodeStrokeThickness();
 
-            CenterX = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+            CenterX = WpfHelper.StringToPixel(WpfHelper.IdToText(
                                                   NodeBehind.GetAttribute("pos")).Split(',')[0] + "pt");
-            CenterY = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+            CenterY = WpfHelper.StringToPixel(WpfHelper.IdToText(
                                                   NodeBehind.GetAttribute("pos")).Split(',')[1] + "pt");
-            Width = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+            Width = WpfHelper.StringToPixel(WpfHelper.IdToText(
                                                 NodeBehind.GetAttribute("width", true)) + "in")
                     + StrokeThickness;
-            Height = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+            Height = WpfHelper.StringToPixel(WpfHelper.IdToText(
                                                  NodeBehind.GetAttribute("height", true)) + "in")
                      + StrokeThickness;
             X = CenterX - Width/2;
             Y = CenterY - Height/2;
             Margin = FormattableString.Invariant($"{X},{Y},0,0");
 
-            Styles = WpfHelper.ConvertIdToStyles(
+            Styles = WpfHelper.IdToStyles(
                 NodeBehind.HasAttribute("style", true)
                     ? NodeBehind.GetAttribute("style", true)
                     : null);
@@ -109,11 +108,11 @@ namespace SharpGraph {
 
         private string GetNodeFillColor() {
             if (Styles.Contains("filled")) {
-                var color = WpfHelper.ConvertIdToText(
+                var color = WpfHelper.IdToText(
                     NodeBehind.HasAttribute("color", true)
                         ? NodeBehind.GetAttribute("color", true)
                         : null);
-                var fillcolor = WpfHelper.ConvertIdToText(
+                var fillcolor = WpfHelper.IdToText(
                     NodeBehind.HasAttribute("fillcolor", true)
                         ? NodeBehind.GetAttribute("fillcolor", true)
                         : null);
@@ -123,7 +122,7 @@ namespace SharpGraph {
         }
 
         private string GetNodeStrokeColor() {
-            var color = WpfHelper.ConvertIdToText(
+            var color = WpfHelper.IdToText(
                 NodeBehind.HasAttribute("color", true)
                     ? NodeBehind.GetAttribute("color", true)
                     : null);
@@ -131,7 +130,7 @@ namespace SharpGraph {
         }
 
         private double GetNodeStrokeThickness() {
-            var thicknessStr = WpfHelper.ConvertIdToText(
+            var thicknessStr = WpfHelper.IdToText(
                 NodeBehind.HasAttribute("penwidth", true)
                     ? NodeBehind.GetAttribute("penwidth", true) + "pt"
                     : "1");
@@ -139,7 +138,7 @@ namespace SharpGraph {
         }
 
         //private string GetFontFamily() {
-        //    var fontname = WpfHelper.ConvertIdToText(
+        //    var fontname = WpfHelper.IdToText(
         //        NodeBehind.HasAttribute("fontname", true)
         //            ? NodeBehind.GetAttribute("fontname", true)
         //            : "Times-Roman");
@@ -147,14 +146,14 @@ namespace SharpGraph {
         //}
 
         private string GetFontColor() {
-            return WpfHelper.ConvertIdToText(
+            return WpfHelper.IdToText(
                 NodeBehind.HasAttribute("fontcolor", true)
                     ? NodeBehind.GetAttribute("fontcolor", true)
                     : "black");
         }
 
         private double GetFontSize() {
-            var sizeStr = WpfHelper.ConvertIdToText(
+            var sizeStr = WpfHelper.IdToText(
                 NodeBehind.HasAttribute("fontsize", true)
                     ? NodeBehind.GetAttribute("fontsize", true)
                     : null);

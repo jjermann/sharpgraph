@@ -33,12 +33,12 @@ namespace SharpGraph {
 
         private void UpdatePropertyValues() {
             Id = GraphBehind.Id;
-            Label = WpfHelper.ConvertIdToText(
+            Label = WpfHelper.IdToText(
                 GraphBehind.HasAttribute("label")
                     ? GraphBehind.GetAttribute("label")
                     : null);
             if (Label != null) {
-                var labelPos = WpfHelper.ConvertIdToText(GraphBehind.GetAttribute("lp"))
+                var labelPos = WpfHelper.IdToText(GraphBehind.GetAttribute("lp"))
                     .Split(',')
                     .Select(p => p + "pt")
                     .Select(WpfHelper.StringToPixel)
@@ -51,7 +51,7 @@ namespace SharpGraph {
         }
 
         private string GetGraphFillColor() {
-            var bgColor = WpfHelper.ConvertIdToText(
+            var bgColor = WpfHelper.IdToText(
                 GraphBehind.HasAttribute("bgcolor", true)
                     ? GraphBehind.GetAttribute("bgcolor", true)
                     : null);
@@ -59,7 +59,7 @@ namespace SharpGraph {
         }
 
         private string GetGraphPad() {
-            var padStr = WpfHelper.ConvertIdToText(
+            var padStr = WpfHelper.IdToText(
                 GraphBehind.HasAttribute("pad")
                     ? GraphBehind.GetAttribute("pad")
                     : "0.0555");

@@ -27,24 +27,25 @@ namespace SharpGraph {
         public double FontSize { get; protected set; }
 
         private void UpdatePropertyValues() {
-            Label = WpfHelper.ConvertIdToText(
+            Label = WpfHelper.IdToText(
                 EdgeBehind.HasAttribute("label")
                     ? EdgeBehind.GetAttribute("label")
                     : null);
             if (Label != null) {
-                var labelPos = WpfHelper.ConvertIdToText(EdgeBehind.GetAttribute("lp"))
+                var labelPos = WpfHelper.IdToText(EdgeBehind.GetAttribute("lp"))
                     .Split(',')
                     .Select(p => p + "pt")
                     .Select(WpfHelper.StringToPixel)
                     .ToList();
                 LabelMargin = FormattableString.Invariant($"{labelPos[0]},{labelPos[1]},0,0");
             }
-            var pos = WpfHelper.ConvertIdToText(EdgeBehind.GetAttribute("pos"));
-            Geometry = WpfHelper.PosToGeometry(pos);
-            HasArrowHead = WpfHelper.HasArrowHead(pos);
-            HasArrowTail = WpfHelper.HasArrowTail(pos);
-            ArrowHeadGeometry = WpfHelper.PosToArrowHeadGeometry(pos);
-            ArrowTailGeometry = WpfHelper.PosToArrowTailGeometry(pos);
+            var pos = WpfHelper.IdToText(EdgeBehind.GetAttribute("pos"));
+            var pathGeometryData = new PathGeometryData(pos);
+            Geometry = pathGeometryData.PathGeometry;
+            HasArrowHead = pathGeometryData.HasArrowHead;
+            HasArrowTail = pathGeometryData.HasArrowTail;
+            ArrowHeadGeometry = pathGeometryData.ArrowHeadGeometry;
+            ArrowTailGeometry = pathGeometryData.ArrowTailGeometry;
 
             StrokeColor = GetEdgeStrokeColor();
             StrokeThickness = GetEdgeStrokeThickness();
@@ -54,7 +55,7 @@ namespace SharpGraph {
         }
 
         private string GetEdgeStrokeColor() {
-            var color = WpfHelper.ConvertIdToText(
+            var color = WpfHelper.IdToText(
                 EdgeBehind.HasAttribute("color", true)
                     ? EdgeBehind.GetAttribute("color", true)
                     : null);
@@ -62,7 +63,7 @@ namespace SharpGraph {
         }
 
         private double GetEdgeStrokeThickness() {
-            var thicknessStr = WpfHelper.ConvertIdToText(
+            var thicknessStr = WpfHelper.IdToText(
                 EdgeBehind.HasAttribute("penwidth", true)
                     ? EdgeBehind.GetAttribute("penwidth", true) + "pt"
                     : "1");
@@ -70,7 +71,7 @@ namespace SharpGraph {
         }
 
         //private string GetFontFamily() {
-        //    var fontname = WpfHelper.ConvertIdToText(
+        //    var fontname = WpfHelper.IdToText(
         //        EdgeBehind.HasAttribute("fontname", true)
         //            ? EdgeBehind.GetAttribute("fontname", true)
         //            : "Times-Roman");
@@ -78,14 +79,14 @@ namespace SharpGraph {
         //}
 
         private string GetFontColor() {
-            return WpfHelper.ConvertIdToText(
+            return WpfHelper.IdToText(
                 EdgeBehind.HasAttribute("fontcolor", true)
                     ? EdgeBehind.GetAttribute("fontcolor", true)
                     : "black");
         }
 
         private double GetFontSize() {
-            var sizeStr = WpfHelper.ConvertIdToText(
+            var sizeStr = WpfHelper.IdToText(
                 EdgeBehind.HasAttribute("fontsize", true)
                     ? EdgeBehind.GetAttribute("fontsize", true)
                     : null);

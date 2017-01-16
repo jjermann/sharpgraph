@@ -16,7 +16,7 @@ namespace ExampleGraphView {
             BeherrschungViewModel = new GraphController();
             BeherrschungViewModel.OpenFileCommand.Execute(beherrschungFile);
             BeherrschungViewModel.NodeVisitStopFunction = n => !string.IsNullOrEmpty(
-                WpfHelper.ConvertIdToText(n.HasAttribute("label")
+                WpfHelper.IdToText(n.HasAttribute("label")
                     ? n.GetAttribute("label")
                     : n.Id));
             BeherrschungViewModel.NodeVisitAcceptFunction = n => true;
@@ -27,7 +27,7 @@ namespace ExampleGraphView {
             NaturmagieViewModel = new GraphController();
             NaturmagieViewModel.OpenFileCommand.Execute(naturmagieFile);
             NaturmagieViewModel.NodeVisitStopFunction = n => !string.IsNullOrEmpty(
-                WpfHelper.ConvertIdToText(n.HasAttribute("label")
+                WpfHelper.IdToText(n.HasAttribute("label")
                     ? n.GetAttribute("label")
                     : n.Id));
             NaturmagieViewModel.NodeVisitAcceptFunction = BeherrschungAccept;
@@ -41,7 +41,7 @@ namespace ExampleGraphView {
         }
 
         private bool BeherrschungAccept(INode node) {
-            var label = WpfHelper.ConvertIdToText(node.HasAttribute("label")
+            var label = WpfHelper.IdToText(node.HasAttribute("label")
                 ? node.GetAttribute("label")
                 : node.Id);
             var regex = new Regex(@"^.*\nV: (?<prereq>.*)$", RegexOptions.Singleline);

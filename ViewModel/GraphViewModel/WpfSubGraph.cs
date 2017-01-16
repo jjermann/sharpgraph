@@ -40,7 +40,7 @@ namespace SharpGraph {
         private void UpdatePropertyValues() {
             Id = SubGraphBehind.Id;
             IsCluster = Id.StartsWith("cluster", StringComparison.OrdinalIgnoreCase);
-            Label = WpfHelper.ConvertIdToText(
+            Label = WpfHelper.IdToText(
                 SubGraphBehind.HasAttribute("label", true)
                     ? SubGraphBehind.GetAttribute("label", true)
                     : null);
@@ -49,23 +49,23 @@ namespace SharpGraph {
             if (HasBoundingBox) {
                 StrokeThickness = GetSubGraphStrokeThickness();
 
-                UpperRightX = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+                UpperRightX = WpfHelper.StringToPixel(WpfHelper.IdToText(
                                                           SubGraphBehind.GetAttribute("bb")).Split(',')[2] + "pt") +
                               StrokeThickness/2.0;
-                UpperRightY = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+                UpperRightY = WpfHelper.StringToPixel(WpfHelper.IdToText(
                                                           SubGraphBehind.GetAttribute("bb")).Split(',')[3] + "pt") +
                               StrokeThickness/2.0;
-                X = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+                X = WpfHelper.StringToPixel(WpfHelper.IdToText(
                                                 SubGraphBehind.GetAttribute("bb")).Split(',')[0] + "pt") -
                     StrokeThickness/2.0;
-                Y = WpfHelper.StringToPixel(WpfHelper.ConvertIdToText(
+                Y = WpfHelper.StringToPixel(WpfHelper.IdToText(
                                                 SubGraphBehind.GetAttribute("bb")).Split(',')[1] + "pt") -
                     StrokeThickness/2.0;
                 Width = UpperRightX - X;
                 Height = UpperRightY - Y;
                 Margin = FormattableString.Invariant($"{X},{Y},0,0");
 
-                Styles = WpfHelper.ConvertIdToStyles(
+                Styles = WpfHelper.IdToStyles(
                     SubGraphBehind.HasAttribute("style", true)
                         ? SubGraphBehind.GetAttribute("style", true)
                         : null);
@@ -76,7 +76,7 @@ namespace SharpGraph {
                 FontSize = GetFontSize();
 
                 if (Label != null) {
-                    var labelPos = WpfHelper.ConvertIdToText(SubGraphBehind.GetAttribute("lp"))
+                    var labelPos = WpfHelper.IdToText(SubGraphBehind.GetAttribute("lp"))
                         .Split(',')
                         .Select(p => p + "pt")
                         .Select(WpfHelper.StringToPixel)
@@ -87,15 +87,15 @@ namespace SharpGraph {
         }
 
         private string GetSubGraphFillColor() {
-            var bgColor = WpfHelper.ConvertIdToText(
+            var bgColor = WpfHelper.IdToText(
                 SubGraphBehind.HasAttribute("bgcolor", true)
                     ? SubGraphBehind.GetAttribute("bgcolor", true)
                     : null);
-            var color = WpfHelper.ConvertIdToText(
+            var color = WpfHelper.IdToText(
                 SubGraphBehind.HasAttribute("color", true)
                     ? SubGraphBehind.GetAttribute("color", true)
                     : null);
-            var fillcolor = WpfHelper.ConvertIdToText(
+            var fillcolor = WpfHelper.IdToText(
                 SubGraphBehind.HasAttribute("fillcolor", true)
                     ? SubGraphBehind.GetAttribute("fillcolor", true)
                     : null);
@@ -106,11 +106,11 @@ namespace SharpGraph {
         }
 
         private string GetSubGraphStrokeColor() {
-            var pencolor = WpfHelper.ConvertIdToText(
+            var pencolor = WpfHelper.IdToText(
                 SubGraphBehind.HasAttribute("pencolor", true)
                     ? SubGraphBehind.GetAttribute("pencolor", true)
                     : null);
-            var color = WpfHelper.ConvertIdToText(
+            var color = WpfHelper.IdToText(
                 SubGraphBehind.HasAttribute("color", true)
                     ? SubGraphBehind.GetAttribute("color", true)
                     : null);
@@ -118,7 +118,7 @@ namespace SharpGraph {
         }
 
         private double GetSubGraphStrokeThickness() {
-            var thicknessStr = WpfHelper.ConvertIdToText(
+            var thicknessStr = WpfHelper.IdToText(
                 SubGraphBehind.HasAttribute("penwidth", true)
                     ? SubGraphBehind.GetAttribute("penwidth", true) + "pt"
                     : "1");
@@ -126,7 +126,7 @@ namespace SharpGraph {
         }
 
         //private string GetFontFamily() {
-        //    var fontname = WpfHelper.ConvertIdToText(
+        //    var fontname = WpfHelper.IdToText(
         //        SubGraphBehind.HasAttribute("fontname", true)
         //            ? SubGraphBehind.GetAttribute("fontname", true)
         //            : "Times-Roman");
@@ -134,14 +134,14 @@ namespace SharpGraph {
         //}
 
         private string GetFontColor() {
-            return WpfHelper.ConvertIdToText(
+            return WpfHelper.IdToText(
                 SubGraphBehind.HasAttribute("fontcolor", true)
                     ? SubGraphBehind.GetAttribute("fontcolor", true)
                     : "black");
         }
 
         private double GetFontSize() {
-            var sizeStr = WpfHelper.ConvertIdToText(
+            var sizeStr = WpfHelper.IdToText(
                 SubGraphBehind.HasAttribute("fontsize", true)
                     ? SubGraphBehind.GetAttribute("fontsize", true)
                     : null);
