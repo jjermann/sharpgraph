@@ -20,7 +20,7 @@
                 <MenuItem Header="_Save As..." Command="{Binding Path=SaveAsCommand, ElementName=DotInputName}" />
             </MenuItem>
         </Menu>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical">
                 <DockPanel VerticalAlignment="Top">
                     <StackPanel Orientation="Vertical">
