@@ -17,6 +17,16 @@ License:
 MIT License, see LICENSE.md.
 
 
+Install:
+--------
+- Install .NET Framework 4.6.2
+
+- Install Graphviz (see below)
+
+- Compile resp. start SharpGraph.
+  If necessary adjust the Graphviz path in the config file
+
+
 Other Prerequisites, Licenses, Links:
 -------------------------------------
 - VisualStudio 2015 / .NET Framework 4.6.2 / Resharper 2016
