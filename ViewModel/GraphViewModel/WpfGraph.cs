@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 
 namespace SharpGraph {
@@ -63,7 +64,8 @@ namespace SharpGraph {
                 GraphBehind.HasAttribute("pad")
                     ? GraphBehind.GetAttribute("pad")
                     : "0.0555");
-            return string.Join(",", padStr.Split(',').Select(s => WpfHelper.StringToPixel(s + "in")));
+            var padSplit = padStr.Split(',').Select(s => WpfHelper.StringToPixel(s + "in")).ToList();
+            return string.Join(",", padSplit.Select(s => s.ToString(CultureInfo.InvariantCulture)));
         }
 
         public event EventHandler Changed;
