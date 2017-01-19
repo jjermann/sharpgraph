@@ -9,7 +9,13 @@ namespace ExampleSimpleView {
                 throw new ArgumentException("No filename argument given!");
             }
             var filename = Environment.GetCommandLineArgs()[1];
-            var graph = GraphParser.GetGraph(new FileInfo(filename));
+            var dotContent = File.ReadAllText(filename);
+            try {
+                GraphParser.CheckSyntax(dotContent);
+            } catch (Exception e) {
+                throw new ArgumentException("Invalid graph syntax:" + Environment.NewLine + e.Message);
+            }
+            var graph = GraphParser.GetGraph(dotContent);
             var layoutGraph = GraphParser.GetGraphLayout(graph.ToDot());
             Graph = new WpfGraph(layoutGraph);
         }

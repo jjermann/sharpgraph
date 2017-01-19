@@ -59,11 +59,11 @@ namespace ExampleGraphView {
         }
 
         private void InitializeOriginalGraph(string filename) {
-            OriginalGraph = GraphParser.GetGraph(new FileInfo(filename));
-            OriginalDotContent = OriginalGraph.ToDot();
-            GraphParser.CheckSyntax(OriginalDotContent);
             //TODO: Figure out a better start selection resp. parse it...
             DeselectAll();
+            OriginalDotContent = File.ReadAllText(filename);
+            UpdateOriginalGraphFromDotContent();
+
             // This also updates the current context
             RestrictVisibility = false;
         }
@@ -89,6 +89,9 @@ namespace ExampleGraphView {
                 ParseFailureMessage = "";
             } catch (Exception e) {
                 ParseFailureMessage = e.Message;
+            }
+            if (OriginalGraph == null) {
+                OriginalGraph = Graph.CreateGraph();
             }
             if (string.IsNullOrEmpty(ParseFailureMessage)) {
                 RestrictSelection();
@@ -248,6 +251,9 @@ namespace ExampleGraphView {
             set {
                 m_graphUpdateMode = value;
                 OnPropertyChanged();
+                if (m_graphUpdateMode == UpdateMode.ImmediateUpdate) {
+                    RaiseContentChanged();
+                }
             }
         }
 
