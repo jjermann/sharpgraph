@@ -9,11 +9,8 @@ Bugs:
   i.e. implement/imitate the sometimes strange dot behavior
 - Fix the content of various objects (ids):
   o Fix Encodings
-  o Apply special characters like \n
-  o Trim surrounding parenthesis
-  o => A proper solution would be to introduce a new class for this that handles all of it
+  o A proper solution would be to introduce a new class for this that handles all of it
 - Maybe: More configuration/preferences
-- We still depend on the region: For example the padding doesn't work properly with "," decimal separator!
 
 Possible design Improvements / refactorings:
 - Cleanup the initial WPF implementation
@@ -21,7 +18,8 @@ Possible design Improvements / refactorings:
   o Review by someone experienced (the overall design and in particualar property changes)
   o Finer property updates, in particular also on the model
   o maybe dependency properties could/should be used somewhere?
-- Refactor the whole design of the example application (analyse it first)
+- Add some control instance for handling multiple views and also for handling updates for the content
+- Analyse/refactor the general design if necessary/useful
   o Graphs from file and/or input box and/or a changing stream/source?
   o Changes to visible nodes vs. original graph vs. input box?
   o More modifications on the graph, in particular attribute changes like filled/not-filled

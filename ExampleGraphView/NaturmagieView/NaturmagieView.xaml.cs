@@ -34,6 +34,8 @@ namespace ExampleGraphView {
             NaturmagieViewModel.SelectNodesById(new List<string> {"Naturmagie"});
             NaturmagieViewModel.RestrictVisibility = true;
 
+            BeherrschungViewModel.ContentChanged += NaturmagieViewModel.CurrentContentChanged;
+
             var beherrschungWindow = new MainWindow(BeherrschungViewModel) {Title = "Naturmagie - Beherrschung"};
             var naturmagieWindow = new MainWindow(NaturmagieViewModel) {Title = "Naturmagie - Fähigkeiten"};
             beherrschungWindow.Show();
@@ -65,7 +67,7 @@ namespace ExampleGraphView {
                 "Beschwören"
             };
             var knowledgePrereqs = prereqs.Intersect(knowledge);
-            var ids = BeherrschungViewModel.CurrentWpfGraph.WpfNodes.Select(n => n.Id.Trim());
+            var ids = BeherrschungViewModel.CurrentWpfGraph.WpfNodes.Where(n => n.IsSelected).Select(n => n.Id.Trim());
             return !knowledgePrereqs.Except(ids).Any();
         }
     }

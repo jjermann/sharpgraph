@@ -55,7 +55,7 @@ namespace ExampleGraphView {
         private void CurrentWpfGraphChanged(object sender, EventArgs e) {
             SelectedNodeIds = new List<string>(
                 CurrentWpfGraph.WpfNodes.Where(wn => wn.IsSelected).Select(wn => wn.Id));
-            UpdateCurrentContent();
+            RaiseContentChanged();
         }
 
         private void InitializeOriginalGraph(string filename) {
@@ -92,7 +92,7 @@ namespace ExampleGraphView {
             }
             if (string.IsNullOrEmpty(ParseFailureMessage)) {
                 RestrictSelection();
-                UpdateCurrentContent();
+                RaiseContentChanged();
             }
         }
 
@@ -104,6 +104,10 @@ namespace ExampleGraphView {
         #endregion Private
         #region OtherPublic
 
+        public GraphController() {
+            ContentChanged += CurrentContentChanged;
+        }
+
         //TODO: Make this a command, only update the graph once at the end
         public void SelectNodesById(IList<string> idList) {
             var nodesToSelect = CurrentWpfGraph.WpfNodes.Where(n => idList.Contains(n.Id));
@@ -113,6 +117,16 @@ namespace ExampleGraphView {
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public event EventHandler ContentChanged;
+
+        public void CurrentContentChanged(object sender, EventArgs e) {
+            UpdateCurrentContent();
+        }
+
+        private void RaiseContentChanged() {
+            ContentChanged?.Invoke(this, new EventArgs());
+        }
 
         public enum UpdateMode {
             ManualUpdate,
@@ -128,7 +142,7 @@ namespace ExampleGraphView {
                 return m_selectAllCommand ?? (m_selectAllCommand = new RelayCommand(
                            param => {
                                SelectAll();
-                               UpdateCurrentContent();
+                               RaiseContentChanged();
                            }));
             }
         }
@@ -139,7 +153,7 @@ namespace ExampleGraphView {
                 return m_deselectAllCommand ?? (m_deselectAllCommand = new RelayCommand(
                            param => {
                                DeselectAll();
-                               UpdateCurrentContent();
+                               RaiseContentChanged();
                            }));
             }
         }
@@ -224,7 +238,7 @@ namespace ExampleGraphView {
             set {
                 m_restrictVisibility = value;
                 OnPropertyChanged();
-                UpdateCurrentContent();
+                RaiseContentChanged();
             }
         }
 
@@ -243,7 +257,7 @@ namespace ExampleGraphView {
             set {
                 m_updateCurrentImage = value;
                 if (m_updateCurrentImage) {
-                    UpdateCurrentContent();
+                    RaiseContentChanged();
                 }
             }
         }
