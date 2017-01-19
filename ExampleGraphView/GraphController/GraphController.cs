@@ -252,7 +252,7 @@ namespace ExampleGraphView {
                 m_graphUpdateMode = value;
                 OnPropertyChanged();
                 if (m_graphUpdateMode == UpdateMode.ImmediateUpdate) {
-                    RaiseContentChanged();
+                    UpdateOriginalGraphFromDotContent();
                 }
             }
         }
