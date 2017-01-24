@@ -29,10 +29,12 @@ namespace SharpGraph {
         public string Margin { get; protected set; }
         public string LabelMargin { get; protected set; }
 
-        protected IEnumerable<string> Styles { get; set; }
+        private ICollection<string> Styles { get; set; }
         public string FillColor { get; protected set; }
         public string StrokeColor { get; protected set; }
         public double StrokeThickness { get; protected set; }
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        public List<double> StrokeDashList { get; private set; }
         public string FontColor { get; protected set; }
         //public string FontFamily { get; protected set; }
         public double FontSize { get; protected set; }
@@ -71,6 +73,7 @@ namespace SharpGraph {
                         : null);
                 FillColor = GetSubGraphFillColor();
                 StrokeColor = GetSubGraphStrokeColor();
+                StrokeDashList = WpfHelper.AbsoluteStrokeDash(Styles, StrokeThickness);
                 //FontFamily = GetFontFamily();
                 FontColor = GetFontColor();
                 FontSize = GetFontSize();
@@ -100,7 +103,7 @@ namespace SharpGraph {
                     ? SubGraphBehind.GetAttribute("fillcolor", true)
                     : null);
             if (Styles.Contains("filled")) {
-                return fillcolor ?? color ?? bgColor ?? "Transparent";
+                return fillcolor ?? color ?? bgColor ?? "lightgray";
             }
             return bgColor ?? "Transparent";
         }

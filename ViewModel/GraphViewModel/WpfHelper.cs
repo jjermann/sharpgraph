@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 
 namespace SharpGraph {
     public static class WpfHelper {
@@ -53,13 +55,13 @@ namespace SharpGraph {
             }
         }
 
-        public static IEnumerable<string> IdToStyles(string id) {
+        public static ICollection<string> IdToStyles(string id) {
             if (id == null) {
                 return new List<string>();
             }
             return IdToText(id).ToLowerInvariant()
-                .Split(';')
-                .Select(s => s.Trim());
+                .Split(',')
+                .Select(s => s.Trim()).ToList();
 
             //switch (style) {
             //    //For Nodes and Edges
@@ -87,6 +89,27 @@ namespace SharpGraph {
             //    default:
             //        return null;
             //}
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        public static List<double> AbsoluteStrokeDash([NotNull] ICollection<string> styles, double strokeThickness) {
+            if (styles == null) throw new ArgumentNullException(nameof(styles));
+            if (styles.Contains("dashed")) {
+                var col = new List<double>();
+                var absoluteSize = 10.0/strokeThickness;
+                col.Add(absoluteSize);
+                col.Add(absoluteSize);
+                return col;
+            }
+            if (styles.Contains("dotted")) {
+                var col = new List<double>();
+                var absoluteSize1 = 2.0/strokeThickness;
+                col.Add(absoluteSize1);
+                var absoluteSize2 = 10.0/strokeThickness;
+                col.Add(absoluteSize2);
+                return col;
+            }
+            return null;
         }
     }
 }

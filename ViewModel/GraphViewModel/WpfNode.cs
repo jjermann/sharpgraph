@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using JetBrains.Annotations;
@@ -43,10 +42,12 @@ namespace SharpGraph {
         public double Height { get; protected set; }
         public string Margin { get; protected set; }
 
-        private IEnumerable<string> Styles { get; set; }
+        private ICollection<string> Styles { get; set; }
         public string FillColor { get; protected set; }
         public string StrokeColor { get; protected set; }
         public double StrokeThickness { get; protected set; }
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        public List<double> StrokeDashList { get; private set; }
         public string FontColor { get; protected set; }
         //public string FontFamily { get; protected set; }
         public double FontSize { get; protected set; }
@@ -101,6 +102,7 @@ namespace SharpGraph {
                     : null);
             FillColor = GetNodeFillColor();
             StrokeColor = GetNodeStrokeColor();
+            StrokeDashList = WpfHelper.AbsoluteStrokeDash(Styles, StrokeThickness);
             //FontFamily = GetFontFamily();
             FontColor = GetFontColor();
             FontSize = GetFontSize();
@@ -116,7 +118,7 @@ namespace SharpGraph {
                     NodeBehind.HasAttribute("fillcolor", true)
                         ? NodeBehind.GetAttribute("fillcolor", true)
                         : null);
-                return fillcolor ?? color ?? "Transparent";
+                return fillcolor ?? color ?? "lightgray";
             }
             return "Transparent";
         }

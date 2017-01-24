@@ -3,23 +3,23 @@ digraph {
   pad="0.5,0.4"
   label="Example Graph"
   fontsize=20
-  node [style=filled, fillcolor="lightblue"]
-  A
+  node [style=filled]
+  A [style="dashed,filled"]
   B->C->{
     A; D; {
-	  A; B [width=0.3, height=0.3, penwidth=3, color=red]
+	  A; B [width=0.3, height=0.3, penwidth=3, color=orangered]
 	}
   }
   C [label="MyNodeC", shape="rect", fillcolor=orange, width=1, height=2]
-  D->B [label="MyEdgeLabel", fontcolor="blue", fontsize=16]
+  D->B [label="MyEdgeLabel", fontcolor="blue", fontsize=16, style=dotted]
   D [label="MyNodeD", shape="circle"];
   subgraph cluster0 {
-    graph [bgcolor="yellow", pencolor="green", penwidth=2]
+    graph [bgcolor="yellow", pencolor="green", penwidth=2, style=dashed]
 	label="Subgraph Label"
 	fontsize=14
 	fontcolor=gray
     E [shape="square"]
-	F:n->A [penwidth=3, color="blue", dir=both]
+	F:n->A [penwidth=3, color="blue", dir=both, style=dashed]
 	D->B [label="bar"]
   }
 }

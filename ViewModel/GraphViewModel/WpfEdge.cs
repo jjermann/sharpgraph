@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -22,9 +23,12 @@ namespace SharpGraph {
         public string ArrowTailGeometry { get; protected set; }
         public string StrokeColor { get; protected set; }
         public double StrokeThickness { get; protected set; }
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        public List<double> StrokeDashList { get; private set; }
         public string FontColor { get; protected set; }
         //public string FontFamily { get; protected set; }
         public double FontSize { get; protected set; }
+        private ICollection<string> Styles { get; set; }
 
         private void UpdatePropertyValues() {
             Label = WpfHelper.IdToText(
@@ -47,8 +51,13 @@ namespace SharpGraph {
             ArrowHeadGeometry = pathGeometryData.ArrowHeadGeometry;
             ArrowTailGeometry = pathGeometryData.ArrowTailGeometry;
 
+            Styles = WpfHelper.IdToStyles(
+                EdgeBehind.HasAttribute("style", true)
+                    ? EdgeBehind.GetAttribute("style", true)
+                    : null);
             StrokeColor = GetEdgeStrokeColor();
             StrokeThickness = GetEdgeStrokeThickness();
+            StrokeDashList = WpfHelper.AbsoluteStrokeDash(Styles, StrokeThickness);
             //FontFamily = GetFontFamily();
             FontColor = GetFontColor();
             FontSize = GetFontSize();
