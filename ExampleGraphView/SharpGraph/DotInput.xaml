@@ -51,6 +51,27 @@
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Top"
                             Content="Apply" />
+                        <StackPanel Orientation="Vertical" Margin="10 0 10 0">
+                            <CheckBox
+                                IsChecked="{Binding
+                                Path=DotOrderByName,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Content="Order by name" />
+                            <CheckBox
+                                IsChecked="{Binding
+                                Path=DotShowRedundantNodes,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Content="Show redundant nodes" />
+                        </StackPanel>
+                        <Button
+                            Command="{Binding Path=GenerateDotFromGraphCommand}"
+                            Height="50"
+                            Margin="10 10 10 10"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Top"
+                            Content="Generate from Graph" />
                     </StackPanel>
                     <Border Margin="0 10 10 10" BorderThickness="1" BorderBrush="Black">
                         <TextBlock Padding="10"

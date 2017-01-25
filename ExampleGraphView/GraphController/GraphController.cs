@@ -80,6 +80,8 @@ namespace ExampleGraphView {
             SelectedNodeIds = new List<string>();
         }
 
+        private IList<string> SelectedNodeIds { get; set; }
+
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void UpdateOriginalGraphFromDotContent() {
             try {
@@ -166,6 +168,22 @@ namespace ExampleGraphView {
             get {
                 return m_originalDotToOriginalGraph ?? (m_originalDotToOriginalGraph = new RelayCommand(
                            param => UpdateOriginalGraphFromDotContent()));
+            }
+        }
+
+        private RelayCommand m_generateDotFromGraphCommand;
+        public ICommand GenerateDotFromGraphCommand {
+            get {
+                return m_generateDotFromGraphCommand ?? (m_generateDotFromGraphCommand = new RelayCommand(
+                           param => {
+                               var dotFormat = new DotFormatOptions {
+                                   OrderByName = DotOrderByName,
+                                   ShowRedundantNodes = DotShowRedundantNodes
+                               };
+                               OriginalDotContent = OriginalGraph.ToDot(dotFormat);
+                           },
+                           param => OriginalGraph != null
+                           ));
             }
         }
 
@@ -335,7 +353,23 @@ namespace ExampleGraphView {
             }
         }
 
-        private IList<string> SelectedNodeIds { get; set; }
+        private bool m_dotOrderByName;
+        public bool DotOrderByName {
+            get { return m_dotOrderByName; }
+            set {
+                m_dotOrderByName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool m_dotShowRedundantNodes;
+        public bool DotShowRedundantNodes {
+            get { return m_dotShowRedundantNodes; }
+            set {
+                m_dotShowRedundantNodes = value;
+                OnPropertyChanged();
+            }
+        }
 
         #endregion PublicProperties
     }
