@@ -38,7 +38,7 @@ namespace ExampleGraphView {
             var nodeSelector = RestrictVisibility
                 ? OriginalGraph.GetNodeSelector(SelectedNodeIds, NodeVisitStopFunction, NodeVisitAcceptFunction)
                 : null;
-            CurrentDotContent = OriginalGraph.ToDot(nodeSelector: nodeSelector);
+            CurrentDotContent = OriginalGraph.ToDot(new DotFormatOptions {NodeSelector = nodeSelector});
             if (UpdateCurrentImage) {
                 CurrentImage = GraphParser.GetGraphImage(CurrentDotContent);
             }

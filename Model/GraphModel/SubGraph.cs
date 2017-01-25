@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -130,11 +129,11 @@ namespace SharpGraph {
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")
         ]
-        public virtual string ToDot(
-            bool orderedByName,
-            bool showRedundantNodes,
-            bool bodyOnly = false,
-            Func<INode, bool> nodeSelector = null) {
+        public virtual string ToDot(DotFormatOptions dotOption = null) {
+            var subOption = dotOption?.Clone() ?? new DotFormatOptions();
+            var bodyOnly = subOption.BodyOnly;
+            subOption.BodyOnly = false;
+
             const string newLine = "\n";
             var depth = SubGraphDepth;
             var indent = string.Concat(Enumerable.Repeat("  ", depth));
@@ -158,29 +157,31 @@ namespace SharpGraph {
                 graphString += subIndent + "edge " + EdgeAttributes + newLine;
             }
 
-            var subgraphs = orderedByName
+            var subgraphs = subOption.OrderByName
                 ? GetSubGraphSubGraphs(false).OrderBy(v => v)
                 : GetSubGraphSubGraphs(false);
             foreach (var subgraph in subgraphs) {
-                graphString += subgraph.ToDot(orderedByName, showRedundantNodes, nodeSelector: nodeSelector);
+                graphString += subgraph.ToDot(subOption);
             }
 
-            var nodes = orderedByName
+            var nodes = subOption.OrderByName
                 ? GetSubGraphNodes(false).OrderBy(v => v)
                 : GetSubGraphNodes(false);
-            var edges = orderedByName
+            var edges = subOption.OrderByName
                 ? GetSubGraphEdges(false).OrderBy(v => v)
                 : GetSubGraphEdges(false);
             var allEdges = Root.GetEdges().ToList();
 
-            if (nodeSelector != null) {
-                nodes = nodes.Where(nodeSelector);
-                edges = edges.Where(e => nodeSelector(e.SourceNode) && nodeSelector(e.EndNode));
-                allEdges = allEdges.Where(e => nodeSelector(e.SourceNode) && nodeSelector(e.EndNode)).ToList();
+            if (subOption.NodeSelector != null) {
+                nodes = nodes.Where(subOption.NodeSelector);
+                edges = edges.Where(e => subOption.NodeSelector(e.SourceNode) && subOption.NodeSelector(e.EndNode));
+                allEdges =
+                    allEdges.Where(e => subOption.NodeSelector(e.SourceNode) && subOption.NodeSelector(e.EndNode))
+                        .ToList();
             }
 
             foreach (var node in nodes) {
-                if (ShouldShowNode(node, allEdges, showRedundantNodes)) {
+                if (ShouldShowNode(node, allEdges, subOption.ShowRedundantNodes)) {
                     graphString += subIndent + node + newLine;
                 }
             }
@@ -214,7 +215,7 @@ namespace SharpGraph {
         }
 
         public override string ToString() {
-            return ToDot(ModelHelper.OrderedByNames, ModelHelper.ShowRedundantNodes);
+            return ToDot();
         }
     }
 }

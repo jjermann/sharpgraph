@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace SharpGraph {
@@ -37,10 +36,6 @@ namespace SharpGraph {
         IEnumerable<IEdge> GetSubGraphEdges(bool recursive = false);
         IEnumerable<ISubGraph> GetSubGraphSubGraphs(bool recursive = false);
 
-        string ToDot(
-            bool orderedByName = true,
-            bool showRedundantNodes = false,
-            bool bodyOnly = false,
-            Func<INode, bool> nodeSelector = null);
+        string ToDot(DotFormatOptions dotOption = null);
     }
 }

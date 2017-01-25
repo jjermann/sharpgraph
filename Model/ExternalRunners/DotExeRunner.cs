@@ -22,6 +22,8 @@ namespace SharpGraph {
         private string DotGraphLayoutArgument { get; }
         private Func<StreamReader, T> OutputProcessor { get; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability",
+             "CA2000:Dispose objects before losing scope")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public T GetOutput(string input) {
             var output = default(T);

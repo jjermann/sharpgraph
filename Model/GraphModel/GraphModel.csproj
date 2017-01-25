@@ -39,6 +39,7 @@
     <Compile Include="AttributeDictionary.cs" />
     <Compile Include="BaseObject.cs" />
     <Compile Include="Compass.cs" />
+    <Compile Include="DotFormatOptions.cs" />
     <Compile Include="Port.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="GlobalSuppressions.cs" />

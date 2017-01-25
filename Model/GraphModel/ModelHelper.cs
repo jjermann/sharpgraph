@@ -3,9 +3,6 @@ using System.Text.RegularExpressions;
 
 namespace SharpGraph {
     public static class ModelHelper {
-        public const bool ShowRedundantNodes = false;
-        public const bool OrderedByNames = false;
-
         public const string DefaultGraphId = "GraphId";
         public const string DirectedEdgeOpName = "->";
         public const string UndirectedEdgeOpName = "--";

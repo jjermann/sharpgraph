@@ -183,13 +183,15 @@ namespace SharpGraph {
 
         public override IGraph Root => this;
 
-        public override string ToDot(bool orderedByName, bool showRedundantNodes, bool bodyOnly = false,
-            Func<INode, bool> nodeSelector = null) {
+        public override string ToDot(DotFormatOptions dotOption = null) {
+            var suboption = dotOption?.Clone() ?? new DotFormatOptions();
+            suboption.BodyOnly = true;
+
             var strict = IsStrict ? ModelHelper.StrictGraphName + " " : "";
             var graphType = IsDirected ? ModelHelper.DirectedGraphName : ModelHelper.UndirectedGraphName;
             var graphId = " " + Id;
             var graphString = FormattableString.Invariant($"{strict}{graphType}{graphId} ") +
-                              base.ToDot(orderedByName, showRedundantNodes, true, nodeSelector);
+                              base.ToDot(suboption);
             return graphString;
         }
 
@@ -216,7 +218,7 @@ namespace SharpGraph {
         }
 
         public override string ToString() {
-            return ToDot(ModelHelper.OrderedByNames, ModelHelper.ShowRedundantNodes);
+            return ToDot();
         }
     }
 }
