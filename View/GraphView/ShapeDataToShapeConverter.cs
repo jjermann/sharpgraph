@@ -16,7 +16,7 @@ namespace SharpGraph {
             } else {
                 switch (shapeData.Name) {
                     case "None":
-                        shape = new Rectangle {Visibility = Visibility.Collapsed};
+                        shape = new Rectangle();
                         break;
                     case "Rectangle":
                         shape = new Rectangle();

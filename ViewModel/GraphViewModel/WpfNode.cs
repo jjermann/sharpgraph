@@ -89,6 +89,7 @@ namespace SharpGraph {
 
             //Dot extends the border in both directions but wpf only inwards
             //so we compensate this by increasing the Width/Height by StrokeThickness.
+            //Side note: Thickness is set to 0 in case of a plain shape
             StrokeThickness = GetNodeStrokeThickness();
 
             CenterX = WpfHelper.StringToPixel(WpfHelper.IdToText(
@@ -137,6 +138,9 @@ namespace SharpGraph {
         }
 
         private double GetNodeStrokeThickness() {
+            if (NodeShapeData.Name == "None") {
+                return 0;
+            }
             var thicknessStr = WpfHelper.IdToText(
                 NodeBehind.HasAttribute("penwidth", true)
                     ? NodeBehind.GetAttribute("penwidth", true) + "pt"

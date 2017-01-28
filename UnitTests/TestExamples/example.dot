@@ -23,4 +23,6 @@ digraph {
 	D->B [label="bar"]
   }
   F [shape=polygon, sides=5]
+  G [shape=none]
+  F -> G
 }
