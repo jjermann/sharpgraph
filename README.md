@@ -65,13 +65,17 @@ Other Prerequisites, Licenses, Links:
 Screenshots:
 ------------
 
+Screenshot from 28.01.2017:
+
+![sharpgraph 20170128](https://cloud.githubusercontent.com/assets/1377808/22400334/0a8cf836-e5b2-11e6-8f2d-f4b317f5cef6.png)
+
 Screenshot from 01.01.2017:
 
-![sharpgraph 20151228](https://cloud.githubusercontent.com/assets/1377808/21582909/59e80cc6-d069-11e6-8c41-53943c27dcd1.png)
+![sharpgraph 20170101](https://cloud.githubusercontent.com/assets/1377808/21582909/59e80cc6-d069-11e6-8c41-53943c27dcd1.png)
 
 Screenshot from 28.12.2016:
 
-![sharpgraph 20151228](https://cloud.githubusercontent.com/assets/1377808/21525059/e97322ce-cd1a-11e6-815e-a271bcb4aa9f.png)
+![sharpgraph 20161228](https://cloud.githubusercontent.com/assets/1377808/21525059/e97322ce-cd1a-11e6-815e-a271bcb4aa9f.png)
 
 Screenshot from 26.12.2016:
 
