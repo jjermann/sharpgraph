@@ -15,7 +15,7 @@ namespace SharpGraph {
             var width = (double) values[0];
             var height = (double) values[1];
 
-            return new TranslateTransform(-width/2, -height/2);
+            return new TranslateTransform(-width/2, height/2);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) {

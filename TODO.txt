@@ -1,10 +1,4 @@
 Bugs:
-- MAJOR BUG:
-  Handle the different coordinate systems (top to bottom vs. bottom to top)
-  o Individual changes for all involved properties?
-    In particular path geometries need to be handled!
-  o The important part is to keep the View (e.g. ActualHeight) separated from the Viewmodel!
-  o Maybe LayoutTransform? But what about Labels? We don't want to transform those...
 - Fix the different results from dot output
   i.e. implement/imitate the sometimes strange dot behavior
 - Fix the content of various objects (ids):
@@ -40,6 +34,7 @@ Possible design Improvements / refactorings:
 
 Content improvements:
 - Support many more basic attributes (a never ending task)
+- support records
 - Think about interactivity and graph changes
 - Make a GraphView application to interactively visualize complex dependencies,
   maybe with a hook to some other application
