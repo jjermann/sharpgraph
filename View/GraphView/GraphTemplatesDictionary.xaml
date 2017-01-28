@@ -49,7 +49,8 @@
     </ControlTemplate>
     <Style x:Key="NodeStyle" TargetType="{x:Type ContentControl}">
         <Setter Property="Template" Value="{StaticResource NodeControlTemplate}" />
-        <Setter Property="Margin" Value="{Binding Path=(viewmodels:WpfNode.Margin), Converter={StaticResource MarginToMirroredMargin}}" />
+        <Setter Property="Margin"
+                Value="{Binding Path=(viewmodels:WpfNode.Margin), Converter={StaticResource MarginToMirroredMargin}}" />
     </Style>
     <DataTemplate DataType="{x:Type viewmodels:WpfNode}">
         <Button Style="{StaticResource NodeStyle}"
@@ -82,19 +83,19 @@
             <Path Data="{Binding Path=Geometry}"
                   Style="{StaticResource EdgeStyle}">
                 <Path.LayoutTransform>
-                    <ScaleTransform ScaleX="1" ScaleY="-1" CenterX="0.5" CenterY="0.5"/>
+                    <ScaleTransform ScaleX="1" ScaleY="-1" CenterX="0.5" CenterY="0.5" />
                 </Path.LayoutTransform>
             </Path>
             <Path Data="{Binding Path=ArrowHeadGeometry}"
                   Style="{StaticResource ArrowHeadStyle}">
                 <Path.LayoutTransform>
-                    <ScaleTransform ScaleX="1" ScaleY="-1" CenterX="0.5" CenterY="0.5"/>
+                    <ScaleTransform ScaleX="1" ScaleY="-1" CenterX="0.5" CenterY="0.5" />
                 </Path.LayoutTransform>
             </Path>
             <Path Data="{Binding Path=ArrowTailGeometry}"
                   Style="{StaticResource ArrowTailStyle}">
                 <Path.LayoutTransform>
-                    <ScaleTransform ScaleX="1" ScaleY="-1" CenterX="0.5" CenterY="0.5"/>
+                    <ScaleTransform ScaleX="1" ScaleY="-1" CenterX="0.5" CenterY="0.5" />
                 </Path.LayoutTransform>
             </Path>
             <TextBlock Text="{Binding Path=Label}"
@@ -129,8 +130,9 @@
                         <DataTemplate DataType="{x:Type viewmodels:WpfSubGraph}">
                             <Grid HorizontalAlignment="Left"
                                   VerticalAlignment="Bottom">
-                                <Rectangle Margin="{Binding Path=Margin, Converter={StaticResource MarginToMirroredMargin}}"
-                                           Style="{StaticResource SubGraphShapeStyle}" />
+                                <Rectangle
+                                    Margin="{Binding Path=Margin, Converter={StaticResource MarginToMirroredMargin}}"
+                                    Style="{StaticResource SubGraphShapeStyle}" />
                                 <TextBlock Text="{Binding Path=Label}"
                                            Margin="{Binding Path=LabelMargin, Converter={StaticResource MarginToMirroredMargin}}"
                                            sharpGraph:Mover.MoveToMiddle="True"

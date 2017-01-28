@@ -1,8 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace SharpGraph {
+    [SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
     public interface IPort {
-        // ReSharper disable once UnusedMemberInSuper.Global
         string Name { get; }
-        // ReSharper disable once UnusedMemberInSuper.Global
         Compass Compass { get; }
     }
 }

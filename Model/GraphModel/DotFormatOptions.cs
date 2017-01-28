@@ -1,6 +1,8 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SharpGraph {
+    [SuppressMessage("ReSharper", "RedundantDefaultMemberInitializer")]
     public class DotFormatOptions {
         public bool OrderByName { get; set; } = false;
         public bool ShowRedundantNodes { get; set; } = false;
