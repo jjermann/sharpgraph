@@ -42,17 +42,113 @@ namespace SharpGraph {
                 .Replace(@"\r", "\r");
         }
 
-        public static string IdToShape(string id) {
-            var shape = IdToText(id).ToLowerInvariant();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")
+        ]
+        public static ShapeData ConvertToShapeData(string shapeId, string sideId, bool hasDiagonals = false) {
+            var shape = IdToText(shapeId).ToLowerInvariant();
+            int sides;
+            if (!int.TryParse(IdToText(sideId), out sides)) {
+                sides = 4;
+            }
+            if (sides < 3) {
+                shape = "ellipse";
+            }
+            var shapeData = new ShapeData {
+                Sides = sides,
+                HasDiagonals = hasDiagonals
+            };
             switch (shape) {
+                case "plaintext":
+                case "plain":
+                case "none":
+                    shapeData.Name = "None";
+                    break;
                 case "box":
                 case "rect":
                 case "rectangle":
                 case "square":
-                    return "Rectangle";
+                    shapeData.Name = "Rectangle";
+                    break;
+                case "triangle":
+                    shapeData.Name = "Polygon";
+                    shapeData.Sides = 3;
+                    break;
+                case "pentagon":
+                    shapeData.Name = "Polygon";
+                    shapeData.Sides = 5;
+                    break;
+                case "hexagon":
+                    shapeData.Name = "Polygon";
+                    shapeData.Sides = 6;
+                    break;
+                case "septagon":
+                    shapeData.Name = "Polygon";
+                    shapeData.Sides = 7;
+                    break;
+                case "octagon":
+                    shapeData.Name = "Polygon";
+                    shapeData.Sides = 8;
+                    break;
+                case "diamond":
+                    shapeData.Name = "Polygon";
+                    shapeData.Sides = 4;
+                    shapeData.Angle = Math.PI/4.0;
+                    break;
+                case "invtriangle":
+                    shapeData.Name = "Polygon";
+                    shapeData.Sides = 3;
+                    shapeData.Angle = Math.PI;
+                    break;
+                case "polygon":
+                    shapeData.Name = "Polygon";
+                    break;
+                case "doublecircle":
+                    shapeData.Name = "Ellipse";
+                    shapeData.Layers = 2;
+                    break;
+                case "doubleoctagon":
+                    shapeData.Name = "Polygon";
+                    shapeData.Sides = 8;
+                    shapeData.Layers = 2;
+                    break;
+                case "triplecircle":
+                    shapeData.Name = "Ellipse";
+                    shapeData.Layers = 3;
+                    break;
+                case "mdiamond":
+                    shapeData.Name = "Polygon";
+                    shapeData.Sides = 4;
+                    shapeData.Angle = Math.PI/4.0;
+                    shapeData.HasDiagonals = true;
+                    break;
+                case "msquare":
+                    shapeData.Name = "Rectangle";
+                    shapeData.HasDiagonals = true;
+                    break;
+                case "mcircle":
+                    shapeData.Name = "Ellipse";
+                    shapeData.HasDiagonals = true;
+                    break;
+                case "circle":
+                case "ellipse":
+                    shapeData.Name = "Ellipse";
+                    break;
+                //TODO
+                //case "parallelogram":
+                //case "trapezium":
+                //case "invtrapezium":
+                //case "house":
+                //case "invhouse":
+                //case "star":
+                //case "oval":
+                //case "egg":
+                //...
                 default:
-                    return "Ellipse";
+                    shapeData.Name = "Ellipse";
+                    break;
             }
+
+            return shapeData;
         }
 
         public static ICollection<string> IdToStyles(string id) {

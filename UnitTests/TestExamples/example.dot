@@ -22,4 +22,5 @@ digraph {
 	F:n->A [penwidth=3, color="blue", dir=both, style=dashed]
 	D->B [label="bar"]
   }
+  F [shape=polygon, sides=5]
 }

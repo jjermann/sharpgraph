@@ -43,6 +43,7 @@
     <Compile Include="..\..\SolutionItems\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ShapeDataToShapeConverter.cs" />
     <Compile Include="ListToDoubleCollectionConverter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Mover.cs" />

@@ -32,7 +32,7 @@ namespace SharpGraph {
         public string Id { get; protected set; }
         public string Label { get; protected set; }
 
-        public string Shape { get; protected set; }
+        public ShapeData NodeShapeData { get; protected set; }
 
         private double CenterX { get; set; }
         private double CenterY { get; set; }
@@ -73,10 +73,19 @@ namespace SharpGraph {
                     ? NodeBehind.GetAttribute("label")
                     : NodeBehind.Id);
 
-            Shape = WpfHelper.IdToShape(
+            Styles = WpfHelper.IdToStyles(
+                NodeBehind.HasAttribute("style", true)
+                    ? NodeBehind.GetAttribute("style", true)
+                    : null);
+
+            NodeShapeData = WpfHelper.ConvertToShapeData(
                 NodeBehind.HasAttribute("shape", true)
                     ? NodeBehind.GetAttribute("shape", true)
-                    : "ellipse");
+                    : "ellipse",
+                NodeBehind.HasAttribute("sides", true)
+                    ? NodeBehind.GetAttribute("sides", true)
+                    : "4",
+                Styles.Contains("diagonals"));
 
             //Dot extends the border in both directions but wpf only inwards
             //so we compensate this by increasing the Width/Height by StrokeThickness.
@@ -96,10 +105,6 @@ namespace SharpGraph {
             Y = CenterY - Height/2;
             Margin = FormattableString.Invariant($"{X},{Y},0,0");
 
-            Styles = WpfHelper.IdToStyles(
-                NodeBehind.HasAttribute("style", true)
-                    ? NodeBehind.GetAttribute("style", true)
-                    : null);
             FillColor = GetNodeFillColor();
             StrokeColor = GetNodeStrokeColor();
             StrokeDashList = WpfHelper.AbsoluteStrokeDash(Styles, StrokeThickness);

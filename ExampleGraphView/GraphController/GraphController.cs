@@ -183,7 +183,7 @@ namespace ExampleGraphView {
                                OriginalDotContent = OriginalGraph.ToDot(dotFormat);
                            },
                            param => OriginalGraph != null
-                           ));
+                       ));
             }
         }
 

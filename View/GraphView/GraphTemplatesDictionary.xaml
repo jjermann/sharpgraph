@@ -6,6 +6,7 @@
     <sharpGraph:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <sharpGraph:ListToDoubleCollectionConverter x:Key="ListToDoubleCollectionConverter" />
     <sharpGraph:CenterConverter x:Key="CenterConverter" />
+    <sharpGraph:ShapeDataToShapeConverter x:Key="ShapeDataToShapeConverter" />
 
     <Style x:Key="NodeShapeStyle" TargetType="{x:Type Shape}">
         <Setter Property="Width" Value="{Binding Path=(viewmodels:WpfNode.Width)}" />
@@ -30,32 +31,14 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    <Style x:Key="NodeShapeControl" TargetType="ContentControl">
-        <Setter Property="ContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <Ellipse Style="{StaticResource NodeShapeStyle}" />
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding Path=(viewmodels:WpfNode.Shape)}" Value="Rectangle">
-                <Setter Property="ContentTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <Rectangle Style="{StaticResource NodeShapeStyle}" />
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-    <ControlTemplate x:Key="NodeTemplate" TargetType="{x:Type ContentControl}">
+    <ControlTemplate x:Key="NodeControlTemplate" TargetType="{x:Type ContentControl}">
         <Grid HorizontalAlignment="Left"
               VerticalAlignment="Top">
             <ContentControl x:Name="NodeShape"
-                            Content="{Binding}"
-                            Style="{StaticResource NodeShapeControl}" />
+                            Content="{Binding
+                                Path=(viewmodels:WpfNode.NodeShapeData),
+                                Converter={StaticResource ShapeDataToShapeConverter},
+                                ConverterParameter={StaticResource NodeShapeStyle}}" />
             <TextBlock Text="{Binding Path=(viewmodels:WpfNode.Label)}"
                        FontSize="{Binding Path=(viewmodels:WpfNode.FontSize)}"
                        Foreground="{Binding Path=(viewmodels:WpfNode.FontColor)}"
@@ -64,7 +47,7 @@
         </Grid>
     </ControlTemplate>
     <Style x:Key="NodeStyle" TargetType="{x:Type ContentControl}">
-        <Setter Property="Template" Value="{StaticResource NodeTemplate}" />
+        <Setter Property="Template" Value="{StaticResource NodeControlTemplate}" />
         <Setter Property="Margin" Value="{Binding Path=(viewmodels:WpfNode.Margin)}" />
     </Style>
     <DataTemplate DataType="{x:Type viewmodels:WpfNode}">

@@ -36,6 +36,7 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="ShapeData.cs" />
     <Compile Include="PathGeometryData.cs" />
     <Compile Include="WpfHelper.cs" />
     <Compile Include="WpfGraph.cs" />

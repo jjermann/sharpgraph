@@ -8,6 +8,7 @@ namespace ExampleGraphView {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly",
          MessageId = "Naturmagie")]
     public partial class NaturmagieView {
+        private bool RestrictOnlyKnowledge { get; } = false;
         private GraphController NaturmagieViewModel { get; set; }
         private GraphController BeherrschungViewModel { get; set; }
 
@@ -66,9 +67,11 @@ namespace ExampleGraphView {
                 "Binden",
                 "Beschwören"
             };
-            var knowledgePrereqs = prereqs.Intersect(knowledge);
             var ids = BeherrschungViewModel.CurrentWpfGraph.WpfNodes.Where(n => n.IsSelected).Select(n => n.Id.Trim());
-            return !knowledgePrereqs.Except(ids).Any();
+            var finalPrereqs = RestrictOnlyKnowledge
+                ? prereqs.Intersect(knowledge)
+                : prereqs;
+            return !finalPrereqs.Except(ids).Any();
         }
     }
 }
