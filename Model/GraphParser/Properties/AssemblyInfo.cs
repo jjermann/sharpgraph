@@ -2,7 +2,4 @@
 
 [assembly: AssemblyTitle("GraphParser")]
 [assembly: AssemblyProduct("GraphParser")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: AssemblyInformationalVersion("1.0.0.0")]
+[assembly: AssemblyDescription("Responsible for generating the graph model")]

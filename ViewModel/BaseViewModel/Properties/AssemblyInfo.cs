@@ -2,7 +2,4 @@
 
 [assembly: AssemblyTitle("BaseViewModel")]
 [assembly: AssemblyProduct("BaseViewModel")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: AssemblyInformationalVersion("1.0.0.0")]
+[assembly: AssemblyDescription("Basic components for viewmodels")]

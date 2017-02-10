@@ -4,9 +4,6 @@ using System.Windows;
 
 [assembly: AssemblyTitle("SimpleView")]
 [assembly: AssemblyProduct("SimpleView")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Example of a very simple application view and viewmodel")]
 [assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]
 [assembly: NeutralResourcesLanguage("en")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: AssemblyInformationalVersion("1.0.0.0")]
