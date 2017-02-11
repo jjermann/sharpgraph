@@ -46,6 +46,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		SolutionItems\GlobalAssemblyInfo.cs = SolutionItems\GlobalAssemblyInfo.cs
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseView", "ExampleGraphView\DatabaseView\DatabaseView.csproj", "{012F1133-28E6-4DB6-AA6C-E338DAFAF28B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -158,6 +160,14 @@ Global
 		{C4D8EE4D-2AB7-4843-8BEB-94D1C1410D80}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C4D8EE4D-2AB7-4843-8BEB-94D1C1410D80}.Release|x86.ActiveCfg = Release|Any CPU
 		{C4D8EE4D-2AB7-4843-8BEB-94D1C1410D80}.Release|x86.Build.0 = Release|Any CPU
+		{012F1133-28E6-4DB6-AA6C-E338DAFAF28B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{012F1133-28E6-4DB6-AA6C-E338DAFAF28B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{012F1133-28E6-4DB6-AA6C-E338DAFAF28B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{012F1133-28E6-4DB6-AA6C-E338DAFAF28B}.Debug|x86.Build.0 = Debug|Any CPU
+		{012F1133-28E6-4DB6-AA6C-E338DAFAF28B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{012F1133-28E6-4DB6-AA6C-E338DAFAF28B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{012F1133-28E6-4DB6-AA6C-E338DAFAF28B}.Release|x86.ActiveCfg = Release|Any CPU
+		{012F1133-28E6-4DB6-AA6C-E338DAFAF28B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -175,5 +185,6 @@ Global
 		{F5CAC2B1-526B-4C73-B551-8C9DF3C5CC3D} = {ACC94778-5F5C-4865-9F54-8C2493338D63}
 		{D1474126-AE9B-41C9-B1B7-ECF9BDC0B536} = {CFFB68EC-1962-4EB5-A979-9E8F2A737C52}
 		{C4D8EE4D-2AB7-4843-8BEB-94D1C1410D80} = {3B73F03F-DB40-4DB2-98BC-5277DD4617FA}
+		{012F1133-28E6-4DB6-AA6C-E338DAFAF28B} = {CFFB68EC-1962-4EB5-A979-9E8F2A737C52}
 	EndGlobalSection
 EndGlobal
