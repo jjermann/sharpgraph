@@ -35,13 +35,13 @@ namespace SharpGraph {
             return shape;
         }
 
-        private static Polygon GetRegularPolygon(int sides, double angle=0) {
-            var baseAngle = 2 * Math.PI / sides;
+        private static Polygon GetRegularPolygon(int sides, double angle = 0) {
+            var baseAngle = 2*Math.PI/sides;
             var initialAngle = Math.PI/2.0 - baseAngle/2.0 + angle;
             var pointCollection = new PointCollection();
             for (var i = 0; i < sides; i++) {
-                var x = Math.Cos(initialAngle + baseAngle * i) + 1;
-                var y = Math.Sin(initialAngle + baseAngle * i) + 1;
+                var x = Math.Cos(initialAngle + baseAngle*i) + 1;
+                var y = Math.Sin(initialAngle + baseAngle*i) + 1;
                 pointCollection.Add(new Point(x, y));
             }
             return new Polygon {
