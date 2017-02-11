@@ -110,6 +110,7 @@ namespace ExampleGraphView {
         #region OtherPublic
 
         public GraphController() {
+            SelectedNodeIds = new List<string>();
             ContentChanged += CurrentContentChanged;
         }
 
