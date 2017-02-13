@@ -6,7 +6,7 @@ namespace ExampleGraphView {
     public class Database {
         public Database() {
             Tables = new Dictionary<string, Table>();
-            Constraints = new Dictionary<Column, Column>();
+            Relations = new Dictionary<Column, Column>();
         }
 
         public IGraph ToGraph() {
@@ -25,7 +25,7 @@ namespace ExampleGraphView {
                 }
             }
             var nodes = graph.GetNodes().ToList();
-            foreach (var p in Constraints) {
+            foreach (var p in Relations) {
                 var sourceNode = nodes.Single(n => n.Id == p.Key.Id);
                 var endNode = nodes.Single(n => n.Id == p.Value.Id);
                 graph.CreateEdge(sourceNode, endNode);
@@ -35,7 +35,7 @@ namespace ExampleGraphView {
         }
 
         public IDictionary<string, Table> Tables { get; }
-        public IDictionary<Column, Column> Constraints { get; }
+        public IDictionary<Column, Column> Relations { get; }
         // ReSharper disable once MemberCanBePrivate.Global
         public string Name { get; set; }
 
@@ -45,10 +45,13 @@ namespace ExampleGraphView {
     }
 
     public class Table {
-        public Table() {
+        public Table(Database parentDatabase, string name) {
             Columns = new Dictionary<string, Column>();
+            ParentDatabase = parentDatabase;
+            Name = name;
         }
 
+        public Database ParentDatabase { get; set; }
         public IDictionary<string, Column> Columns { get; }
         public string Name { get; set; }
 
@@ -58,6 +61,11 @@ namespace ExampleGraphView {
     }
 
     public class Column {
+        public Column(Table parent, string name) {
+            Parent = parent;
+            Name = name;
+        }
+
         // ReSharper disable once MemberCanBePrivate.Global
         public Table Parent { get; set; }
         public string Name { get; set; }

@@ -111,8 +111,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="..\..\UnitTests\TestExamples\example.dot">
-      <Link>example.dot</Link>
+    <Content Include="..\..\UnitTests\TestExamples\example.gv">
+      <Link>example.gv</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

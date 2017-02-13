@@ -31,14 +31,10 @@ namespace ExampleGraphView {
                         var tableName = reader["TABLE_NAME"].ToString();
                         var columnName = reader["COLUMN_NAME"].ToString();
                         if (!database.Tables.ContainsKey(tableName)) {
-                            database.Tables[tableName] = new Table {
-                                Name = tableName
-                            };
+                            database.Tables[tableName] = new Table(database, tableName);
                         }
-                        database.Tables[tableName].Columns[columnName] = new Column {
-                            Parent = database.Tables[tableName],
-                            Name = columnName
-                        };
+                        database.Tables[tableName].Columns[columnName] = new Column(database.Tables[tableName],
+                            columnName);
                     }
                 }
             } finally {
@@ -72,7 +68,7 @@ namespace ExampleGraphView {
                         var refColumnName = reader["REFERENCED_COLUMN_NAME"].ToString();
                         var fkColumn = database.Tables[fkTableName].Columns[fkColumnName];
                         var refColumn = database.Tables[refTableName].Columns[refColumnName];
-                        database.Constraints[fkColumn] = refColumn;
+                        database.Relations[fkColumn] = refColumn;
                     }
                 }
             } finally {

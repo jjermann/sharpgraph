@@ -4,10 +4,10 @@ digraph {
   label="Example Graph"
   fontsize=20
   node [style=filled]
-  A [style="dashed,filled"]
+  A_1 [style="dashed,filled"]
   B->C->{
-    A; D; {
-	  A; B [width=0.3, height=0.3, penwidth=3, color=orangered]
+    A_1; D; {
+	  A_1; B [width=0.3, height=0.3, penwidth=3, color=orangered]
 	}
   }
   C [label="MyNodeC", shape="rect", fillcolor=orange, width=1, height=2]
@@ -19,10 +19,10 @@ digraph {
 	fontsize=14
 	fontcolor=gray
     E [shape="square"]
-	F:n->A [penwidth=3, color="blue", dir=both, style=dashed]
+	F:n->A_1 [penwidth=3, color="blue", dir=both, style=dashed]
 	D->B [label="bar"]
   }
   F [shape=polygon, sides=5]
-  G [shape=none]
-  F -> G
+  "1\"G\nH" [shape=none]
+  F -> "1\"G\nH"
 }

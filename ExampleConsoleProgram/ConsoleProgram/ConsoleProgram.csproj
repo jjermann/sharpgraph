@@ -56,8 +56,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\UnitTests\TestExamples\example.dot">
-      <Link>example.dot</Link>
+    <Content Include="..\..\UnitTests\TestExamples\example.gv">
+      <Link>example.gv</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="app.config" />

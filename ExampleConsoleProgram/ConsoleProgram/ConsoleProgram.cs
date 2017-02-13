@@ -4,8 +4,10 @@ using SharpGraph;
 
 namespace ExampleConsoleProgram {
     public static class ConsoleProgram {
-        private const string DefaultInputFile = @"example.dot";
+        private const string DefaultInputFile = @"example.gv";
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming",
+             "CA2204:Literals should be spelled correctly", MessageId = "gv")]
         private static void Main(string[] args) {
             var file = args.Length > 0 ? new FileInfo(args[0]) : new FileInfo(DefaultInputFile);
             if (!file.Exists) {
@@ -28,7 +30,7 @@ namespace ExampleConsoleProgram {
                 //var diff = DiffHelper.GetDiff(initialReparsed, reparsedReparsed);
                 Console.Clear();
                 Console.Write(diff);
-                Console.WriteLine("Press any key to generate outOriginal.png, out.png and layout.dot...");
+                Console.WriteLine("Press any key to generate outOriginal.png, out.png and layout.gv...");
                 Console.ReadKey();
 
                 GenerateOutput(originalDot, graphDot, reparsedDot);
@@ -47,7 +49,7 @@ namespace ExampleConsoleProgram {
         private static void GenerateOutput(string originalDot, string graphDot, string reparsedDot) {
             GraphParser.GetGraphImage(originalDot).Save("outOriginal.png");
             GraphParser.GetGraphImage(graphDot).Save("out.png");
-            File.WriteAllText("layout.dot", reparsedDot);
+            File.WriteAllText("layout.gv", reparsedDot);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace SharpGraph {
                 Stream stream = null;
                 try {
                     stream =
-                        executingAssembly.GetManifestResourceStream(@"SharpGraph.TestExamples.example.dot");
+                        executingAssembly.GetManifestResourceStream(@"SharpGraph.TestExamples.example.gv");
                     Assert.IsTrue(stream != null);
                     using (var reader = new StreamReader(stream)) {
                         stream = null;

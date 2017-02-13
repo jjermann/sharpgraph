@@ -2,8 +2,6 @@
 using System.Linq;
 using NUnit.Framework;
 
-// ReSharper disable once CheckNamespace
-
 namespace SharpGraph {
     [TestFixture]
     public static class DotOutputTests {

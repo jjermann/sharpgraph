@@ -3,8 +3,6 @@ using System.IO;
 using System.Reflection;
 using NUnit.Framework;
 
-// ReSharper disable once CheckNamespace
-
 namespace SharpGraph {
     [TestFixture]
     public static class DotParserHelperTests {
@@ -18,7 +16,7 @@ namespace SharpGraph {
 
             Stream stream = null;
             try {
-                stream = executingAssembly.GetManifestResourceStream(@"SharpGraph.TestExamples.example.dot");
+                stream = executingAssembly.GetManifestResourceStream(@"SharpGraph.TestExamples.example.gv");
                 Assert.IsTrue(stream != null);
                 using (var reader = new StreamReader(stream)) {
                     stream = null;

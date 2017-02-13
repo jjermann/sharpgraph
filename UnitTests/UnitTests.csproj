@@ -73,9 +73,10 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
-    <EmbeddedResource Include="TestExamples\example.dot">
+    <EmbeddedResource Include="TestExamples\example.gv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <None Include="TestExamples\records.gv" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\DotParserHelper\DotParserHelper.csproj">

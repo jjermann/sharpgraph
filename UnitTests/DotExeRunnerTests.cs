@@ -2,8 +2,6 @@
 using System.Drawing;
 using NUnit.Framework;
 
-// ReSharper disable once CheckNamespace
-
 namespace SharpGraph {
     [TestFixture]
     public static class DotExeRunnerTests {

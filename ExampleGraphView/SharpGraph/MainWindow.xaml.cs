@@ -10,7 +10,7 @@ namespace ExampleGraphView {
         public MainWindow(string initialFile = null) {
             InitializeComponent();
             if (string.IsNullOrEmpty(initialFile)) {
-                initialFile = "example.dot";
+                initialFile = "example.gv";
             }
             var vm = (GraphController) DataContext;
             if (vm.OpenFileCommand.CanExecute(initialFile)) {

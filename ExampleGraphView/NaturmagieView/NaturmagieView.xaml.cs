@@ -13,7 +13,7 @@ namespace ExampleGraphView {
         private GraphController BeherrschungViewModel { get; set; }
 
         private void NaturmagieView_Startup(object sender, StartupEventArgs e) {
-            const string beherrschungFile = "naturmagie_beherrschung_basic.dot";
+            const string beherrschungFile = "naturmagie_beherrschung_basic.gv";
             BeherrschungViewModel = new GraphController();
             BeherrschungViewModel.OpenFileCommand.Execute(beherrschungFile);
             BeherrschungViewModel.NodeVisitStopFunction = n => !string.IsNullOrEmpty(
@@ -24,7 +24,7 @@ namespace ExampleGraphView {
             BeherrschungViewModel.SelectNodesById(new List<string> {"\"Beherrschung der Naturmagie\""});
             BeherrschungViewModel.RestrictVisibility = true;
 
-            const string naturmagieFile = "naturmagie_basic.dot";
+            const string naturmagieFile = "naturmagie_basic.gv";
             NaturmagieViewModel = new GraphController();
             NaturmagieViewModel.OpenFileCommand.Execute(naturmagieFile);
             NaturmagieViewModel.NodeVisitStopFunction = n => !string.IsNullOrEmpty(

@@ -77,10 +77,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="naturmagie_basic.dot">
+    <Content Include="naturmagie_basic.gv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="naturmagie_beherrschung_basic.dot">
+    <Content Include="naturmagie_beherrschung_basic.gv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\Settings.settings">
