@@ -16,11 +16,11 @@ namespace ExampleGraphView {
 
             foreach (var p in Tables.Values) {
                 var sg = graph.CreateSubGraph("cluster" + p.Name);
-                var subGraphAttrs = new AttributeDictionary {{"label", p.Name}};
+                var subGraphAttrs = new AttributeDictionary {{"label", '"'+p.Name+'"'}};
                 sg.SetAttributes(subGraphAttrs);
                 foreach (var c in p.Columns.Values) {
                     var node = sg.CreateNode(c.Id);
-                    var nodeAttrs = new AttributeDictionary {{"label", c.Name}};
+                    var nodeAttrs = new AttributeDictionary {{"label", '"'+c.Name+'"'}};
                     node.SetAttributes(nodeAttrs);
                 }
             }
