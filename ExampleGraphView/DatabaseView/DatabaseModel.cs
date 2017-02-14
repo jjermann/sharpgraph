@@ -4,13 +4,13 @@ using System.Linq;
 using SharpGraph;
 
 namespace ExampleGraphView {
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class Database {
         public Database() {
             Tables = new Dictionary<string, Table>();
             Relations = new Dictionary<Column, Column>();
         }
 
-        // ReSharper disable once MemberCanBePrivate.Global
         public Database Clone() {
             var database = new Database {Name = Name};
             foreach (var table in Tables) {
@@ -71,7 +71,6 @@ namespace ExampleGraphView {
 
         public IDictionary<string, Table> Tables { get; }
         public IDictionary<Column, Column> Relations { get; }
-        // ReSharper disable once MemberCanBePrivate.Global
         public string Name { get; set; }
 
         public override string ToString() {
