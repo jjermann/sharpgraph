@@ -132,7 +132,9 @@
                                   VerticalAlignment="Bottom">
                                 <Rectangle
                                     Margin="{Binding Path=Margin, Converter={StaticResource MarginToMirroredMargin}}"
-                                    Style="{StaticResource SubGraphShapeStyle}" />
+                                    Style="{StaticResource SubGraphShapeStyle}" 
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Bottom" />
                                 <TextBlock Text="{Binding Path=Label}"
                                            Margin="{Binding Path=LabelMargin, Converter={StaticResource MarginToMirroredMargin}}"
                                            sharpGraph:Mover.MoveToMiddle="True"
