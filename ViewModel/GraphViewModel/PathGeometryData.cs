@@ -24,7 +24,7 @@ namespace SharpGraph {
         }
 
         private PathFigureData ParsePathFigureData(string spline) {
-            const string num = @"[-]?(?:[\.[0-9]+]|[0-9]+(?:\.[0-9]*)?)";
+            const string num = @"[-]?(?:[\.[0-9]+]|[0-9]+(?:\.[0-9]*)?)(?:e\+[0-9][0-9][0-9])?";
             var point = FormattableString.Invariant($"(?:{num},{num})");
             var end = FormattableString.Invariant($"(e,(?<endPoint>{point}) )?");
             var start = FormattableString.Invariant($"(s,(?<startPoint>{point}) )?");

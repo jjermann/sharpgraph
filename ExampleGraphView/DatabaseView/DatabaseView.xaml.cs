@@ -6,7 +6,7 @@ namespace ExampleGraphView {
 
         private void DatabaseView_Startup(object sender, StartupEventArgs e) {
             var databaseManager = new DatabaseManager();
-            var graph = databaseManager.GetDatabase().ToGraph();
+            var graph = databaseManager.GetDatabase().RelationColumnsOnly().ToGraph();
             var graphDot = graph.ToDot();
 
             DatabaseViewModel = new GraphController {
