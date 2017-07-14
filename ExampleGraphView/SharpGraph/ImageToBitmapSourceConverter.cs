@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Data;
@@ -10,6 +11,7 @@ namespace ExampleGraphView {
         public object Convert(object value, Type targetType, object parameter,
             System.Globalization.CultureInfo culture) {
             var myImage = (Image) value;
+            Debug.Assert(myImage != null);
             using (var bitmap = new Bitmap(myImage)) {
                 var bmpPt = bitmap.GetHbitmap();
                 var bitmapSource =
