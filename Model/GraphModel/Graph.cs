@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace SharpGraph {
@@ -27,6 +28,8 @@ namespace SharpGraph {
             }
             if (!Nodes.ContainsKey(node)) {
                 Nodes[node] = node;
+            } else {
+                
             }
             var addedNode = Nodes[node];
             if (checkParent && (addedNode.Parent != node.Parent)) {
@@ -215,6 +218,146 @@ namespace SharpGraph {
             }
 
             return graph;
+        }
+
+        public IDictionary<INode, HashSet<INode>> GetOutgoingNeighboursDictionary() {
+            var neighbourDictionary = new Dictionary<INode, HashSet<INode>>();
+            foreach (var node in GetNodes()) {
+                neighbourDictionary[node] = new HashSet<INode>();
+            }
+            foreach (var edge in GetEdges()) {
+                var sourceNode = edge.SourceNode;
+                var endNode = edge.EndNode;
+                neighbourDictionary[sourceNode].Add(endNode);
+            }
+            return neighbourDictionary;
+        }
+
+        public ICollection<HashSet<INode>> GetStronglyConnectedComponents() {
+            var output = new Collection<HashSet<INode>>();
+            var neighbourDictionary = GetOutgoingNeighboursDictionary();
+            var nodeStack = new Stack<INode>();
+            var currentIndex = 0;
+            var indexDictionary = new Dictionary<INode, int>();
+            var lowlinkDictionary = new Dictionary<INode, int>();
+            var nodes = GetNodes().ToList();
+            foreach (var node in nodes) {
+                indexDictionary[node] = -1;
+                lowlinkDictionary[node] = -1;
+            }
+
+            foreach (var node in nodes) {
+                if (indexDictionary[node] < 0) {
+                    StrongConnect(
+                        output, 
+                        neighbourDictionary, 
+                        nodeStack, 
+                        ref currentIndex, 
+                        indexDictionary, 
+                        lowlinkDictionary, 
+                        node);
+                }
+            }
+            return output;
+        }
+
+        private static void StrongConnect(
+            ICollection<HashSet<INode>> output,
+            IDictionary<INode, HashSet<INode>> neighbourDictionary,
+            Stack<INode> nodeStack,
+            ref int currentIndex,
+            IDictionary<INode, int> indexDictionary, 
+            IDictionary<INode, int> lowlinkDictionary,
+            INode node) {
+            indexDictionary[node] = currentIndex;
+            lowlinkDictionary[node] = currentIndex;
+            currentIndex++;
+            nodeStack.Push(node);
+
+            foreach (var neighbour in neighbourDictionary[node]) {
+                if (indexDictionary[neighbour] < 0) {
+                    StrongConnect(
+                        output,
+                        neighbourDictionary,
+                        nodeStack,
+                        ref currentIndex,
+                        indexDictionary,
+                        lowlinkDictionary,
+                        neighbour);
+                    lowlinkDictionary[node] = Math.Min(lowlinkDictionary[node], lowlinkDictionary[neighbour]);
+                } else if (nodeStack.Contains(neighbour)) {
+                    lowlinkDictionary[node] = Math.Min(lowlinkDictionary[node], indexDictionary[neighbour]);
+                }
+            }
+
+            if (lowlinkDictionary[node] == indexDictionary[node]) {
+                var scc = new HashSet<INode>();
+                INode nextNode;
+                do {
+                    nextNode = nodeStack.Pop();
+                    scc.Add(nextNode);
+                } while (node != nextNode);
+                output.Add(scc);
+            }
+        }
+
+        public object Clone() {
+            return GetReducedGraph(null);
+        }
+
+        //nodes == null returns a complete clone, otherwise the clone is restricted to the specified nodes
+        public IGraph GetReducedGraph(ICollection<INode> nodes) {
+            var thisGraph = this as ISubGraph;
+            var graph = CreateGraph(Id, IsDirected, IsStrict, Attributes, NodeAttributes, EdgeAttributes);
+            var subgraphDictionary = new Dictionary<ISubGraph, ISubGraph> {[thisGraph] = graph};
+            CloneAndAddAllSubgraphs(graph, thisGraph, subgraphDictionary);
+            foreach (var node in GetNodes()) {
+                if (nodes != null && !nodes.Contains(node)) {
+                    continue;
+                }
+                var clonedNode = new Node(subgraphDictionary[node.Parent], node.Id);
+                clonedNode.SetAttributes(node.GetAttributes());
+                graph.AddNode(clonedNode);
+            }
+            foreach (var edge in GetEdges()) {
+                if (nodes != null && (!nodes.Contains(edge.SourceNode) || !nodes.Contains(edge.EndNode))) {
+                    continue;
+                }
+                var clonedEdge = new Edge(subgraphDictionary[edge.Parent], edge.SourceNode, edge.EndNode, edge.EndPort);
+                clonedEdge.SetAttributes(edge.GetAttributes());
+                graph.AddEdge(clonedEdge);
+            }
+
+            if (nodes != null) {
+                graph.RemoveEmptySubgraphs();
+            }
+            return graph;
+        }
+
+        public void RemoveEmptySubgraphs() {
+            IList<ISubGraph> emptySubgraphs;
+            do {
+                emptySubgraphs = GetSubGraphs().Where(
+                    sg =>
+                        !sg.GetSubGraphSubGraphs().Any() &&
+                        !sg.GetSubGraphNodes().Any() &&
+                        !sg.GetSubGraphEdges().Any()).ToList();
+                foreach (var subgraph in emptySubgraphs) {
+                    SubGraphs.Remove(subgraph);
+                }
+            } while (emptySubgraphs.Any());
+        }
+
+        private void CloneAndAddAllSubgraphs(IGraph root, ISubGraph currentSubgraph, IDictionary<ISubGraph, ISubGraph> subgraphDictionary) {
+            foreach (var subgraph in currentSubgraph.GetSubGraphSubGraphs()) {
+                var clonedSubgraph = new SubGraph(subgraphDictionary[currentSubgraph], subgraph.Id);
+                clonedSubgraph.SetAttributes(subgraph.GetAttributes());
+                clonedSubgraph.SetNodeAttributes(subgraph.GetNodeAttributes());
+                clonedSubgraph.SetEdgeAttributes(subgraph.GetEdgeAttributes());
+                var addedSubgraph = root.AddSubGraph(clonedSubgraph);
+                subgraphDictionary[subgraph] = addedSubgraph;
+                CloneAndAddAllSubgraphs(root, subgraph, subgraphDictionary);
+            }
         }
 
         public override string ToString() {
