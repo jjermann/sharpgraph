@@ -80,7 +80,13 @@ namespace SharpGraph {
             Assert.IsTrue(graph.Id == "MyId");
             CheckIdConsistencies(graph);
             Assert.IsFalse(graph.GetEdges().GroupBy(e => new {e.SourceNode, e.EndNode}).Any(c => c.Count() > 1));
-            Assert.IsTrue(graph.GetEdges().All(e => e.Id == "node" + e.SourceNode.Id + e.EndNode.Id));
+            Assert.IsTrue(
+                graph.GetEdges()
+                    .All(
+                        e =>
+                            e.Id ==
+                            ModelHelper.ReduceId(@"""" + "node" + ModelHelper.ReduceId(e.SourceNode.Id) +
+                                                 ModelHelper.ReduceId(e.EndNode.Id) + @"""")));
             var output = graph.ToDot();
             Assert.IsTrue(output.StartsWith("strict digraph MyId {", StringComparison.OrdinalIgnoreCase));
         }

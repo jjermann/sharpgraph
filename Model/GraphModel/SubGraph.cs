@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace SharpGraph {
@@ -127,8 +128,7 @@ namespace SharpGraph {
             return subgraphs.Concat(subgraphs.SelectMany(g => g.GetSubGraphSubGraphs(true)));
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")
-        ]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public virtual string ToDot(DotFormatOptions dotOption = null) {
             var subOption = dotOption?.Clone() ?? new DotFormatOptions();
             var bodyOnly = subOption.BodyOnly;

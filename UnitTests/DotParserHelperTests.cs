@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using NUnit.Framework;
@@ -9,7 +10,7 @@ namespace SharpGraph {
         [SetUp]
         public static void Init() {}
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         [Test]
         public static void GetParseTreeTest() {
             var executingAssembly = Assembly.GetExecutingAssembly();

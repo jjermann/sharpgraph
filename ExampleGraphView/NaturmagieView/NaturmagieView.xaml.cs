@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using SharpGraph;
 
 namespace ExampleGraphView {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly",
-         MessageId = "Naturmagie")]
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Naturmagie")]
     public partial class NaturmagieView {
         private bool RestrictOnlyKnowledge { get; } = false;
         private GraphController NaturmagieViewModel { get; set; }

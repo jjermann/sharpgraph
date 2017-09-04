@@ -132,7 +132,7 @@
                                   VerticalAlignment="Bottom">
                                 <Rectangle
                                     Margin="{Binding Path=Margin, Converter={StaticResource MarginToMirroredMargin}}"
-                                    Style="{StaticResource SubGraphShapeStyle}" 
+                                    Style="{StaticResource SubGraphShapeStyle}"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Bottom" />
                                 <TextBlock Text="{Binding Path=Label}"

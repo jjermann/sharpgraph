@@ -15,6 +15,7 @@ namespace SharpGraph {
 
         public static bool GetMoveToMiddle(UIElement element) {
             if (element == null) throw new ArgumentNullException(nameof(element));
+            // ReSharper disable once PossibleNullReferenceException
             return (bool) element.GetValue(MoveToMiddleProperty);
         }
 

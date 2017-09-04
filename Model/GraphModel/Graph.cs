@@ -28,9 +28,7 @@ namespace SharpGraph {
             }
             if (!Nodes.ContainsKey(node)) {
                 Nodes[node] = node;
-            } else {
-                
-            }
+            } else {}
             var addedNode = Nodes[node];
             if (checkParent && (addedNode.Parent != node.Parent)) {
                 throw new ArgumentException(FormattableString.Invariant(
@@ -249,12 +247,12 @@ namespace SharpGraph {
             foreach (var node in nodes) {
                 if (indexDictionary[node] < 0) {
                     StrongConnect(
-                        output, 
-                        neighbourDictionary, 
-                        nodeStack, 
-                        ref currentIndex, 
-                        indexDictionary, 
-                        lowlinkDictionary, 
+                        output,
+                        neighbourDictionary,
+                        nodeStack,
+                        ref currentIndex,
+                        indexDictionary,
+                        lowlinkDictionary,
                         node);
                 }
             }
@@ -266,7 +264,7 @@ namespace SharpGraph {
             IDictionary<INode, HashSet<INode>> neighbourDictionary,
             Stack<INode> nodeStack,
             ref int currentIndex,
-            IDictionary<INode, int> indexDictionary, 
+            IDictionary<INode, int> indexDictionary,
             IDictionary<INode, int> lowlinkDictionary,
             INode node) {
             indexDictionary[node] = currentIndex;
@@ -312,7 +310,7 @@ namespace SharpGraph {
             var subgraphDictionary = new Dictionary<ISubGraph, ISubGraph> {[thisGraph] = graph};
             CloneAndAddAllSubgraphs(graph, thisGraph, subgraphDictionary);
             foreach (var node in GetNodes()) {
-                if (nodes != null && !nodes.Contains(node)) {
+                if ((nodes != null) && !nodes.Contains(node)) {
                     continue;
                 }
                 var clonedNode = new Node(subgraphDictionary[node.Parent], node.Id);
@@ -320,7 +318,7 @@ namespace SharpGraph {
                 graph.AddNode(clonedNode);
             }
             foreach (var edge in GetEdges()) {
-                if (nodes != null && (!nodes.Contains(edge.SourceNode) || !nodes.Contains(edge.EndNode))) {
+                if ((nodes != null) && (!nodes.Contains(edge.SourceNode) || !nodes.Contains(edge.EndNode))) {
                     continue;
                 }
                 var clonedEdge = new Edge(subgraphDictionary[edge.Parent], edge.SourceNode, edge.EndNode, edge.EndPort);
@@ -348,7 +346,8 @@ namespace SharpGraph {
             } while (emptySubgraphs.Any());
         }
 
-        private void CloneAndAddAllSubgraphs(IGraph root, ISubGraph currentSubgraph, IDictionary<ISubGraph, ISubGraph> subgraphDictionary) {
+        private void CloneAndAddAllSubgraphs(IGraph root, ISubGraph currentSubgraph,
+            IDictionary<ISubGraph, ISubGraph> subgraphDictionary) {
             foreach (var subgraph in currentSubgraph.GetSubGraphSubGraphs()) {
                 var clonedSubgraph = new SubGraph(subgraphDictionary[currentSubgraph], subgraph.Id);
                 clonedSubgraph.SetAttributes(subgraph.GetAttributes());

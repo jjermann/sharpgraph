@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using SharpGraph;
 
@@ -6,8 +7,7 @@ namespace ExampleConsoleProgram {
     public static class ConsoleProgram {
         private const string DefaultInputFile = @"example.gv";
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming",
-             "CA2204:Literals should be spelled correctly", MessageId = "gv")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "gv")]
         private static void Main(string[] args) {
             var file = args.Length > 0 ? new FileInfo(args[0]) : new FileInfo(DefaultInputFile);
             if (!file.Exists) {

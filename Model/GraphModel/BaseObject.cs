@@ -1,7 +1,8 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SharpGraph {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes")]
+    [SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes")]
     public abstract class BaseObject : IBaseObject {
         protected BaseObject(ISubGraph parentGraph, string id) {
             Parent = parentGraph;

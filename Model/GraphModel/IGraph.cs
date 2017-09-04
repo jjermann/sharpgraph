@@ -5,7 +5,6 @@ namespace SharpGraph {
     public interface IGraph : ISubGraph, ICloneable {
         bool IsStrict { get; }
         bool IsDirected { get; }
-        // ReSharper disable once UnusedParameter.Global
         INode AddNode(INode node, bool checkParent = false);
         IEdge AddEdge(IEdge edge);
         ISubGraph AddSubGraph(ISubGraph subgraph);

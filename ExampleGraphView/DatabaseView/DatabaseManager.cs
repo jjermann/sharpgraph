@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ExampleGraphView {
     public class DatabaseManager : IDatabaseManager {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         public Database GetDatabase() {
             var database = new Database();
             using (var connection = new SqlConnection()) {

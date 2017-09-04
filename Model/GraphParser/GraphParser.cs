@@ -12,6 +12,9 @@ namespace SharpGraph {
         public static readonly Func<string, Image> ImageGenerator =
             new DotExeRunner<Image>("-Tpng", reader => Image.FromStream(reader.BaseStream)).GetOutput;
 
+        public static readonly Func<string, Image> GifImageGenerator =
+            new DotExeRunner<Image>("-Tgif", reader => Image.FromStream(reader.BaseStream)).GetOutput;
+
         public static readonly Func<string, bool> SyntaxChecker =
             new DotExeRunner<bool>("-Tcanon", reader => {
                 reader.ReadToEnd();
@@ -63,6 +66,10 @@ namespace SharpGraph {
 
         public static Image GetGraphImage(string graphDot) {
             return ImageGenerator(graphDot);
+        }
+
+        public static Image GetGraphGifImage(string graphDot) {
+            return GifImageGenerator(graphDot);
         }
 
         // ReSharper disable once UnusedMethodReturnValue.Global

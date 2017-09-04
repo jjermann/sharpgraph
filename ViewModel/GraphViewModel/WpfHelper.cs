@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 
 namespace SharpGraph {
     public static class WpfHelper {
@@ -26,9 +26,9 @@ namespace SharpGraph {
             return inches*DeviceIndependentPpi;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming",
+        [SuppressMessage("Microsoft.Naming",
              "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pt")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly",
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly",
              MessageId = "Pt")]
         // ReSharper disable once MemberCanBePrivate.Global
         public static double PtToPixel(double points) {
@@ -42,8 +42,7 @@ namespace SharpGraph {
                 .Replace(@"\r", "\r");
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")
-        ]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public static ShapeData ConvertToShapeData(string shapeId, string sideId, bool hasDiagonals = false) {
             var shape = IdToText(shapeId).ToLowerInvariant();
             int sides;
@@ -187,8 +186,8 @@ namespace SharpGraph {
             //}
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        public static List<double> AbsoluteStrokeDash([NotNull] ICollection<string> styles, double strokeThickness) {
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        public static List<double> AbsoluteStrokeDash(ICollection<string> styles, double strokeThickness) {
             if (styles == null) throw new ArgumentNullException(nameof(styles));
             if (styles.Contains("dashed")) {
                 var col = new List<double>();
