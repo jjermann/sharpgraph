@@ -28,7 +28,7 @@ namespace SharpGraph {
             }
             if (!Nodes.ContainsKey(node)) {
                 Nodes[node] = node;
-            } else {}
+            }
             var addedNode = Nodes[node];
             if (checkParent && (addedNode.Parent != node.Parent)) {
                 throw new ArgumentException(FormattableString.Invariant(
@@ -36,6 +36,16 @@ namespace SharpGraph {
             }
             addedNode.SetAttributes(node.GetAttributes());
             return addedNode;
+        }
+
+        public void RemoveNode(INode node) {
+            if ((node != null) && Nodes.ContainsKey(node)) {
+                var connectedEdges = Nodes[node].ConnectedEdges().ToList();
+                foreach (var edge in connectedEdges) {
+                    RemoveEdge(edge);
+                }
+                Nodes.Remove(node);
+            }
         }
 
         public IEdge AddEdge(IEdge edge) {
@@ -58,6 +68,12 @@ namespace SharpGraph {
             return addedEdge;
         }
 
+        public void RemoveEdge(IEdge edge) {
+            if (edge != null) {
+                Edges.Remove(edge);
+            }
+        }
+
         public ISubGraph AddSubGraph(ISubGraph subgraph) {
             if (subgraph == null) throw new ArgumentNullException(nameof(subgraph));
             if (!Equals(subgraph.Parent) && !SubGraphs.ContainsKey(subgraph.Parent)) {
@@ -70,6 +86,23 @@ namespace SharpGraph {
             var addedSubGraph = SubGraphs[subgraph];
             addedSubGraph.SetAttributes(subgraph.GetAttributes());
             return addedSubGraph;
+        }
+
+        public void RemoveSubGraph(ISubGraph subgraph) {
+            if ((subgraph != null) && SubGraphs.ContainsKey(subgraph)) {
+                var subgraphs = SubGraphs[subgraph].GetSubGraphSubGraphs().ToList();
+                foreach (var sg in subgraphs) {
+                    RemoveSubGraph(sg);
+                }
+                var edges = SubGraphs[subgraph].GetSubGraphEdges().ToList();
+                foreach (var edge in edges) {
+                    RemoveEdge(edge);
+                }
+                var nodes = SubGraphs[subgraph].GetSubGraphNodes().ToList();
+                foreach (var node in nodes) {
+                    RemoveNode(node);
+                }
+            }
         }
 
         public IEnumerable<INode> GetNodes() {
@@ -296,6 +329,50 @@ namespace SharpGraph {
                     scc.Add(nextNode);
                 } while (node != nextNode);
                 output.Add(scc);
+            }
+        }
+
+        public IGraph GetReachabilityGraph(ICollection<INode> nodes) {
+            var discoveredNodes = new Dictionary<INode, HashSet<INode>>();
+            var neighbourDictionary = GetOutgoingNeighboursDictionary();
+            foreach (var node in nodes) {
+                GetReachableNodes(node, node, discoveredNodes, neighbourDictionary);
+            }
+            foreach (var node in nodes) {
+                var nodesToForget = discoveredNodes[node].Where(n => !nodes.Contains(n)).ToList();
+                foreach (var el in nodesToForget) {
+                    discoveredNodes[node].Remove(el);
+                }
+            }
+            var graph = GetReducedGraph(nodes);
+            foreach (var edge in graph.GetEdges().ToList()) {
+                graph.RemoveEdge(edge);
+            }
+            foreach (var node in nodes) {
+                foreach (var neighbour in discoveredNodes[node]) {
+                    graph.CreateEdge(node, neighbour);
+                }
+            }
+            return graph;
+        }
+
+        private static void GetReachableNodes(
+            INode rootNode,
+            INode node,
+            IDictionary<INode, HashSet<INode>> discoveredNodes,
+            IDictionary<INode, HashSet<INode>> neighbourDictionary) {
+            if (!discoveredNodes.ContainsKey(rootNode)) {
+                discoveredNodes[rootNode] = new HashSet<INode>();
+            }
+            discoveredNodes[rootNode].Add(node);
+            foreach (var neighbour in neighbourDictionary[node]) {
+                if (discoveredNodes.ContainsKey(neighbour)) {
+                    foreach (var el in discoveredNodes[neighbour]) {
+                        discoveredNodes[rootNode].Add(el);
+                    }
+                } else if (!discoveredNodes[rootNode].Contains(neighbour)) {
+                    GetReachableNodes(rootNode, neighbour, discoveredNodes, neighbourDictionary);
+                }
             }
         }
 
