@@ -332,48 +332,46 @@ namespace SharpGraph {
             }
         }
 
-        public IGraph GetReachabilityGraph(ICollection<INode> nodes) {
-            var discoveredNodes = new Dictionary<INode, HashSet<INode>>();
+        public IGraph GetConnectionGraph(ICollection<INode> nodeCollection) {
+            var nodes = new HashSet<INode>(nodeCollection);
+            var connectedNodes = new Dictionary<INode, HashSet<INode>>();
             var neighbourDictionary = GetOutgoingNeighboursDictionary();
             foreach (var node in nodes) {
-                GetReachableNodes(node, node, discoveredNodes, neighbourDictionary);
-            }
-            foreach (var node in nodes) {
-                var nodesToForget = discoveredNodes[node].Where(n => !nodes.Contains(n)).ToList();
-                foreach (var el in nodesToForget) {
-                    discoveredNodes[node].Remove(el);
-                }
+                connectedNodes[node] = GetConnectedNodes(node, neighbourDictionary, nodes);
             }
             var graph = GetReducedGraph(nodes);
             foreach (var edge in graph.GetEdges().ToList()) {
                 graph.RemoveEdge(edge);
             }
             foreach (var node in nodes) {
-                foreach (var neighbour in discoveredNodes[node]) {
+                foreach (var neighbour in connectedNodes[node]) {
                     graph.CreateEdge(node, neighbour);
                 }
             }
-            return graph;
+            return graph;            
         }
 
-        private static void GetReachableNodes(
-            INode rootNode,
+        private static HashSet<INode> GetConnectedNodes(
             INode node,
-            IDictionary<INode, HashSet<INode>> discoveredNodes,
-            IDictionary<INode, HashSet<INode>> neighbourDictionary) {
-            if (!discoveredNodes.ContainsKey(rootNode)) {
-                discoveredNodes[rootNode] = new HashSet<INode>();
+            IDictionary<INode, HashSet<INode>> neighbourDictionary,
+            HashSet<INode> nodeList,
+            HashSet<INode> connectedNodes = null,
+            HashSet<INode> visitedNodes = null) {
+            if (visitedNodes == null) {
+                visitedNodes = new HashSet<INode>();
             }
-            discoveredNodes[rootNode].Add(node);
+            if (connectedNodes == null) {
+                connectedNodes = new HashSet<INode>();
+            }
+            visitedNodes.Add(node);
             foreach (var neighbour in neighbourDictionary[node]) {
-                if (discoveredNodes.ContainsKey(neighbour)) {
-                    foreach (var el in discoveredNodes[neighbour]) {
-                        discoveredNodes[rootNode].Add(el);
-                    }
-                } else if (!discoveredNodes[rootNode].Contains(neighbour)) {
-                    GetReachableNodes(rootNode, neighbour, discoveredNodes, neighbourDictionary);
+                if (nodeList.Contains(neighbour)) {
+                    connectedNodes.Add(neighbour);
+                } else if (!visitedNodes.Contains(neighbour)) {
+                    GetConnectedNodes(neighbour, neighbourDictionary, nodeList, connectedNodes, visitedNodes);
                 }
             }
+            return connectedNodes;
         }
 
         public object Clone() {

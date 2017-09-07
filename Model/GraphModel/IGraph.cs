@@ -19,7 +19,7 @@ namespace SharpGraph {
         void RemoveEmptySubgraphs();
         IDictionary<INode, HashSet<INode>> GetOutgoingNeighboursDictionary();
         ICollection<HashSet<INode>> GetStronglyConnectedComponents();
-        IGraph GetReachabilityGraph(ICollection<INode> nodes);
+        IGraph GetConnectionGraph(ICollection<INode> nodeCollection);
 
         Func<INode, bool> GetNodeSelector(
             IEnumerable<string> selectedIdList,
