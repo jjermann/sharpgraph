@@ -16,6 +16,19 @@ namespace ExampleGraphView {
     public class GraphController : INotifyPropertyChanged {
         #region Private
 
+        private bool m_isConnectedComponentsEnabled;
+        public bool IsConnectedComponentsEnabled {
+            get { return m_isConnectedComponentsEnabled; }
+            set {
+                m_isConnectedComponentsEnabled = value;
+                if (!m_isConnectedComponentsEnabled) {
+                    CurrentConnectedComponents = null;
+                } else {
+                    CurrentConnectedComponents = GetConnectedComponents(CurrentLayoutGraph);
+                }
+            }
+        }
+
         private IGraph m_currentLayoutGraph;
         private IGraph CurrentLayoutGraph {
             get { return m_currentLayoutGraph; }
@@ -50,6 +63,19 @@ namespace ExampleGraphView {
             }
             CurrentWpfGraph = new WpfGraph(CurrentLayoutGraph, SelectedNodeIds);
             CurrentWpfGraph.Changed += CurrentWpfGraphChanged;
+
+            if (IsConnectedComponentsEnabled) {
+                CurrentConnectedComponents = GetConnectedComponents(CurrentLayoutGraph);
+            }
+        }
+
+        private IList<WpfGraph> GetConnectedComponents(IGraph graph) {
+            var scc = graph.GetStronglyConnectedComponents().Where(c => c.Count > 1).ToList();
+            var sccGraphs = scc.Select(graph.GetReducedGraph).ToList();
+            var wpfGraphList = sccGraphs
+                .Select(g => new WpfGraph(GraphParser.GetGraphLayout(g.ToDot())))
+                .ToList();
+            return wpfGraphList;
         }
 
         private void CurrentWpfGraphChanged(object sender, EventArgs e) {
@@ -311,6 +337,15 @@ namespace ExampleGraphView {
             get { return m_currentWpfGraph; }
             private set {
                 m_currentWpfGraph = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList<WpfGraph> m_currentConnectedComponents;
+        public IList<WpfGraph> CurrentConnectedComponents {
+            get { return m_currentConnectedComponents; }
+            private set {
+                m_currentConnectedComponents = value;
                 OnPropertyChanged();
             }
         }

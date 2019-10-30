@@ -19,6 +19,7 @@ namespace ExampleGraphView {
             ShowDotOutput = false;
             ShowDotLayoutOutput = false;
             ShowImageOutput = false;
+            ShowConnectedComponentsOutput = false;
             ShowDotInput = true;
         }
 
@@ -26,6 +27,7 @@ namespace ExampleGraphView {
         private DotLayoutOutput DotLayoutOutputWindow { get; set; }
         private ImageOutput ImageOutputWindow { get; set; }
         private DotInput DotInputWindow { get; set; }
+        private ConnectedComponentsOutput ConnectedComponentsOutputWindow { get; set; }
 
         private bool m_showDotOutput;
         public bool ShowDotOutput {
@@ -84,6 +86,35 @@ namespace ExampleGraphView {
                     if (ImageOutputWindow != null) {
                         ImageOutputWindow.Close();
                         ImageOutputWindow = null;
+                    }
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        private bool m_showConnectedComponentsOutput;
+        public bool ShowConnectedComponentsOutput
+        {
+            get { return m_showConnectedComponentsOutput; }
+            set
+            {
+                m_showConnectedComponentsOutput = value;
+                var vm = (GraphController)DataContext;
+                vm.IsConnectedComponentsEnabled = m_showConnectedComponentsOutput;
+                if (m_showConnectedComponentsOutput)
+                {
+                    if (ConnectedComponentsOutputWindow == null)
+                    {
+                        ConnectedComponentsOutputWindow = new ConnectedComponentsOutput(DataContext);
+                        ConnectedComponentsOutputWindow.Show();
+                    }
+                }
+                else
+                {
+                    if (ConnectedComponentsOutputWindow != null)
+                    {
+                        ConnectedComponentsOutputWindow.Close();
+                        ConnectedComponentsOutputWindow = null;
                     }
                 }
                 OnPropertyChanged();
